@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.presenter.splash
+package br.com.hellodev.moviestreaming.presenter.screens.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.ui.theme.MovieStreamingTheme
+import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants

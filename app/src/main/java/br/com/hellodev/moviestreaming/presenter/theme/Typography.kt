@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.ui.theme
+package br.com.hellodev.moviestreaming.presenter.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

@@ -1,9 +1,10 @@
-package br.com.hellodev.moviestreaming.ui.theme
+package br.com.hellodev.moviestreaming.presenter.theme
 
 import androidx.compose.ui.graphics.Color
 
 data class MyColorScheme(
     val defaultColor: Color,
+    val disabledDefaultColor: Color,
     val backgroundColor: Color,
     val textColor: Color,
     val secondaryButtonColor: Color,

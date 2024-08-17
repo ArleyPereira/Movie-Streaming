@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.ui.theme
+package br.com.hellodev.moviestreaming.presenter.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 
 private val LightColorScheme = MyColorScheme(
     defaultColor = DefaultColor,
+    disabledDefaultColor = DisabledDefaultColor,
     backgroundColor = BackgroundColorLight,
     textColor = TextColorLight,
     secondaryButtonColor = SecondaryButtonColorLight,
@@ -37,6 +38,7 @@ private val LightColorScheme = MyColorScheme(
 
 private val DarkColorScheme = MyColorScheme(
     defaultColor = DefaultColor,
+    disabledDefaultColor = DisabledDefaultColor,
     backgroundColor = BackgroundColorDark,
     textColor = TextColorDark,
     secondaryButtonColor = SecondaryButtonColorDark,

@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.hellodev.moviestreaming.presenter.splash.SplashScreen
-import br.com.hellodev.moviestreaming.presenter.welcome.WelcomeScreen
-import br.com.hellodev.moviestreaming.ui.theme.MovieStreamingTheme
+import br.com.hellodev.moviestreaming.presenter.screens.splash.SplashScreen
+import br.com.hellodev.moviestreaming.presenter.screens.welcome.WelcomeScreen
+import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
