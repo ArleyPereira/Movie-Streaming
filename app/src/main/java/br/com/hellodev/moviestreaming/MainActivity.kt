@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.hellodev.moviestreaming.presenter.splash.SplashScreen
+import br.com.hellodev.moviestreaming.presenter.welcome.WelcomeScreen
 import br.com.hellodev.moviestreaming.ui.theme.MovieStreamingTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MovieStreamingTheme {
-                SplashScreen()
+                WelcomeScreen()
             }
         }
     }
