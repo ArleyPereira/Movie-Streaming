@@ -7,7 +7,6 @@ data class MyColorScheme(
     val disabledDefaultColor: Color,
     val backgroundColor: Color,
     val backgroundSocialButtonColor: Color,
-    val dividerColor: Color,
     val borderColor: Color,
     val textColor: Color,
     val secondaryButtonColor: Color,
