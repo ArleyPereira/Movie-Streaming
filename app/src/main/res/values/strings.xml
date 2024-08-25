@@ -10,4 +10,13 @@
     <string name="label_sign_with_password_authentication_screen">Entrar com senha</string>
     <string name="label_sign_up_account_authentication_screen">Não tem uma conta?</string>
     <string name="label_sign_up_authentication_screen">Criar conta</string>
+
+    <!--    SignupScreen-->
+    <string name="label_title_signup_screen">Crie sua conta</string>
+    <string name="label_input_email_signup_screen">Email</string>
+    <string name="label_input_password_signup_screen">Senha</string>
+    <string name="label_button_signup_screen">Criar conta</string>
+    <string name="label_or_signup_screen">ou continue com</string>
+    <string name="label_sign_up_account_signup_screen">Já tem uma conta?</string>
+    <string name="label_sign_in_signup_screen">Entrar</string>
 </resources>

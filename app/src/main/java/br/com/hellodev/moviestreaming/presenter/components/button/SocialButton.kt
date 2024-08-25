@@ -165,7 +165,7 @@ private fun SocialButtonPreview() {
                     onClick = {}
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
                 SocialButton(
                     icon = painterResource(id = R.drawable.ic_facebook),
@@ -173,7 +173,7 @@ private fun SocialButtonPreview() {
                     onClick = {}
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
                 SocialButton(
                     icon = painterResource(id = R.drawable.ic_github),
