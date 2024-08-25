@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -64,7 +65,7 @@ fun SignupScreen(
     SignupContent(
         state = state,
         action = viewModel::submitAction,
-        onBackPressed = {}
+        onBackPressed = onBackPressed
     )
 }
 
@@ -74,12 +75,10 @@ fun SignupContent(
     action: (SignupAction) -> Unit,
     onBackPressed: () -> Unit
 ) {
-    var showPassword by remember { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             TopAppBarUI(
-                onClick = {}
+                onClick = onBackPressed
             )
         },
         content = { paddingValues ->
@@ -127,7 +126,8 @@ fun SignupContent(
                         )
                     },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
                     ),
                     onValueChange = {
                         action(
@@ -156,11 +156,11 @@ fun SignupContent(
                         if (state.password.isNotEmpty()) {
                             IconButton(
                                 onClick = {
-                                    showPassword = !showPassword
+                                    action(SignupAction.OnPasswordVisibilityChange)
                                 },
                                 content = {
                                     Icon(
-                                        painter = if (showPassword) {
+                                        painter = if (state.passwordVisibility) {
                                             painterResource(id = R.drawable.ic_hide)
                                         } else {
                                             painterResource(id = R.drawable.ic_show)
@@ -173,9 +173,10 @@ fun SignupContent(
                         }
                     },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
                     ),
-                    visualTransformation = if (showPassword) {
+                    visualTransformation = if (state.passwordVisibility) {
                         VisualTransformation.None
                     } else {
                         PasswordVisualTransformation()
@@ -195,7 +196,7 @@ fun SignupContent(
                 PrimaryButton(
                     text = stringResource(id = R.string.label_button_signup_screen),
                     isLoading = false,
-                    enabled = true,
+                    enabled = state.enabledSignupButton,
                     onClick = {}
                 )
 

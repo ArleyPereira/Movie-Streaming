@@ -9,4 +9,6 @@ sealed class SignupAction {
         val type: InputType
     ) : SignupAction()
 
+    data object OnPasswordVisibilityChange : SignupAction()
+
 }
