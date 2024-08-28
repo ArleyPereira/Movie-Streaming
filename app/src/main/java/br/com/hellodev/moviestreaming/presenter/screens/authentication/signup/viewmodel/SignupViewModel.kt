@@ -2,7 +2,8 @@ package br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.v
 
 import androidx.lifecycle.ViewModel
 import br.com.hellodev.moviestreaming.core.enums.InputType
-import br.com.hellodev.moviestreaming.core.enums.InputType.*
+import br.com.hellodev.moviestreaming.core.enums.InputType.EMAIL
+import br.com.hellodev.moviestreaming.core.enums.InputType.PASSWORD
 import br.com.hellodev.moviestreaming.core.functions.isValidEmail
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.action.SignupAction
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.state.SignupState

@@ -12,6 +12,7 @@ lottie-compose = "6.5.0"
 viewmodel-compose = "2.8.4"
 google-services = "4.4.2"
 firebase-bom = "33.2.0"
+koin-compose = "4.0.0-RC1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,9 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodel-compose" }
+
+# Koin
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
