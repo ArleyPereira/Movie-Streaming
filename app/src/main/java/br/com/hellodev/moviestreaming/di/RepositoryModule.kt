@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
 
-    factory<SignupRepository> { SignupRepositoryImpl() }
+    factory<SignupRepository> { SignupRepositoryImpl(auth = get()) }
 
 }

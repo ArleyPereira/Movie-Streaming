@@ -1,6 +1,8 @@
 package br.com.hellodev.moviestreaming.core.application
 
 import android.app.Application
+import br.com.hellodev.moviestreaming.di.appModules
+import br.com.hellodev.moviestreaming.di.firebaseModule
 import br.com.hellodev.moviestreaming.di.presenterModule
 import br.com.hellodev.moviestreaming.di.repositoryModule
 import br.com.hellodev.moviestreaming.di.useCaseModule
@@ -15,7 +17,7 @@ class MainApplication: Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(repositoryModule, useCaseModule, presenterModule)
+            modules(appModules)
         }
     }
 }
