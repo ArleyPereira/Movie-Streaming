@@ -5,13 +5,16 @@ import br.com.hellodev.moviestreaming.core.enums.InputType
 import br.com.hellodev.moviestreaming.core.enums.InputType.EMAIL
 import br.com.hellodev.moviestreaming.core.enums.InputType.PASSWORD
 import br.com.hellodev.moviestreaming.core.functions.isValidEmail
+import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.RegisterUseCase
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.action.SignupAction
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.state.SignupState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class SignupViewModel : ViewModel() {
+class SignupViewModel(
+    private val registerUseCase: RegisterUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(SignupState())
     val state = _state.asStateFlow()

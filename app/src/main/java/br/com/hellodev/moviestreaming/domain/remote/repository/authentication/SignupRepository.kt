@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.domain.remote
+package br.com.hellodev.moviestreaming.domain.remote.repository.authentication
 
 interface SignupRepository {
 

@@ -49,12 +49,13 @@ import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.st
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.viewmodel.SignupViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignupScreen(
     onBackPressed: () -> Unit,
 ) {
-    val viewModel: SignupViewModel = viewModel()
+    val viewModel = koinViewModel<SignupViewModel>()
     val state = viewModel.state.collectAsState().value
 
     SignupContent(
