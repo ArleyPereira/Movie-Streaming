@@ -70,6 +70,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.authentication)
+    implementation(libs.firebase.database)
 
     // Lottie
     implementation(libs.lottie.compose)
