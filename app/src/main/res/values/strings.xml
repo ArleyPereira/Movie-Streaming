@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Movie Streaming</string>
 
+    <!--    Generic-->
+    <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
+
+    <!--    Firebase Authentication-->
+    <string name="email_in_use_firebase_authentication">Este e-mail já está em uso.</string>
+    <string name="strong_password_firebase_authentication">Insira uma senha mais forte.</string>
+    <string name="invalid_email_firebase_authentication">Insira um e-mail válido.</string>
+    <string name="invalid_password_firebase_authentication">Senha inválida, tente novamente.</string>
+    <string name="user_not_found_firebase_authentication">Usuário não encontrado.</string>
+    <string name="account_not_firebase_authentication">Nenhuma conta encontrada com este e-mail.</string>
+
     <!--    AuthenticationScreen-->
     <string name="label_title_authentication_screen">Entrar com</string>
     <string name="label_sign_with_facebook_authentication_screen">Continuar com Facebook</string>
