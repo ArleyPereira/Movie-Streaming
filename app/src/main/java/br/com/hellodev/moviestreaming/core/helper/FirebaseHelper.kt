@@ -1,9 +1,17 @@
 package br.com.hellodev.moviestreaming.core.helper
 
 import br.com.hellodev.moviestreaming.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseHelper {
     companion object {
+        fun getAuth() = FirebaseAuth.getInstance()
+
+        fun getDatabase() = FirebaseDatabase.getInstance().reference
+
+        fun getUserId() = getAuth().currentUser?.uid.orEmpty()
+
         fun validError(error: String?): Int {
             return when {
                 error?.contains("The email address is already in use by another account") == true -> {

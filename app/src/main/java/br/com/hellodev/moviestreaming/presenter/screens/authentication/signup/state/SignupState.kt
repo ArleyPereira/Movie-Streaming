@@ -2,8 +2,8 @@ package br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.s
 
 data class SignupState(
     val isLoading: Boolean = false,
-    val email: String = "",
-    val password: String = "",
+    val email: String = "u@gmail.com",
+    val password: String = "teste123",
     val passwordVisibility: Boolean = false,
     val enabledSignupButton: Boolean = false,
     val hasError: Boolean = false,

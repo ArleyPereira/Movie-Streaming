@@ -6,6 +6,11 @@ import org.koin.dsl.module
 
 val presenterModule = module {
 
-    viewModel { SignupViewModel(registerUseCase = get()) }
+    viewModel {
+        SignupViewModel(
+            registerUseCase = get(),
+            saveUserUseCase = get()
+        )
+    }
 
 }
