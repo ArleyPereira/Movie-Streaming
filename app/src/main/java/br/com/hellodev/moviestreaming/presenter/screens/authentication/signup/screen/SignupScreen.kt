@@ -1,6 +1,5 @@
 package br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,13 +18,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -38,12 +44,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.core.enums.InputType
+import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
+import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.button.SocialButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerWithText
+import br.com.hellodev.moviestreaming.presenter.components.snackbar.FeedbackUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.TextFieldUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.action.SignupAction
@@ -51,6 +58,7 @@ import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.st
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.viewmodel.SignupViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -73,10 +81,44 @@ fun SignupContent(
     action: (SignupAction) -> Unit,
     onBackPressed: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(state.hasError) {
+        if (state.hasError) {
+            scope.launch {
+                val result = snackbarHostState
+                    .showSnackbar(
+                        message = context.getString(
+                            state.feedbackUI?.second ?: R.string.error_generic
+                        )
+                    )
+
+                if (result == SnackbarResult.Dismissed) {
+                    action(SignupAction.ResetError)
+                }
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBarUI(
                 onClick = onBackPressed
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                snackbar = { snackbarData ->
+                    state.feedbackUI?.let { feedbackUI ->
+                        FeedbackUI(
+                            message = snackbarData.visuals.message,
+                            type = feedbackUI.first
+                        )
+                    }
+                }
             )
         },
         content = { paddingValues ->

@@ -1,6 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.action
 
-import br.com.hellodev.moviestreaming.core.enums.InputType
+import br.com.hellodev.moviestreaming.core.enums.input.InputType
 
 sealed class SignupAction {
 
@@ -12,5 +12,7 @@ sealed class SignupAction {
     data object OnPasswordVisibilityChange : SignupAction()
 
     data object OnSignup : SignupAction()
+
+    data object ResetError : SignupAction()
 
 }

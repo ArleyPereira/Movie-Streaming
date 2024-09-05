@@ -44,9 +44,9 @@ val TextFieldBackgroundColorLight = Color(0xFFFAFAFA)
 val TextFieldBackgroundColorDark = Color(0xFF1F222A)
 
 // Alert & Status
-val SuccessColor = Color(0xFF4ADE80)
+val SuccessColor = Color(0xFF4AAF57)
 val InfoColor = Color(0xFF246BFD)
-val WarningColor = Color(0xFFFACC15)
+val WarningColor = Color(0xFFFF981F)
 val ErrorColor = Color(0xFFF75555)
 val DisabledColor = Color(0xFFD8D8D8)
 

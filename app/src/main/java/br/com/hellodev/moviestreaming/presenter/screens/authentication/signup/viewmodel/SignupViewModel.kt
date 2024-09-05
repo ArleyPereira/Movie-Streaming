@@ -2,9 +2,10 @@ package br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.v
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.hellodev.moviestreaming.core.enums.InputType
-import br.com.hellodev.moviestreaming.core.enums.InputType.EMAIL
-import br.com.hellodev.moviestreaming.core.enums.InputType.PASSWORD
+import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
+import br.com.hellodev.moviestreaming.core.enums.input.InputType
+import br.com.hellodev.moviestreaming.core.enums.input.InputType.EMAIL
+import br.com.hellodev.moviestreaming.core.enums.input.InputType.PASSWORD
 import br.com.hellodev.moviestreaming.core.functions.isValidEmail
 import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
 import br.com.hellodev.moviestreaming.domain.remote.model.User
@@ -38,6 +39,10 @@ class SignupViewModel(
             is SignupAction.OnSignup -> {
                 onSignup()
             }
+
+            is SignupAction.ResetError -> {
+                resetError()
+            }
         }
     }
 
@@ -56,7 +61,10 @@ class SignupViewModel(
                 _state.update { currentState ->
                     currentState.copy(
                         hasError = true,
-                        error = FirebaseHelper.validError(exception.message)
+                        feedbackUI = Pair(
+                            FeedbackType.ERROR,
+                            FirebaseHelper.validError(exception.message)
+                        )
                     )
                 }
             }
@@ -101,6 +109,12 @@ class SignupViewModel(
 
         _state.update { currentState ->
             currentState.copy(enabledSignupButton = emailValid && passwordValid)
+        }
+    }
+
+    private fun resetError() {
+        _state.update { currentState ->
+            currentState.copy(hasError = false, feedbackUI = null)
         }
     }
 
