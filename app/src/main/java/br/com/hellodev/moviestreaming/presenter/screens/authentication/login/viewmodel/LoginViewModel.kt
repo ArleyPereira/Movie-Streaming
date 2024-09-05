@@ -8,7 +8,6 @@ import br.com.hellodev.moviestreaming.core.enums.input.InputType.EMAIL
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.PASSWORD
 import br.com.hellodev.moviestreaming.core.functions.isValidEmail
 import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
-import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.LoginUseCase
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.action.LoginAction
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.state.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,9 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel(
-    private val loginUseCase: LoginUseCase
-) : ViewModel() {
+class LoginViewModel() : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
@@ -46,16 +43,18 @@ class LoginViewModel(
     private fun onSignIn() {
         viewModelScope.launch {
             try {
-                loginUseCase(
-                    email = _state.value.email,
-                    password = _state.value.password
-                )
+//                registerUseCase(
+//                    email = _state.value.email,
+//                    password = _state.value.password
+//                )
+//
+//                saveUserUseCase(user = User(email = _state.value.email))
             } catch (exception: Exception) {
                 exception.printStackTrace()
 
                 _state.update { currentState ->
                     currentState.copy(
-                        hasFeedback = true,
+                        hasError = true,
                         feedbackUI = Pair(
                             FeedbackType.ERROR,
                             FirebaseHelper.validError(exception.message)
@@ -109,7 +108,7 @@ class LoginViewModel(
 
     private fun resetError() {
         _state.update { currentState ->
-            currentState.copy(hasFeedback = false, feedbackUI = null)
+            currentState.copy(hasError = false, feedbackUI = null)
         }
     }
 

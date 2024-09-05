@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.screen.LoginScreen
-import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.screen.SignupScreen
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
                             //.padding(paddingValues)
                         ) {
-                            //SignupScreen {  }
                             LoginScreen { }
                         }
                     }

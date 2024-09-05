@@ -1,9 +1,9 @@
 package br.com.hellodev.moviestreaming.domain.remote.usecase.authentication
 
-import br.com.hellodev.moviestreaming.domain.remote.repository.authentication.AuthenticationRepository
+import br.com.hellodev.moviestreaming.domain.remote.repository.authentication.SignupRepository
 
 class RegisterUseCase(
-    private val repository: AuthenticationRepository
+    private val repository: SignupRepository
 ) {
 
     suspend operator fun invoke(email: String, password: String) {

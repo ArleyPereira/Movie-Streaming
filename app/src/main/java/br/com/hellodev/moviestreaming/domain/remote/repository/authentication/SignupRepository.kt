@@ -1,9 +1,7 @@
 package br.com.hellodev.moviestreaming.domain.remote.repository.authentication
 
-interface AuthenticationRepository {
+interface SignupRepository {
 
     suspend fun register(email: String, password: String)
-
-    suspend fun login(email: String, password: String)
 
 }

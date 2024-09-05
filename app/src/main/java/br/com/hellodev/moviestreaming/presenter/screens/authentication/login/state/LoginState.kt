@@ -8,6 +8,6 @@ data class LoginState(
     val password: String = "teste123",
     val passwordVisibility: Boolean = false,
     val enabledSignInButton: Boolean = false,
-    val hasFeedback: Boolean = false,
+    val hasError: Boolean = false,
     val feedbackUI: Pair<FeedbackType, Int>? = null
 )
