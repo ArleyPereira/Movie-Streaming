@@ -10,7 +10,7 @@
     <string name="invalid_email_firebase_authentication">Insira um e-mail válido.</string>
     <string name="invalid_password_firebase_authentication">Senha inválida, tente novamente.</string>
     <string name="user_not_found_firebase_authentication">Usuário não encontrado.</string>
-    <string name="account_not_firebase_authentication">Nenhuma conta encontrada com este e-mail.</string>
+    <string name="account_not_firebase_authentication">A credencial de autenticação fornecida está incorreta, malformada ou expirou.</string>
 
     <!--    AuthenticationScreen-->
     <string name="label_title_authentication_screen">Entrar com</string>
@@ -28,6 +28,17 @@
     <string name="label_input_password_signup_screen">Senha</string>
     <string name="label_button_signup_screen">Criar conta</string>
     <string name="label_or_signup_screen">ou continue com</string>
-    <string name="label_sign_up_account_signup_screen">Já tem uma conta?</string>
+    <string name="label_sign_in_account_signup_screen">Já tem uma conta?</string>
     <string name="label_sign_in_signup_screen">Entrar</string>
+
+    <!--    LoginScreen-->
+    <string name="label_title_login_screen">Faça login na sua conta</string>
+    <string name="label_input_email_login_screen">Email</string>
+    <string name="label_input_password_login_screen">Senha</string>
+    <string name="label_button_login_screen">Entrar</string>
+    <string name="label_forgot_password_login_screen">Esqueceu a senha?</string>
+    <string name="label_or_login_screen">ou continue com</string>
+    <string name="label_sign_up_account_login_screen">Não tem uma conta?</string>
+    <string name="label_sign_up_login_screen">Criar conta</string>
+
 </resources>

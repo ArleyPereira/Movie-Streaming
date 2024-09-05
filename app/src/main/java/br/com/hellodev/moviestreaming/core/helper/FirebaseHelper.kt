@@ -26,6 +26,10 @@ class FirebaseHelper {
                     R.string.invalid_email_firebase_authentication
                 }
 
+                error?.contains("The supplied auth credential is incorrect, malformed or has expired") == true -> {
+                    R.string.account_not_firebase_authentication
+                }
+
                 else -> {
                     R.string.error_generic
                 }
