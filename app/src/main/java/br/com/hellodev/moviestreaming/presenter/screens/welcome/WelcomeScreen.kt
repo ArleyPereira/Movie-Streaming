@@ -24,13 +24,19 @@ import br.com.hellodev.moviestreaming.presenter.components.slide.WelcomeSlideUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 @Composable
-fun WelcomeScreen() {
-    WelcomeContent()
+fun WelcomeScreen(
+    navigateToHomeAuthenticationScreen: () -> Unit
+) {
+    WelcomeContent(
+        navigateToHomeAuthenticationScreen = navigateToHomeAuthenticationScreen
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WelcomeContent() {
+fun WelcomeContent(
+    navigateToHomeAuthenticationScreen: () -> Unit
+) {
     val slideItems = listOf(
         Pair(
             first = "Bem-vindo",
@@ -87,7 +93,7 @@ fun WelcomeContent() {
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
                         text = "Pular",
-                        onClick = {}
+                        onClick = { navigateToHomeAuthenticationScreen() }
                     )
                 }
             }
@@ -98,5 +104,7 @@ fun WelcomeContent() {
 @Preview
 @Composable
 private fun WelcomePreview() {
-    WelcomeContent()
+    WelcomeContent(
+        navigateToHomeAuthenticationScreen = {}
+    )
 }
