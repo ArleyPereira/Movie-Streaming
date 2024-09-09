@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.core.navigation.routes.hosts.onboarding
+package br.com.hellodev.moviestreaming.core.navigation.hosts.onboarding
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

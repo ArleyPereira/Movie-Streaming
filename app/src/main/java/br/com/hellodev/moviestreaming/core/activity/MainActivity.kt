@@ -5,7 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import br.com.hellodev.moviestreaming.core.navigation.routes.hosts.onboarding.OnboardingNavHost
+import br.com.hellodev.moviestreaming.core.navigation.hosts.authentication.AuthenticationNavHost
+import br.com.hellodev.moviestreaming.core.navigation.hosts.onboarding.OnboardingNavHost
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MovieStreamingTheme {
-                OnboardingNavHost(navHostController = rememberNavController())
+                AuthenticationNavHost(navHostController = rememberNavController())
             }
         }
     }

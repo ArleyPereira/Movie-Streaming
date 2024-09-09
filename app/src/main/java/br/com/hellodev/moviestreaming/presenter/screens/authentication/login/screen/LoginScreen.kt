@@ -2,6 +2,8 @@ package br.com.hellodev.moviestreaming.presenter.screens.authentication.login.sc
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -75,7 +77,7 @@ fun LoginScreen(
 }
 
 @Composable
-fun LoginContent(
+private fun LoginContent(
     state: LoginState,
     action: (LoginAction) -> Unit,
     onBackPressed: () -> Unit
@@ -313,6 +315,11 @@ fun LoginContent(
 
                     Text(
                         text = stringResource(id = R.string.label_sign_up_login_screen),
+                        modifier = Modifier
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) { onBackPressed() },
                         style = TextStyle(
                             lineHeight = 19.6.sp,
                             fontFamily = UrbanistFamily,

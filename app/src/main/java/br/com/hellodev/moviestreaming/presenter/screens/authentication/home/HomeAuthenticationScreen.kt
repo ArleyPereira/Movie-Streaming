@@ -1,7 +1,8 @@
 package br.com.hellodev.moviestreaming.presenter.screens.authentication.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,23 +32,26 @@ import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.button.SocialButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerWithText
-import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 
 @Composable
-fun HomeAuthenticationScreen() {
-    HomeAuthenticationContent()
+fun HomeAuthenticationScreen(
+    navigateToLoginScreen: () -> Unit,
+    navigateToSignupScreen: () -> Unit
+) {
+    HomeAuthenticationContent(
+        navigateToLoginScreen = navigateToLoginScreen,
+        navigateToSignupScreen = navigateToSignupScreen
+    )
 }
 
 @Composable
-fun HomeAuthenticationContent() {
+private fun HomeAuthenticationContent(
+    navigateToLoginScreen: () -> Unit,
+    navigateToSignupScreen: () -> Unit
+) {
     Scaffold(
-        topBar = {
-            TopAppBarUI(
-                onClick = {}
-            )
-        },
         containerColor = MovieStreamingTheme.colorScheme.backgroundColor,
         content = { paddingValues ->
             Column(
@@ -119,7 +124,7 @@ fun HomeAuthenticationContent() {
 
                 PrimaryButton(
                     text = stringResource(id = R.string.label_sign_with_password_authentication_screen),
-                    onClick = {}
+                    onClick = { navigateToLoginScreen() }
                 )
 
                 Row(
@@ -144,6 +149,11 @@ fun HomeAuthenticationContent() {
 
                     Text(
                         text = stringResource(id = R.string.label_sign_up_authentication_screen),
+                        modifier = Modifier
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) { navigateToSignupScreen() },
                         style = TextStyle(
                             lineHeight = 19.6.sp,
                             fontFamily = UrbanistFamily,
@@ -162,6 +172,9 @@ fun HomeAuthenticationContent() {
 @Composable
 private fun HomeAuthenticationPreview() {
     MovieStreamingTheme {
-        HomeAuthenticationContent()
+        HomeAuthenticationContent(
+            navigateToLoginScreen = {},
+            navigateToSignupScreen = {}
+        )
     }
 }
