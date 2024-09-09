@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,18 +23,32 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navigateToWelcomeScreen: () -> Unit
+) {
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(true) {
+        scope.launch {
+            delay(2000)
+            navigateToWelcomeScreen()
+        }
+    }
+
     SplashContent()
 }
 
 @Composable
-fun SplashContent() {
+private fun SplashContent() {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("loading.json"))
 
-    Scaffold(modifier = Modifier
-        .fillMaxSize(),
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
         containerColor = MovieStreamingTheme.colorScheme.backgroundColor
     ) { innerPadding ->
         Box(

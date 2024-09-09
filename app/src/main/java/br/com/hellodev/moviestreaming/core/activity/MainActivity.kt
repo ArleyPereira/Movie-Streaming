@@ -4,12 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
-import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.screen.LoginScreen
-import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.screen.SignupScreen
+import androidx.navigation.compose.rememberNavController
+import br.com.hellodev.moviestreaming.core.navigation.routes.hosts.onboarding.OnboardingNavHost
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,20 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MovieStreamingTheme {
-                Scaffold(
-                    content = { paddingValues ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-
-                            //.padding(paddingValues)
-                        ) {
-                            //SignupScreen {  }
-                            LoginScreen { }
-                        }
-                    }
-                )
-                //WelcomeScreen()
+                OnboardingNavHost(navHostController = rememberNavController())
             }
         }
     }
