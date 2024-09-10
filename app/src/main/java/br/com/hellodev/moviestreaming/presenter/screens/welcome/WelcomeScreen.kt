@@ -1,6 +1,5 @@
 package br.com.hellodev.moviestreaming.presenter.screens.welcome
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,13 +22,19 @@ import br.com.hellodev.moviestreaming.presenter.components.slide.WelcomeSlideUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 @Composable
-fun WelcomeScreen() {
-    WelcomeContent()
+fun WelcomeScreen(
+    navigateToHomeAuthenticationScreen: () -> Unit
+) {
+
+    WelcomeContent(
+        navigateToHomeAuthenticationScreen = navigateToHomeAuthenticationScreen
+    )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WelcomeContent() {
+private fun WelcomeContent(
+    navigateToHomeAuthenticationScreen: () -> Unit
+) {
     val slideItems = listOf(
         Pair(
             first = "Bem-vindo",
@@ -87,7 +91,7 @@ fun WelcomeContent() {
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
                         text = "Pular",
-                        onClick = {}
+                        onClick = { navigateToHomeAuthenticationScreen() }
                     )
                 }
             }
@@ -98,5 +102,7 @@ fun WelcomeContent() {
 @Preview
 @Composable
 private fun WelcomePreview() {
-    WelcomeContent()
+    WelcomeContent(
+        navigateToHomeAuthenticationScreen = {}
+    )
 }
