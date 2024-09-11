@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.presenter.screens.welcome
+package br.com.hellodev.moviestreaming.presenter.screens.welcome.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -19,21 +22,32 @@ import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.slide.WelcomeSlideUI
+import br.com.hellodev.moviestreaming.presenter.screens.welcome.action.WelcomeAction
+import br.com.hellodev.moviestreaming.presenter.screens.welcome.viewmodel.WelcomeViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WelcomeScreen(
     navigateToHomeAuthenticationScreen: () -> Unit
 ) {
+    val viewModel = koinViewModel<WelcomeViewModel>()
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(state.nextScreen) {
+        if (state.nextScreen) {
+            navigateToHomeAuthenticationScreen()
+        }
+    }
 
     WelcomeContent(
-        navigateToHomeAuthenticationScreen = navigateToHomeAuthenticationScreen
+        action = viewModel::submitAction
     )
 }
 
 @Composable
 private fun WelcomeContent(
-    navigateToHomeAuthenticationScreen: () -> Unit
+    action: (WelcomeAction) -> Unit
 ) {
     val slideItems = listOf(
         Pair(
@@ -91,7 +105,7 @@ private fun WelcomeContent(
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
                         text = "Pular",
-                        onClick = { navigateToHomeAuthenticationScreen() }
+                        onClick = { action(WelcomeAction.OnNextScreen) }
                     )
                 }
             }
@@ -103,6 +117,6 @@ private fun WelcomeContent(
 @Composable
 private fun WelcomePreview() {
     WelcomeContent(
-        navigateToHomeAuthenticationScreen = {}
+        action = {}
     )
 }
