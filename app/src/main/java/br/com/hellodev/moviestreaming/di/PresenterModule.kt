@@ -3,6 +3,7 @@ package br.com.hellodev.moviestreaming.di
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.viewmodel.LoginViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.viewmodel.SignupViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.main.home.viewmodel.HomeViewModel
+import br.com.hellodev.moviestreaming.presenter.screens.main.search.viewmodel.SearchViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.splash.viewmodel.SplashViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.welcome.viewmodel.WelcomeViewModel
 import org.koin.core.module.dsl.viewModel
@@ -37,6 +38,10 @@ val presenterModule = module {
 
     viewModel {
         HomeViewModel()
+    }
+
+    viewModel {
+        SearchViewModel()
     }
 
 }
