@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.di
 
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.viewmodel.LoginViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.viewmodel.SignupViewModel
+import br.com.hellodev.moviestreaming.presenter.screens.main.favorite.viewmodel.FavoriteViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.main.home.viewmodel.HomeViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.main.search.viewmodel.SearchViewModel
 import br.com.hellodev.moviestreaming.presenter.screens.splash.viewmodel.SplashViewModel
@@ -42,6 +43,10 @@ val presenterModule = module {
 
     viewModel {
         SearchViewModel()
+    }
+
+    viewModel {
+        FavoriteViewModel()
     }
 
 }
