@@ -11,7 +11,7 @@ import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccountAction() {
+fun AccountScreen() {
     val viewModel = koinViewModel<AccountViewModel>()
     val state by viewModel.state.collectAsState()
 
