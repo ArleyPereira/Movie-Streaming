@@ -50,6 +50,6 @@ fun OnboardingNavHost(navHostController: NavHostController) {
 
         authenticationNavHost(navHostController = navHostController)
 
-        appNavHost(navHostController = navHostController)
+        appNavHost()
     }
 }
