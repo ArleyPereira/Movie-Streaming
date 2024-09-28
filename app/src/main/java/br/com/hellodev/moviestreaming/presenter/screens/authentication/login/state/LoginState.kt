@@ -4,10 +4,11 @@ import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
 
 data class LoginState(
     val isLoading: Boolean = false,
-    val email: String = "u@gmail.com",
-    val password: String = "teste123",
+    val email: String = "",
+    val password: String = "",
     val passwordVisibility: Boolean = false,
     val enabledSignInButton: Boolean = false,
     val hasFeedback: Boolean = false,
-    val feedbackUI: Pair<FeedbackType, Int>? = null
+    val feedbackUI: Pair<FeedbackType, Int>? = null,
+    val isAuthenticated: Boolean = false
 )

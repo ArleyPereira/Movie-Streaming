@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import br.com.hellodev.moviestreaming.core.navigation.hosts.app.appNavHost
+import br.com.hellodev.moviestreaming.core.navigation.routes.app.AppRoutes
 import br.com.hellodev.moviestreaming.core.navigation.routes.authentication.AuthenticationRoutes
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.home.HomeAuthenticationScreen
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.screen.LoginScreen
@@ -27,6 +28,13 @@ fun NavGraphBuilder.authenticationNavHost(navHostController: NavHostController) 
 
         composable<AuthenticationRoutes.Login> {
             LoginScreen(
+                navigateToAppScreen = {
+                    navHostController.navigate(AppRoutes.Graph) {
+                        popUpTo(AuthenticationRoutes.Graph) {
+                            inclusive = true
+                        }
+                    }
+                },
                 onBackPressed = {
                     navHostController.popBackStack()
                 }
@@ -35,6 +43,13 @@ fun NavGraphBuilder.authenticationNavHost(navHostController: NavHostController) 
 
         composable<AuthenticationRoutes.Signup> {
             SignupScreen(
+                navigateToAppScreen = {
+                    navHostController.navigate(AppRoutes.Graph) {
+                        popUpTo(AuthenticationRoutes.Graph) {
+                            inclusive = true
+                        }
+                    }
+                },
                 onBackPressed = {
                     navHostController.popBackStack()
                 }

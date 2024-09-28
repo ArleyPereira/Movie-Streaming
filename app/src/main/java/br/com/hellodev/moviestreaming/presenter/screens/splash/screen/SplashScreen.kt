@@ -30,6 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SplashScreen(
+    navigateToAppScreen: () -> Unit,
     navigateToWelcomeScreen: () -> Unit,
     navigateToHomeAuthenticationScreen: () -> Unit,
 ) {
@@ -40,7 +41,11 @@ fun SplashScreen(
     LaunchedEffect(state.isLoading) {
         if (!state.isLoading) {
             if (state.isWelcomeVisited) {
-                navigateToHomeAuthenticationScreen()
+                if (state.isAuthenticated) {
+                    navigateToAppScreen()
+                } else {
+                    navigateToHomeAuthenticationScreen()
+                }
             } else {
                 navigateToWelcomeScreen()
             }

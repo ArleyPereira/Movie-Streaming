@@ -8,6 +8,8 @@ class FirebaseHelper {
     companion object {
         fun getAuth() = FirebaseAuth.getInstance()
 
+        fun isAuthenticated() = getAuth().currentUser != null
+
         fun getDatabase() = FirebaseDatabase.getInstance().reference
 
         fun getUserId() = getAuth().currentUser?.uid.orEmpty()

@@ -1,6 +1,7 @@
 package br.com.hellodev.moviestreaming.presenter.screens.splash.viewmodel
 
 import androidx.lifecycle.ViewModel
+import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
 import br.com.hellodev.moviestreaming.core.preferences.AppPreferences
 import br.com.hellodev.moviestreaming.presenter.screens.splash.action.SplashAction
 import br.com.hellodev.moviestreaming.presenter.screens.splash.state.SplashState
@@ -27,7 +28,8 @@ class SplashViewModel(
         _state.update { currentState ->
             currentState.copy(
                 isWelcomeVisited = appPreferences.getWelcomeVisited(),
-                isLoading = false
+                isLoading = false,
+                isAuthenticated = FirebaseHelper.isAuthenticated()
             )
         }
     }
