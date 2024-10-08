@@ -43,6 +43,10 @@ val TopAppBarColorDark = Color(0xFFFFFFFF)
 val TextFieldBackgroundColorLight = Color(0xFFFAFAFA)
 val TextFieldBackgroundColorDark = Color(0xFF1F222A)
 
+// Switch
+val SwitchInactiveBackgroundColorLight = Color(0xFFEEEEEE)
+val SwitchInactiveBackgroundColorDark = Color(0xFF35383F)
+
 // Alert & Status
 val SuccessColor = Color(0xFF4AAF57)
 val InfoColor = Color(0xFF246BFD)

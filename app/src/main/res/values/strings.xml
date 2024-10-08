@@ -48,4 +48,15 @@
     <string name="label_sign_up_account_login_screen">Não tem uma conta?</string>
     <string name="label_sign_up_login_screen">Criar conta</string>
 
+    <!--    AccountScreen-->
+    <string name="label_edit_account_screen">Editar perfil</string>
+    <string name="label_notification_account_screen">Notificações</string>
+    <string name="label_download_account_screen">Download</string>
+    <string name="label_security_account_screen">Segurança</string>
+    <string name="label_language_account_screen">Idioma</string>
+    <string name="label_theme_mode_account_screen">Modo noturno</string>
+    <string name="label_help_center_account_screen">Central de ajuda</string>
+    <string name="label_privacy_policy_account_screen">Política de privacidade</string>
+    <string name="label_logout_account_screen">Sair</string>
+
 </resources>
