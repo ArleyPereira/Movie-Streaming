@@ -15,6 +15,10 @@ val BackgroundColorDark = Color(0xFF181A20)
 val TextColorLight = Color(0xFF212121)
 val TextColorDark = Color(0xFFFFFFFF)
 
+// Icon
+val IconColorLight = Color(0xFF212121)
+val IconColorDark = Color(0xFFFFFFFF)
+
 // Button -> Background
 val SecondaryButtonColorLight = Color(0x14E21221)
 val SecondaryButtonColorDark = Color(0xFF35383F)
