@@ -8,11 +8,11 @@ import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
 sealed class MenuItems(
     @DrawableRes val icon: Int,
     @StringRes val label: Int,
-    type: MenuType
+    val type: MenuType
 ) {
 
     data object EditProfile: MenuItems(
-        icon = R.drawable.ic_edit,
+        icon = R.drawable.ic_user_line,
         label = R.string.label_edit_account_screen,
         type = MenuType.EDIT_PROFILE
     )
