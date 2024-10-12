@@ -5,16 +5,17 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.5"
+lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
-composeBom = "2024.09.00"
+composeBom = "2024.09.03"
 lottie-compose = "6.5.0"
-viewmodel-compose = "2.8.5"
+viewmodel-compose = "2.8.6"
 google-services = "4.4.2"
-firebase-bom = "33.2.0"
+firebase-bom = "33.4.0"
 koin-compose = "4.0.0-RC1"
-navigation-compose = "2.8.0"
-serialization-json = "1.7.1"
+navigation-compose = "2.8.2"
+serialization-json = "1.7.3"
+landscapist-coil = "2.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,9 @@ serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-jso
 
 # Lottie
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie-compose" }
+
+# Landscapist
+landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "landscapist-coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

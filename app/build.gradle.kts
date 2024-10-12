@@ -80,6 +80,9 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
+    // Landscapist
+    implementation(libs.landscapist.coil)
+
     // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

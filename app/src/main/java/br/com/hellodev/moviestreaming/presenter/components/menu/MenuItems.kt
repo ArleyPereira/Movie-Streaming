@@ -42,7 +42,7 @@ sealed class MenuItems(
     )
 
     data object DarkMode: MenuItems(
-        icon = R.drawable.ic_theme_mode,
+        icon = R.drawable.ic_dark_mode,
         label = R.string.label_theme_mode_account_screen,
         type = MenuType.DARK_MODE
     )
