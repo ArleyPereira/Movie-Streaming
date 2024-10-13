@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.screens.app
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ private fun AppContent() {
         content = { paddingValues ->
             BottomAppBarNavHost(
                 modifier = Modifier
+                    .background(MovieStreamingTheme.colorScheme.backgroundColor)
                     .padding(paddingValues),
                 navHostController = navController
             )
