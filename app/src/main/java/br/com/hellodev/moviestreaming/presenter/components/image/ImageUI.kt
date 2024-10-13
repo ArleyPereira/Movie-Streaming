@@ -36,11 +36,12 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun ImageUI(
     modifier: Modifier = Modifier,
-    imageModel: Any,
+    imageModel: Any? = null,
     contentScale: ContentScale = ContentScale.None,
     previewPlaceholder: Painter? = null,
     shape: Shape = RoundedCornerShape(12.dp),
     borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
+    isLoading: Boolean = false,
     onClick: () -> Unit
 ) {
     val failureComposition by rememberLottieComposition(LottieCompositionSpec.Asset("error_loading_error.json"))
@@ -69,14 +70,16 @@ fun ImageUI(
             }
         },
         failure = {
-            LottieAnimation(
-                composition = failureComposition,
-                modifier = Modifier
-                    .size(120.dp)
-                    .align(Alignment.BottomCenter),
-                iterations = LottieConstants.IterateForever,
-                maintainOriginalImageBounds = true
-            )
+            if (!isLoading) {
+                LottieAnimation(
+                    composition = failureComposition,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(Alignment.BottomCenter),
+                    iterations = LottieConstants.IterateForever,
+                    maintainOriginalImageBounds = true
+                )
+            }
         }
     )
 }

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.*
+import br.com.hellodev.moviestreaming.domain.remote.model.User
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.header.HeaderScreen
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
@@ -101,31 +102,37 @@ private fun AccountContent(
                     ImageUI(
                         modifier = Modifier
                             .size(120.dp),
-                        imageModel = R.drawable.placeholder_welcome,
+                        imageModel = state.user?.photo,
                         contentScale = ContentScale.Crop,
                         previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
                         shape = CircleShape,
+                        isLoading = state.isLoading,
                         onClick = {}
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Text(
-                        text = "Andrew Ainsley",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            lineHeight = 24.sp,
-                            fontFamily = UrbanistFamily,
-                            fontWeight = FontWeight.Bold,
-                            color = MovieStreamingTheme.colorScheme.textColor,
-                            textAlign = TextAlign.Center
+                    if (
+                        state.user?.name?.isNotEmpty() == true &&
+                        state.user.surname?.isNotEmpty() == true
+                    ) {
+                        Text(
+                            text = "${state.user.name} ${state.user.surname}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                lineHeight = 24.sp,
+                                fontFamily = UrbanistFamily,
+                                fontWeight = FontWeight.Bold,
+                                color = MovieStreamingTheme.colorScheme.textColor,
+                                textAlign = TextAlign.Center
+                            )
                         )
-                    )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
 
                     Text(
-                        text = "andrew_ainsley@yourdomain.com",
+                        text = state.user?.email ?: "",
                         style = TextStyle(
                             lineHeight = 19.6.sp,
                             fontFamily = UrbanistFamily,
@@ -177,7 +184,13 @@ private fun AccountContent(
 private fun AccountPreview() {
     MovieStreamingTheme {
         AccountContent(
-            state = AccountState(),
+            state = AccountState(
+                user = User(
+                    name = "Andrew",
+                    surname = "Ainsley",
+                    email = "john.mclean@examplepetstore.com",
+                )
+            ),
             action = {},
             onItemClick = {}
         )

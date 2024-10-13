@@ -56,7 +56,9 @@ val presenterModule = module {
     }
 
     viewModel {
-        AccountViewModel()
+        AccountViewModel(
+            getUserUseCase = get()
+        )
     }
 
 
