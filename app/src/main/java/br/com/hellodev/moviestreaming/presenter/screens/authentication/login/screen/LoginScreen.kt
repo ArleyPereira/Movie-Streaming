@@ -133,7 +133,7 @@ private fun LoginContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MovieStreamingTheme.colorScheme.backgroundColor)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
                     .verticalScroll(rememberScrollState())
                     .padding(paddingValues)
                     .padding(horizontal = 24.dp, vertical = 48.dp),

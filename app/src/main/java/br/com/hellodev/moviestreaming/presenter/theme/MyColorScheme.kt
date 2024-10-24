@@ -5,7 +5,8 @@ import androidx.compose.ui.graphics.Color
 data class MyColorScheme(
     val defaultColor: Color,
     val disabledDefaultColor: Color,
-    val backgroundColor: Color,
+    val primaryBackgroundColor: Color,
+    val secondaryBackgroundColor: Color,
     val backgroundSocialButtonColor: Color,
     val topAppBarColor: Color,
     val textFieldBackgroundColor: Color,
@@ -21,7 +22,7 @@ data class MyColorScheme(
     val successColor: Color,
     val infoColor: Color,
     val warningColor: Color,
-    val errorColor: Color,
+    val alertColor: Color,
     val disabledColor: Color,
     val greyscale900Color: Color,
     val greyscale800Color: Color,
@@ -35,5 +36,7 @@ data class MyColorScheme(
     val greyscale50Color: Color,
     val whiteColor: Color,
     val blackColor: Color,
-    val transparentColor: Color
+    val transparentColor: Color,
+    val spotColor: Color,
+    val ambientColor: Color,
 )

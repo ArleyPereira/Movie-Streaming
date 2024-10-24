@@ -69,7 +69,7 @@ private fun SplashContent() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        containerColor = MovieStreamingTheme.colorScheme.backgroundColor
+        containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor
     ) { innerPadding ->
         Box(
             modifier = Modifier

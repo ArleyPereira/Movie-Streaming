@@ -59,4 +59,10 @@
     <string name="label_privacy_policy_account_screen">Política de privacidade</string>
     <string name="label_logout_account_screen">Sair</string>
 
+    <!--    BottomSheetLogout-->
+    <string name="label_title_bottom_sheet_logout">Sair</string>
+    <string name="label_message_bottom_sheet_logout">Tem certeza de que deseja sair?</string>
+    <string name="label_cancel_button_bottom_sheet_logout">Cancelar</string>
+    <string name="label_confirm_button_bottom_sheet_logout">Sim, sair</string>
+
 </resources>

@@ -67,7 +67,7 @@ private fun TopAppBarUIPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MovieStreamingTheme.colorScheme.backgroundColor),
+                .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor),
         ) {
             TopAppBarUI(
                 title = "Fill Your Profile",

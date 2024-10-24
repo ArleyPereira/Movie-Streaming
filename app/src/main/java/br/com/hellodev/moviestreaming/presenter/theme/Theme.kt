@@ -13,7 +13,8 @@ import androidx.compose.runtime.remember
 private val LightColorScheme = MyColorScheme(
     defaultColor = DefaultColor,
     disabledDefaultColor = DisabledDefaultColor,
-    backgroundColor = BackgroundColorLight,
+    primaryBackgroundColor = PrimaryBackgroundColorLight,
+    secondaryBackgroundColor = SecondaryBackgroundColorLight,
     backgroundSocialButtonColor = BackgroundSocialButtonColorLight,
     textFieldBackgroundColor = TextFieldBackgroundColorLight,
     alphaDefaultColor = AlphaDefaultColor,
@@ -27,7 +28,7 @@ private val LightColorScheme = MyColorScheme(
     switchInactiveBackgroundColor = SwitchInactiveBackgroundColorLight,
     switchActiveBackgroundColor = SwitchInactiveBackgroundColorLight,
     successColor = SuccessColor,
-    errorColor = ErrorColor,
+    alertColor = AlertColor,
     warningColor = WarningColor,
     infoColor = InfoColor,
     disabledColor = DisabledColor,
@@ -43,13 +44,16 @@ private val LightColorScheme = MyColorScheme(
     greyscale50Color = Greyscale50Color,
     whiteColor = WhiteColor,
     blackColor = BlackColor,
-    transparentColor = TransparentColor
+    transparentColor = TransparentColor,
+    spotColor = SpotColor,
+    ambientColor = AmbientColor
 )
 
 private val DarkColorScheme = MyColorScheme(
     defaultColor = DefaultColor,
     disabledDefaultColor = DisabledDefaultColor,
-    backgroundColor = BackgroundColorDark,
+    primaryBackgroundColor = PrimaryBackgroundColorDark,
+    secondaryBackgroundColor = SecondaryBackgroundColorDark,
     backgroundSocialButtonColor = BackgroundSocialButtonColorDark,
     textFieldBackgroundColor = TextFieldBackgroundColorDark,
     alphaDefaultColor = AlphaDefaultColor,
@@ -63,7 +67,7 @@ private val DarkColorScheme = MyColorScheme(
     switchInactiveBackgroundColor = SwitchInactiveBackgroundColorDark,
     switchActiveBackgroundColor = SwitchInactiveBackgroundColorDark,
     successColor = SuccessColor,
-    errorColor = ErrorColor,
+    alertColor = AlertColor,
     warningColor = WarningColor,
     infoColor = InfoColor,
     disabledColor = DisabledColor,
@@ -79,7 +83,9 @@ private val DarkColorScheme = MyColorScheme(
     greyscale50Color = Greyscale50Color,
     whiteColor = WhiteColor,
     blackColor = BlackColor,
-    transparentColor = TransparentColor
+    transparentColor = TransparentColor,
+    spotColor = SpotColor,
+    ambientColor = AmbientColor
 )
 
 private val LocalColorScheme = compositionLocalOf { LightColorScheme }

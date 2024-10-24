@@ -47,7 +47,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.button.SocialButton
@@ -134,7 +133,7 @@ private fun SignupContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MovieStreamingTheme.colorScheme.backgroundColor)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
                     .verticalScroll(rememberScrollState())
                     .padding(paddingValues)
                     .padding(horizontal = 24.dp, vertical = 48.dp),

@@ -7,9 +7,13 @@ val DefaultColor = Color(0xFFE21221)
 val DisabledDefaultColor = Color(0xFFC1232F)
 val AlphaDefaultColor = Color(0x14E21221)
 
-// Background
-val BackgroundColorLight = Color(0xFFFFFFFF)
-val BackgroundColorDark = Color(0xFF181A20)
+// Background - Primary
+val PrimaryBackgroundColorLight = Color(0xFFFFFFFF)
+val PrimaryBackgroundColorDark = Color(0xFF181A20)
+
+// Background - Secondary
+val SecondaryBackgroundColorLight = Color(0xFFFFFFFF)
+val SecondaryBackgroundColorDark = Color(0xFF1F222A)
 
 // Text
 val TextColorLight = Color(0xFF212121)
@@ -20,7 +24,7 @@ val IconColorLight = Color(0xFF212121)
 val IconColorDark = Color(0xFFFFFFFF)
 
 // Button -> Background
-val SecondaryButtonColorLight = Color(0x14E21221)
+val SecondaryButtonColorLight = Color(0xFFFCE7E9)
 val SecondaryButtonColorDark = Color(0xFF35383F)
 
 // Button -> Text
@@ -55,7 +59,7 @@ val SwitchInactiveBackgroundColorDark = Color(0xFF35383F)
 val SuccessColor = Color(0xFF4AAF57)
 val InfoColor = Color(0xFF246BFD)
 val WarningColor = Color(0xFFFF981F)
-val ErrorColor = Color(0xFFF75555)
+val AlertColor = Color(0xFFF75555)
 val DisabledColor = Color(0xFFD8D8D8)
 
 // Greyscale
@@ -74,3 +78,5 @@ val Greyscale50Color = Color(0xFFFAFAFA)
 val WhiteColor = Color(0xFFFFFFFF)
 val BlackColor = Color(0xFF000000)
 val TransparentColor = Color(0x00000000)
+val SpotColor = Color(0x40E21221)
+val AmbientColor = Color(0x40E21221)

@@ -38,7 +38,7 @@ fun FeedbackUI(
         SUCCESS -> MovieStreamingTheme.colorScheme.successColor
         INFO -> MovieStreamingTheme.colorScheme.infoColor
         WARNING -> MovieStreamingTheme.colorScheme.warningColor
-        ERROR -> MovieStreamingTheme.colorScheme.errorColor
+        ERROR -> MovieStreamingTheme.colorScheme.alertColor
     }
 
     Card(
@@ -83,7 +83,7 @@ private fun FeedbackUIPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MovieStreamingTheme.colorScheme.backgroundColor),
+                .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

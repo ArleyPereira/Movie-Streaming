@@ -1,6 +1,5 @@
 package br.com.hellodev.moviestreaming.presenter.screens.main.account.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -11,11 +10,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,10 +33,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.*
 import br.com.hellodev.moviestreaming.domain.remote.model.User
-import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
+import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
+import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.logout.BottomSheetLogout
 import br.com.hellodev.moviestreaming.presenter.components.header.HeaderScreen
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.menu.MenuItemDarkModeUI
@@ -42,6 +48,7 @@ import br.com.hellodev.moviestreaming.presenter.screens.main.account.state.Accou
 import br.com.hellodev.moviestreaming.presenter.screens.main.account.viewmodel.AccountViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -68,12 +75,17 @@ fun AccountScreen() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AccountContent(
     state: AccountState,
     action: (AccountAction) -> Unit,
     onItemClick: (MenuItems) -> Unit
 ) {
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             HeaderScreen(
@@ -86,7 +98,7 @@ private fun AccountContent(
                 title = R.string.label_account_bottom_app_bar
             )
         },
-        containerColor = MovieStreamingTheme.colorScheme.backgroundColor,
+        containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
         content = { paddingValues ->
             LazyColumn(
                 modifier = Modifier
@@ -169,11 +181,42 @@ private fun AccountContent(
                             MenuItemUI(
                                 icon = item.icon,
                                 label = item.label,
-                                onClick = { onItemClick(item) }
+                                onClick = {
+                                    if (item.type == LOGOUT) {
+                                        showBottomSheet = true
+                                    } else {
+                                        onItemClick(item)
+                                    }
+                                }
                             )
                         }
                     }
                 }
+            }
+
+            if (showBottomSheet) {
+                ModalBottomSheet(
+                    onDismissRequest = {
+                        showBottomSheet = false
+                    },
+                    sheetState = sheetState,
+                    containerColor = MovieStreamingTheme.colorScheme.secondaryBackgroundColor,
+                    dragHandle = {
+                        DragBottomSheet()
+                    },
+                    content = {
+                        BottomSheetLogout(
+                            onCancelClick = {
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) {
+                                        showBottomSheet = false
+                                    }
+                                }
+                            },
+                            onConfirmClick = {}
+                        )
+                    }
+                )
             }
         }
     )

@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.hellodev.moviestreaming.core.navigation.hosts.bar.BottomAppBarNavHost
-import br.com.hellodev.moviestreaming.presenter.components.bar.BottomBarUI
+import br.com.hellodev.moviestreaming.presenter.components.bottom.bar.BottomBarUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 
 @Composable
@@ -42,7 +42,7 @@ private fun AppContent() {
         content = { paddingValues ->
             BottomAppBarNavHost(
                 modifier = Modifier
-                    .background(MovieStreamingTheme.colorScheme.backgroundColor)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
                     .padding(paddingValues),
                 navHostController = navController
             )
