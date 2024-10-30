@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import br.com.hellodev.moviestreaming.core.navigation.hosts.app.appNavHost
 import br.com.hellodev.moviestreaming.core.navigation.routes.app.AppRoutes
 import br.com.hellodev.moviestreaming.core.navigation.routes.authentication.AuthenticationRoutes
 import br.com.hellodev.moviestreaming.presenter.screens.authentication.home.HomeAuthenticationScreen
@@ -55,7 +54,5 @@ fun NavGraphBuilder.authenticationNavHost(navHostController: NavHostController) 
                 }
             )
         }
-
-        appNavHost()
     }
 }

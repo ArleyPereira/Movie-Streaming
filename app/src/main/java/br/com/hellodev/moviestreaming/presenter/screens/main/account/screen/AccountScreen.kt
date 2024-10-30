@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.*
 import br.com.hellodev.moviestreaming.domain.remote.model.User
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
@@ -52,15 +53,17 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccountScreen() {
+fun AccountScreen(
+    navigateToHomeAuthentication: () -> Unit
+) {
     val viewModel = koinViewModel<AccountViewModel>()
     val state by viewModel.state.collectAsState()
 
     AccountContent(
         state = state,
         action = viewModel::submitAction,
-        onItemClick = { menu ->
-            when (menu.type) {
+        onItemClick = { type ->
+            when (type) {
                 EDIT_PROFILE -> {}
                 NOTIFICATION -> {}
                 DOWNLOAD -> {}
@@ -69,7 +72,10 @@ fun AccountScreen() {
                 DARK_MODE -> {}
                 HELP_CENTER -> {}
                 PRIVACY_POLICY -> {}
-                LOGOUT -> {}
+                LOGOUT -> {
+                    viewModel.submitAction(AccountAction.Logout)
+                    navigateToHomeAuthentication()
+                }
             }
         }
     )
@@ -80,7 +86,7 @@ fun AccountScreen() {
 private fun AccountContent(
     state: AccountState,
     action: (AccountAction) -> Unit,
-    onItemClick: (MenuItems) -> Unit
+    onItemClick: (MenuType) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -164,7 +170,7 @@ private fun AccountContent(
                             MenuItemLanguageUI(
                                 icon = item.icon,
                                 label = item.label,
-                                onClick = { onItemClick(item) }
+                                onClick = { onItemClick(item.type) }
                             )
                         }
 
@@ -173,7 +179,7 @@ private fun AccountContent(
                                 icon = item.icon,
                                 label = item.label,
                                 isDarkMode = false,
-                                onCheckedChange = { onItemClick(item) }
+                                onCheckedChange = { onItemClick(item.type) }
                             )
                         }
 
@@ -185,7 +191,7 @@ private fun AccountContent(
                                     if (item.type == LOGOUT) {
                                         showBottomSheet = true
                                     } else {
-                                        onItemClick(item)
+                                        onItemClick(item.type)
                                     }
                                 }
                             )
@@ -213,7 +219,10 @@ private fun AccountContent(
                                     }
                                 }
                             },
-                            onConfirmClick = {}
+                            onConfirmClick = {
+                                showBottomSheet = false
+                                onItemClick(LOGOUT)
+                            }
                         )
                     }
                 )

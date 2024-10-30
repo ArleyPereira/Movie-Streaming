@@ -2,9 +2,11 @@ package br.com.hellodev.moviestreaming.presenter.screens.main.account.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
 import br.com.hellodev.moviestreaming.presenter.screens.main.account.action.AccountAction
 import br.com.hellodev.moviestreaming.presenter.screens.main.account.state.AccountState
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -21,6 +23,11 @@ class AccountViewModel(
     }
 
     fun submitAction(action: AccountAction) {
+        when (action) {
+            AccountAction.Logout -> {
+                logout()
+            }
+        }
     }
 
     private fun getUser() {
@@ -32,6 +39,10 @@ class AccountViewModel(
                 isLoading = false
             )
         }
+    }
+
+    private fun logout() {
+        FirebaseHelper.getAuth().signOut()
     }
 
 }

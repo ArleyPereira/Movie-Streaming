@@ -15,7 +15,8 @@ import br.com.hellodev.moviestreaming.presenter.screens.main.search.screen.Searc
 @Composable
 fun BottomAppBarNavHost(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    navigateToHomeAuthentication: () -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -39,7 +40,9 @@ fun BottomAppBarNavHost(
         }
 
         composable<BottomAppBarRoutes.Account> {
-            AccountScreen()
+            AccountScreen(
+                navigateToHomeAuthentication = navigateToHomeAuthentication
+            )
         }
     }
 }

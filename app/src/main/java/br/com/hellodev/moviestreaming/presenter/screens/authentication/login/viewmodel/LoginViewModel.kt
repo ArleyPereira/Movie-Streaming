@@ -46,13 +46,17 @@ class LoginViewModel(
     private fun onSignIn() {
         viewModelScope.launch {
             try {
+                _state.update { currentState ->
+                    currentState.copy(isLoading = true)
+                }
+
                 loginUseCase(
                     email = _state.value.email,
                     password = _state.value.password
                 )
 
                 _state.update { currentState ->
-                    currentState.copy(isAuthenticated = true)
+                    currentState.copy(isLoading = false, isAuthenticated = true)
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
@@ -60,6 +64,7 @@ class LoginViewModel(
                 _state.update { currentState ->
                     currentState.copy(
                         hasFeedback = true,
+                        isLoading = false,
                         feedbackUI = Pair(
                             FeedbackType.ERROR,
                             FirebaseHelper.validError(exception.message)
