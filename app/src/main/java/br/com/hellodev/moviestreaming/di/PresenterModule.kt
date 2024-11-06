@@ -1,65 +1,38 @@
 package br.com.hellodev.moviestreaming.di
 
-import br.com.hellodev.moviestreaming.presenter.screens.authentication.login.viewmodel.LoginViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.authentication.signup.viewmodel.SignupViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.main.account.viewmodel.AccountViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.main.download.viewModel.DownloadViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.main.favorite.viewmodel.FavoriteViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.main.home.viewmodel.HomeViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.main.search.viewmodel.SearchViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.splash.viewmodel.SplashViewModel
-import br.com.hellodev.moviestreaming.presenter.screens.welcome.viewmodel.WelcomeViewModel
-import org.koin.core.module.dsl.viewModel
+import br.com.hellodev.moviestreaming.presenter.features.authentication.login.viewmodel.LoginViewModel
+import br.com.hellodev.moviestreaming.presenter.features.authentication.signup.viewmodel.SignupViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.account.viewmodel.AccountViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.download.viewModel.DownloadViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.favorite.viewmodel.FavoriteViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.home.viewmodel.HomeViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.search.viewmodel.SearchViewModel
+import br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel.EditProfileViewModel
+import br.com.hellodev.moviestreaming.presenter.features.splash.viewmodel.SplashViewModel
+import br.com.hellodev.moviestreaming.presenter.features.welcome.viewmodel.WelcomeViewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val presenterModule = module {
 
-    viewModel {
-        SignupViewModel(
-            registerUseCase = get(),
-            saveUserUseCase = get()
-        )
-    }
+    viewModelOf(::SignupViewModel)
 
-    viewModel {
-        LoginViewModel(
-            loginUseCase = get()
-        )
-    }
+    viewModelOf(::LoginViewModel)
 
-    viewModel {
-        WelcomeViewModel(
-            appPreferences = get()
-        )
-    }
+    viewModelOf(::WelcomeViewModel)
 
-    viewModel {
-        SplashViewModel(
-            appPreferences = get()
-        )
-    }
+    viewModelOf(::SplashViewModel)
 
-    viewModel {
-        HomeViewModel()
-    }
+    viewModelOf(::HomeViewModel)
 
-    viewModel {
-        SearchViewModel()
-    }
+    viewModelOf(::SearchViewModel)
 
-    viewModel {
-        FavoriteViewModel()
-    }
+    viewModelOf(::FavoriteViewModel)
 
-    viewModel {
-        DownloadViewModel()
-    }
+    viewModelOf(::DownloadViewModel)
 
-    viewModel {
-        AccountViewModel(
-            getUserUseCase = get()
-        )
-    }
+    viewModelOf(::AccountViewModel)
 
+    viewModelOf(::EditProfileViewModel)
 
 }

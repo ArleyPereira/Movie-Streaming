@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import br.com.hellodev.moviestreaming.core.navigation.routes.app.AppRoutes
-import br.com.hellodev.moviestreaming.presenter.screens.app.AppScreen
+import br.com.hellodev.moviestreaming.presenter.features.app.AppScreen
 
 fun NavGraphBuilder.appNavHost(
     navigateToHomeAuthentication: () -> Unit

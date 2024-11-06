@@ -9,8 +9,8 @@ import br.com.hellodev.moviestreaming.core.navigation.hosts.authentication.authe
 import br.com.hellodev.moviestreaming.core.navigation.routes.app.AppRoutes
 import br.com.hellodev.moviestreaming.core.navigation.routes.authentication.AuthenticationRoutes
 import br.com.hellodev.moviestreaming.core.navigation.routes.onboarding.OnboardingRoutes
-import br.com.hellodev.moviestreaming.presenter.screens.splash.screen.SplashScreen
-import br.com.hellodev.moviestreaming.presenter.screens.welcome.screen.WelcomeScreen
+import br.com.hellodev.moviestreaming.presenter.features.splash.screen.SplashScreen
+import br.com.hellodev.moviestreaming.presenter.features.welcome.screen.WelcomeScreen
 
 @Composable
 fun OnboardingNavHost(navHostController: NavHostController) {
