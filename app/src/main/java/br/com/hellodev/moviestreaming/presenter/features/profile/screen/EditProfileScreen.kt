@@ -75,8 +75,8 @@ private fun EditProfileContent(
             ) {
                 ImageUI(
                     modifier = Modifier
-                        .size(120.dp),
-                    imageModel = "https://wwww.google.com.br",
+                        .size(140.dp),
+                    imageModel = null,
                     contentScale = ContentScale.Crop,
                     previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
                     shape = CircleShape,
@@ -144,10 +144,8 @@ private fun EditProfileContent(
                     }
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
-
                 PrimaryButton(
-                    text = "Continuar",
+                    text = stringResource(R.string.label_button_update_edit_profile_screen),
                     isLoading = false,
                     enabled = true,
                     onClick = {}
