@@ -5,7 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import br.com.hellodev.moviestreaming.core.navigation.hosts.profile.profileNavHost
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
+import br.com.hellodev.moviestreaming.core.navigation.routes.profile.ProfileRoutes
 import br.com.hellodev.moviestreaming.presenter.features.main.account.screen.AccountScreen
 import br.com.hellodev.moviestreaming.presenter.features.main.download.screen.DownloadScreen
 import br.com.hellodev.moviestreaming.presenter.features.main.favorite.screen.FavoriteScreen
@@ -41,8 +43,13 @@ fun BottomAppBarNavHost(
 
         composable<BottomAppBarRoutes.Account> {
             AccountScreen(
-                navigateToHomeAuthentication = navigateToHomeAuthentication
+                navigateToHomeAuthentication = navigateToHomeAuthentication,
+                navigateToEditProfileScreen = {
+                    navHostController.navigate(ProfileRoutes.EditProfile)
+                }
             )
         }
+
+        profileNavHost(navHostController = navHostController)
     }
 }

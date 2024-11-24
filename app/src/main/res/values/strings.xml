@@ -59,6 +59,16 @@
     <string name="label_privacy_policy_account_screen">Política de privacidade</string>
     <string name="label_logout_account_screen">Sair</string>
 
+    <!--    EditProfileScreen-->
+    <string name="label_title_edit_profile_screen">Editar perfil</string>
+    <string name="label_input_first_name_edit_profile_screen">Nome</string>
+    <string name="label_input_surname_edit_profile_screen">Sobrenome</string>
+    <string name="label_input_email_edit_profile_screen">E-mail</string>
+    <string name="label_input_phone_edit_profile_screen">Telefone</string>
+    <string name="label_input_genre_edit_profile_screen">Gênero</string>
+    <string name="label_input_pais_edit_profile_screen">País</string>
+    <string name="label_button_update_edit_profile_screen">Atualizar</string>
+
     <!--    BottomSheetLogout-->
     <string name="label_title_bottom_sheet_logout">Sair</string>
     <string name="label_message_bottom_sheet_logout">Tem certeza de que deseja sair?</string>
