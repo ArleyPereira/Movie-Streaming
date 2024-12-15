@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
@@ -85,18 +87,18 @@ private fun EditProfileContent(
                 )
 
                 TextFieldUI(
-                    value = "",
+                    value = state.name,
                     placeholder = stringResource(R.string.label_input_first_name_edit_profile_screen),
                     onValueChange = {
-
+                        action(EditProfileAction.OnNameChanged(it))
                     }
                 )
 
                 TextFieldUI(
-                    value = "",
+                    value = state.surname,
                     placeholder = stringResource(R.string.label_input_surname_edit_profile_screen),
                     onValueChange = {
-
+                        action(EditProfileAction.OnSurnameChanged(it))
                     }
                 )
 
@@ -121,10 +123,13 @@ private fun EditProfileContent(
                 )
 
                 TextFieldUI(
-                    value = "",
+                    value = state.phone,
                     placeholder = stringResource(R.string.label_input_phone_edit_profile_screen),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Phone
+                    ),
                     onValueChange = {
-
+                        action(EditProfileAction.OnPhoneChanged(it))
                     }
                 )
 
