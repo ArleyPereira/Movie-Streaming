@@ -46,6 +46,7 @@ fun TextFieldUI(
     enabled: Boolean = true,
     isError: Boolean = false,
     singleLine: Boolean = false,
+    maxLength: Int = Int.MAX_VALUE,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     requireKeyboardFocus: Boolean = false,
@@ -66,8 +67,16 @@ fun TextFieldUI(
         CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
             TextField(
                 value = value,
-                onValueChange = {
-                    onValueChange(it)
+                onValueChange = { value ->
+                    val filteredValue = when (visualTransformation) {
+                        VisualTransformation.None -> value
+
+                        else -> value.filter { it.isDigit() }
+                    }
+
+                    if (filteredValue.length <= maxLength) {
+                        onValueChange(filteredValue)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
