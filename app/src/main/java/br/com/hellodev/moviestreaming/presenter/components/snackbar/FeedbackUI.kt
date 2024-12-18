@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +35,7 @@ fun FeedbackUI(
     message: String,
     type: FeedbackType
 ) {
-    val defaultColor = when (type) {
+    val containerColor = when (type) {
         SUCCESS -> MovieStreamingTheme.colorScheme.successColor
         INFO -> MovieStreamingTheme.colorScheme.infoColor
         WARNING -> MovieStreamingTheme.colorScheme.warningColor
@@ -47,7 +48,7 @@ fun FeedbackUI(
             .padding(16.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = defaultColor.copy(alpha = 0.2f)
+            containerColor = containerColor
         )
     ) {
         Row(
@@ -59,7 +60,7 @@ fun FeedbackUI(
             Icon(
                 painter = painterResource(R.drawable.ic_info),
                 contentDescription = message,
-                tint = defaultColor
+                tint = MovieStreamingTheme.colorScheme.whiteColor
             )
 
             Spacer(modifier = Modifier.width(6.dp))
@@ -68,7 +69,7 @@ fun FeedbackUI(
                 text = message,
                 style = TextStyle(
                     fontFamily = UrbanistFamily,
-                    color = defaultColor,
+                    color = MovieStreamingTheme.colorScheme.whiteColor,
                     letterSpacing = 0.2.sp
                 )
             )

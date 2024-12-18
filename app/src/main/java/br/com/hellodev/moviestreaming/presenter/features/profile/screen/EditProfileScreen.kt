@@ -27,6 +27,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.enums.input.InputType
+import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
@@ -90,6 +92,8 @@ private fun EditProfileContent(
 
                 TextFieldUI(
                     value = state.name,
+                    isError = state.inputError == InputType.FIRST_NAME,
+                    error = stringResource(inputErrorMessage(InputType.FIRST_NAME)),
                     placeholder = stringResource(R.string.label_input_first_name_edit_profile_screen),
                     onValueChange = {
                         action(EditProfileAction.OnNameChanged(it))
@@ -98,6 +102,8 @@ private fun EditProfileContent(
 
                 TextFieldUI(
                     value = state.surname,
+                    isError = state.inputError == InputType.SURNAME,
+                    error = stringResource(inputErrorMessage(InputType.SURNAME)),
                     placeholder = stringResource(R.string.label_input_surname_edit_profile_screen),
                     onValueChange = {
                         action(EditProfileAction.OnSurnameChanged(it))
@@ -126,6 +132,8 @@ private fun EditProfileContent(
 
                 TextFieldUI(
                     value = state.phone,
+                    isError = state.inputError == InputType.PHONE,
+                    error = stringResource(inputErrorMessage(InputType.PHONE)),
                     placeholder = stringResource(R.string.label_input_phone_edit_profile_screen),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Phone
@@ -157,7 +165,7 @@ private fun EditProfileContent(
                     text = stringResource(R.string.label_button_update_edit_profile_screen),
                     isLoading = false,
                     enabled = true,
-                    onClick = {}
+                    onClick = { action(EditProfileAction.Update) }
                 )
             }
         }

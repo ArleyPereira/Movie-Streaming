@@ -11,6 +11,11 @@
     <!--    Generic-->
     <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
 
+    <!--    Invalid Input Error-->
+    <string name="error_first_name_invalid">Insira um nome válido</string>
+    <string name="error_surname_invalid">Insira um sobrenome válido</string>
+    <string name="error_phone_invalid">Insira um telefone válido</string>
+
     <!--    Firebase Authentication-->
     <string name="email_in_use_firebase_authentication">Este e-mail já está em uso.</string>
     <string name="strong_password_firebase_authentication">Insira uma senha mais forte.</string>

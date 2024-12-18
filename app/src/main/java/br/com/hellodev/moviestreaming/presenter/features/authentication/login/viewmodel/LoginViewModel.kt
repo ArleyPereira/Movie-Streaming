@@ -84,6 +84,8 @@ class LoginViewModel(
             PASSWORD -> {
                 onPasswordChange(value)
             }
+
+            else -> {}
         }
 
         enabledSignInButton()
