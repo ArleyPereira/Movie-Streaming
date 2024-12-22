@@ -52,7 +52,7 @@ import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.button.SocialButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerWithText
 import br.com.hellodev.moviestreaming.presenter.components.snackbar.FeedbackUI
-import br.com.hellodev.moviestreaming.presenter.components.textfield.TextFieldUI
+import br.com.hellodev.moviestreaming.presenter.components.textfield.default.TextFieldUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.features.authentication.signup.action.SignupAction
 import br.com.hellodev.moviestreaming.presenter.features.authentication.signup.state.SignupState

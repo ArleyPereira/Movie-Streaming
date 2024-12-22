@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.presenter.components.textfield
+package br.com.hellodev.moviestreaming.presenter.components.textfield.default
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

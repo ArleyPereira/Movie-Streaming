@@ -15,6 +15,8 @@
     <string name="error_first_name_invalid">Insira um nome válido</string>
     <string name="error_surname_invalid">Insira um sobrenome válido</string>
     <string name="error_phone_invalid">Insira um telefone válido</string>
+    <string name="error_genre_invalid">Insira um gênero válido</string>
+    <string name="error_country_invalid">Insira um país válido</string>
 
     <!--    Firebase Authentication-->
     <string name="email_in_use_firebase_authentication">Este e-mail já está em uso.</string>
@@ -71,7 +73,7 @@
     <string name="label_input_email_edit_profile_screen">E-mail</string>
     <string name="label_input_phone_edit_profile_screen">Telefone</string>
     <string name="label_input_genre_edit_profile_screen">Gênero</string>
-    <string name="label_input_pais_edit_profile_screen">País</string>
+    <string name="label_input_country_edit_profile_screen">País</string>
     <string name="label_button_update_edit_profile_screen">Atualizar</string>
 
     <!--    BottomSheetLogout-->

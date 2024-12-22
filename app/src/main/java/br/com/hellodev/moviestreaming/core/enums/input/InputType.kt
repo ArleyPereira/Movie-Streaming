@@ -5,5 +5,7 @@ enum class InputType {
     SURNAME,
     PHONE,
     EMAIL,
-    PASSWORD
+    PASSWORD,
+    GENRE,
+    COUNTRY
 }

@@ -7,6 +7,8 @@ data class EditProfileState(
     val name: String = "",
     val surname: String = "",
     val phone: String = "",
+    val genre: String = "",
+    val country: String = "",
     val hasFeedback: Boolean = false,
     val inputError: InputType? = null
 )
