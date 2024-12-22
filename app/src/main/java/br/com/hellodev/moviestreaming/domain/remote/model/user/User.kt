@@ -1,4 +1,4 @@
-package br.com.hellodev.moviestreaming.domain.remote.model
+package br.com.hellodev.moviestreaming.domain.remote.model.user
 
 data class User(
     val id: String? = null,

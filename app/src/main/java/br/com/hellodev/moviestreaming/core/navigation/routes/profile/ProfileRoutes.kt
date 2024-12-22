@@ -10,4 +10,7 @@ sealed class ProfileRoutes {
     @Serializable
     data object EditProfile : ProfileRoutes()
 
+    @Serializable
+    data object Genre : ProfileRoutes()
+
 }

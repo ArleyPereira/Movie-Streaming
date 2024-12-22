@@ -1,11 +1,8 @@
 package br.com.hellodev.moviestreaming.data.remote.repository.user
 
 import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
-import br.com.hellodev.moviestreaming.domain.remote.model.User
+import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.domain.remote.repository.user.UserRepository
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import kotlin.coroutines.suspendCoroutine
 
 class UserRepositoryImpl : UserRepository {

@@ -1,10 +1,15 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -31,6 +36,7 @@ import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
+import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.click.TextFieldClickUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.default.TextFieldUI
@@ -43,6 +49,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EditProfileScreen(
+    navigateToGenreScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
     val viewModel = koinViewModel<EditProfileViewModel>()
@@ -51,6 +58,7 @@ fun EditProfileScreen(
     EditProfileContent(
         state = state,
         action = viewModel::submitAction,
+        navigateToGenreScreen = navigateToGenreScreen,
         onBackPressed = onBackPressed
     )
 }
@@ -59,6 +67,7 @@ fun EditProfileScreen(
 private fun EditProfileContent(
     state: EditProfileState,
     action: (EditProfileAction) -> Unit,
+    navigateToGenreScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
     Scaffold(
@@ -67,6 +76,30 @@ private fun EditProfileContent(
                 title = stringResource(R.string.label_title_edit_profile_screen),
                 onClick = onBackPressed
             )
+        },
+        bottomBar = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
+            ) {
+                HorizontalDividerUI()
+
+                PrimaryButton(
+                    modifier = Modifier
+                        .padding(
+                            start = 24.dp,
+                            end = 24.dp,
+                            top = 24.dp,
+                            bottom = 32.dp
+                        ),
+                    text = stringResource(R.string.label_button_update_edit_profile_screen),
+                    isLoading = false,
+                    enabled = true,
+                    onClick = { action(EditProfileAction.Update) }
+                )
+            }
         },
         containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
         content = { paddingValues ->
@@ -157,9 +190,7 @@ private fun EditProfileContent(
                     painter = painterResource(id = R.drawable.ic_right),
                     isError = state.inputError == InputType.GENRE,
                     error = stringResource(inputErrorMessage(InputType.GENRE)),
-                    onClick = {
-
-                    }
+                    onClick = navigateToGenreScreen
                 )
 
                 TextFieldClickUI(
@@ -169,13 +200,6 @@ private fun EditProfileContent(
                     isError = state.inputError == InputType.COUNTRY,
                     error = stringResource(inputErrorMessage(InputType.COUNTRY)),
                     onClick = {}
-                )
-
-                PrimaryButton(
-                    text = stringResource(R.string.label_button_update_edit_profile_screen),
-                    isLoading = false,
-                    enabled = true,
-                    onClick = { action(EditProfileAction.Update) }
                 )
             }
         }
@@ -189,6 +213,7 @@ private fun EditProfile() {
         EditProfileContent(
             state = EditProfileState(),
             action = {},
+            navigateToGenreScreen = {},
             onBackPressed = {}
         )
     }

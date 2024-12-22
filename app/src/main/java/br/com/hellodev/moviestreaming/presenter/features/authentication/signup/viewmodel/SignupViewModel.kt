@@ -8,7 +8,7 @@ import br.com.hellodev.moviestreaming.core.enums.input.InputType.EMAIL
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.PASSWORD
 import br.com.hellodev.moviestreaming.core.functions.isValidEmail
 import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
-import br.com.hellodev.moviestreaming.domain.remote.model.User
+import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.RegisterUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveUserUseCase
 import br.com.hellodev.moviestreaming.presenter.features.authentication.signup.action.SignupAction

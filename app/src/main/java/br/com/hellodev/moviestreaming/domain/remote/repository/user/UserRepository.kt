@@ -1,6 +1,6 @@
 package br.com.hellodev.moviestreaming.domain.remote.repository.user
 
-import br.com.hellodev.moviestreaming.domain.remote.model.User
+import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 
 interface UserRepository {
 

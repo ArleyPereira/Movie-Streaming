@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.*
-import br.com.hellodev.moviestreaming.domain.remote.model.User
+import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.logout.BottomSheetLogout
 import br.com.hellodev.moviestreaming.presenter.components.header.HeaderScreen
