@@ -32,24 +32,25 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GenreScreen(
+    onGenreSelected: (Genre?) -> Unit,
     onBackPressed: () -> Unit
 ) {
-
     val viewModel = koinViewModel<GenreViewModel>()
     val state by viewModel.state.collectAsState()
 
     GenreContent(
         state = state,
         action = viewModel::submitAction,
+        onGenreSelected = onGenreSelected,
         onBackPressed = onBackPressed
     )
-
 }
 
 @Composable
 fun GenreContent(
     state: GenreState,
     action: (GenreAction) -> Unit,
+    onGenreSelected: (Genre?) -> Unit,
     onBackPressed: () -> Unit
 ) {
     Scaffold(
@@ -78,7 +79,7 @@ fun GenreContent(
                         ),
                     text = "Selecionar",
                     enabled = state.selectedGenre != null,
-                    onClick = { }
+                    onClick = { onGenreSelected(state.selectedGenre) }
                 )
             }
         },
@@ -115,9 +116,10 @@ private fun GenrePreview() {
     MovieStreamingTheme {
         GenreContent(
             state = GenreState(
-                genres = Genre.genres
+                genres = Genre.items
             ),
             action = {},
+            onGenreSelected = {},
             onBackPressed = {}
         )
     }

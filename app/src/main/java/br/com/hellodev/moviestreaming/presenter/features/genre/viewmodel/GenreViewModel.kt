@@ -36,7 +36,7 @@ class GenreViewModel : ViewModel() {
     private fun getGenres() {
         viewModelScope.launch {
             _state.update { currentState ->
-                currentState.copy(genres = Genre.genres)
+                currentState.copy(genres = Genre.items)
             }
         }
     }

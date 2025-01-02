@@ -6,6 +6,7 @@ import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.functions.isValidName
 import br.com.hellodev.moviestreaming.core.functions.isValidPhone
 import br.com.hellodev.moviestreaming.presenter.features.profile.action.EditProfileAction
+import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditProfileParameter
 import br.com.hellodev.moviestreaming.presenter.features.profile.state.EditProfileState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,11 +36,8 @@ class EditProfileViewModel : ViewModel() {
                 onSurnameChanged(surname = action.surname)
             }
 
-            is EditProfileAction.OnCountryChanged -> {
-                onCountryChanged(country = action.country)
-            }
-            is EditProfileAction.OnGenreChanged -> {
-                onGenreChanged(genre = action.genre)
+            is EditProfileAction.SetOnBackResult -> {
+                setOnBackResult(parameter = action.parameter)
             }
         }
     }
@@ -58,7 +56,7 @@ class EditProfileViewModel : ViewModel() {
     private fun onNameChanged(name: String) {
         _state.update { currentState ->
             currentState.copy(
-                name = name,
+                name = name.trim(),
                 inputError = null
             )
         }
@@ -67,7 +65,7 @@ class EditProfileViewModel : ViewModel() {
     private fun onSurnameChanged(surname: String) {
         _state.update { currentState ->
             currentState.copy(
-                surname = surname,
+                surname = surname.trim(),
                 inputError = null
             )
         }
@@ -82,21 +80,25 @@ class EditProfileViewModel : ViewModel() {
         }
     }
 
-    private fun onGenreChanged(genre: String) {
-        _state.update { currentState ->
-            currentState.copy(
-                genre = genre,
-                inputError = null
-            )
+    private fun setOnBackResult(parameter: EditProfileParameter) {
+        parameter.genre?.let {
+            _state.update { currentState ->
+                currentState.copy(genre = it)
+            }
         }
+
+        parameter.country?.let {
+            _state.update { currentState ->
+                currentState.copy(country = it)
+            }
+        }
+
+        clearError()
     }
 
-    private fun onCountryChanged(country: String) {
+    private fun clearError() {
         _state.update { currentState ->
-            currentState.copy(
-                country = country,
-                inputError = null
-            )
+            currentState.copy(inputError = null)
         }
     }
 
@@ -105,8 +107,8 @@ class EditProfileViewModel : ViewModel() {
             !isValidName(_state.value.name) -> InputType.FIRST_NAME
             !isValidName(_state.value.surname) -> InputType.SURNAME
             !isValidPhone(_state.value.phone) -> InputType.PHONE
-            _state.value.genre.isEmpty() -> InputType.GENRE
-            _state.value.country.isEmpty() -> InputType.COUNTRY
+            _state.value.genre == null -> InputType.GENRE
+            _state.value.country == null -> InputType.COUNTRY
             else -> null
         }
 
@@ -119,8 +121,8 @@ class EditProfileViewModel : ViewModel() {
         val name = isValidName(_state.value.name)
         val surname = isValidName(_state.value.surname)
         val phone = isValidPhone(_state.value.phone)
-        val genre = _state.value.genre.isNotEmpty()
-        val country = _state.value.country.isNotEmpty()
+        val genre = _state.value.genre != null
+        val country = _state.value.country != null
 
         return name && surname && phone && genre && country
     }
