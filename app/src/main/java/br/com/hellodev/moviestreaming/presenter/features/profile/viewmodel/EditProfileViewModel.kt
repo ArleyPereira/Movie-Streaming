@@ -2,10 +2,14 @@ package br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.functions.isValidName
 import br.com.hellodev.moviestreaming.core.functions.isValidPhone
+import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveUserUseCase
 import br.com.hellodev.moviestreaming.presenter.features.profile.action.EditProfileAction
 import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditProfileParameter
 import br.com.hellodev.moviestreaming.presenter.features.profile.state.EditProfileState
@@ -15,7 +19,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class EditProfileViewModel(
-    private val getUserUseCase: GetUserUseCase
+    private val getUserUseCase: GetUserUseCase,
+    private val saveUserUseCase: SaveUserUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(EditProfileState())
@@ -46,13 +51,17 @@ class EditProfileViewModel(
             is EditProfileAction.SetOnBackResult -> {
                 setOnBackResult(parameter = action.parameter)
             }
+
+            is EditProfileAction.ClearFeedback -> {
+                clearFeedback()
+            }
         }
     }
 
     private fun getUser() {
         viewModelScope.launch {
             _state.update { currentState ->
-                currentState.copy(isLoading = true)
+                currentState.copy(isLoadingScreen = true)
             }
 
             val user = getUserUseCase()
@@ -65,7 +74,7 @@ class EditProfileViewModel(
                     phone = user.phone ?: "",
                     genre = user.genre ?: "",
                     country = user.country ?: "",
-                    isLoading = false
+                    isLoadingScreen = false
                 )
             }
         }
@@ -78,7 +87,31 @@ class EditProfileViewModel(
                 return@launch
             }
 
-            // Salvar esses dados no firebase
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
+            val user = User(
+                name = _state.value.name,
+                surname = _state.value.surname,
+                email = _state.value.email,
+                phone = _state.value.phone,
+                genre = _state.value.genre,
+                country = _state.value.country
+            )
+
+            saveUserUseCase(user = user)
+
+            _state.update { currentState ->
+                currentState.copy(
+                    hasFeedback = true,
+                    isLoading = false,
+                    feedbackUI = Pair(
+                        FeedbackType.SUCCESS,
+                        R.string.success_save_user_generic
+                    )
+                )
+            }
         }
     }
 
@@ -154,6 +187,12 @@ class EditProfileViewModel(
         val country = _state.value.country != null
 
         return name && surname && phone && genre && country
+    }
+
+    private fun clearFeedback() {
+        _state.update { currentState ->
+            currentState.copy(hasFeedback = false, feedbackUI = null)
+        }
     }
 
 }

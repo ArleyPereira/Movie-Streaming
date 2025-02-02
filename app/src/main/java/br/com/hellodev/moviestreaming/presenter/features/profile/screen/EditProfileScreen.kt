@@ -17,13 +17,20 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -41,6 +48,7 @@ import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.loading.LoadingScreenUI
+import br.com.hellodev.moviestreaming.presenter.components.snackbar.FeedbackUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.click.TextFieldClickUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.default.TextFieldUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
@@ -49,6 +57,7 @@ import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditP
 import br.com.hellodev.moviestreaming.presenter.features.profile.state.EditProfileState
 import br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel.EditProfileViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -82,8 +91,29 @@ private fun EditProfileContent(
     navigateToCountryScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(state.hasFeedback) {
+        if (state.hasFeedback) {
+            scope.launch {
+                val result = snackbarHostState
+                    .showSnackbar(
+                        message = context.getString(
+                            state.feedbackUI?.second ?: R.string.error_generic
+                        )
+                    )
+
+                if (result == SnackbarResult.Dismissed) {
+                    action(EditProfileAction.ClearFeedback)
+                }
+            }
+        }
+    }
+
     when {
-        state.isLoading -> {
+        state.isLoadingScreen -> {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -121,11 +151,23 @@ private fun EditProfileContent(
                                     bottom = 32.dp
                                 ),
                             text = stringResource(R.string.label_button_update_edit_profile_screen),
-                            isLoading = false,
-                            enabled = true,
+                            isLoading = state.isLoading,
                             onClick = { action(EditProfileAction.Update) }
                         )
                     }
+                },
+                snackbarHost = {
+                    SnackbarHost(
+                        hostState = snackbarHostState,
+                        snackbar = { snackbarData ->
+                            state.feedbackUI?.let { feedbackUI ->
+                                FeedbackUI(
+                                    message = snackbarData.visuals.message,
+                                    type = feedbackUI.first
+                                )
+                            }
+                        }
+                    )
                 },
                 containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
                 content = { paddingValues ->
@@ -146,7 +188,7 @@ private fun EditProfileContent(
                             contentScale = ContentScale.Crop,
                             previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
                             shape = CircleShape,
-                            isLoading = state.isLoading,
+                            isLoading = state.isLoadingScreen,
                             onClick = {}
                         )
 
@@ -237,7 +279,7 @@ private fun EditProfile() {
     MovieStreamingTheme {
         EditProfileContent(
             state = EditProfileState(
-                isLoading = false,
+                isLoadingScreen = false,
                 email = "u@gmail.com",
                 phone = "11912345678"
             ),

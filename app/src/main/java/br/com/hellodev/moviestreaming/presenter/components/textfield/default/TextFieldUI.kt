@@ -116,6 +116,7 @@ fun TextFieldUI(
                     disabledContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
                     unfocusedContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
                     focusedContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
+                    disabledIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
                     focusedIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
                     unfocusedIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
                     errorContainerColor = MovieStreamingTheme.colorScheme.alphaDefaultColor,

@@ -1,8 +1,10 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.state
 
+import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 
 data class EditProfileState(
+    val isLoadingScreen: Boolean = false,
     val isLoading: Boolean = false,
     val name: String = "",
     val surname: String = "",
@@ -11,5 +13,6 @@ data class EditProfileState(
     val genre: String? = null,
     val country: String? = null,
     val hasFeedback: Boolean = false,
-    val inputError: InputType? = null
+    val inputError: InputType? = null,
+    val feedbackUI: Pair<FeedbackType, Int>? = null
 )

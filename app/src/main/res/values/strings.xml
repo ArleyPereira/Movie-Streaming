@@ -10,6 +10,7 @@
 
     <!--    Generic-->
     <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
+    <string name="success_save_user_generic">Usuário salvo com sucesso.</string>
 
     <!--    Invalid Input Error-->
     <string name="error_first_name_invalid">Insira um nome válido</string>
