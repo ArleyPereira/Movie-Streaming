@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -41,6 +40,7 @@ import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Compa
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
+import br.com.hellodev.moviestreaming.presenter.components.loading.LoadingScreenUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.click.TextFieldClickUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.default.TextFieldUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
@@ -82,141 +82,153 @@ private fun EditProfileContent(
     navigateToCountryScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBarUI(
-                title = stringResource(R.string.label_title_edit_profile_screen),
-                onClick = onBackPressed
-            )
-        },
-        bottomBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .windowInsetsPadding(WindowInsets.navigationBars)
-                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor.copy(alpha = 0.7f))
-            ) {
-                HorizontalDividerUI()
-
-                PrimaryButton(
-                    modifier = Modifier
-                        .padding(
-                            start = 24.dp,
-                            end = 24.dp,
-                            top = 24.dp,
-                            bottom = 32.dp
-                        ),
-                    text = stringResource(R.string.label_button_update_edit_profile_screen),
-                    isLoading = false,
-                    enabled = true,
-                    onClick = { action(EditProfileAction.Update) }
-                )
-            }
-        },
-        containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
-        content = { paddingValues ->
+    when {
+        state.isLoading -> {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(paddingValues)
-                    .padding(24.dp)
-                    .imePadding(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ImageUI(
-                    modifier = Modifier
-                        .size(140.dp),
-                    imageModel = null,
-                    contentScale = ContentScale.Crop,
-                    previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
-                    shape = CircleShape,
-                    isLoading = state.isLoading,
-                    onClick = {}
-                )
+                LoadingScreenUI()
+            }
+        }
 
-                TextFieldUI(
-                    value = state.name,
-                    isError = state.inputError == InputType.FIRST_NAME,
-                    error = stringResource(inputErrorMessage(InputType.FIRST_NAME)),
-                    placeholder = stringResource(R.string.label_input_first_name_edit_profile_screen),
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    onValueChange = {
-                        action(EditProfileAction.OnNameChanged(it))
+        else -> {
+            Scaffold(
+                topBar = {
+                    TopAppBarUI(
+                        title = stringResource(R.string.label_title_edit_profile_screen),
+                        onClick = onBackPressed
+                    )
+                },
+                bottomBar = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .windowInsetsPadding(WindowInsets.navigationBars)
+                            .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor.copy(alpha = 0.7f))
+                    ) {
+                        HorizontalDividerUI()
+
+                        PrimaryButton(
+                            modifier = Modifier
+                                .padding(
+                                    start = 24.dp,
+                                    end = 24.dp,
+                                    top = 24.dp,
+                                    bottom = 32.dp
+                                ),
+                            text = stringResource(R.string.label_button_update_edit_profile_screen),
+                            isLoading = false,
+                            enabled = true,
+                            onClick = { action(EditProfileAction.Update) }
+                        )
                     }
-                )
+                },
+                containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
+                content = { paddingValues ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(paddingValues)
+                            .padding(24.dp)
+                            .imePadding(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(24.dp)
+                    ) {
+                        ImageUI(
+                            modifier = Modifier
+                                .size(140.dp),
+                            imageModel = null,
+                            contentScale = ContentScale.Crop,
+                            previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
+                            shape = CircleShape,
+                            isLoading = state.isLoading,
+                            onClick = {}
+                        )
 
-                TextFieldUI(
-                    value = state.surname,
-                    isError = state.inputError == InputType.SURNAME,
-                    error = stringResource(inputErrorMessage(InputType.SURNAME)),
-                    placeholder = stringResource(R.string.label_input_surname_edit_profile_screen),
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    onValueChange = {
-                        action(EditProfileAction.OnSurnameChanged(it))
-                    }
-                )
+                        TextFieldUI(
+                            value = state.name,
+                            isError = state.inputError == InputType.FIRST_NAME,
+                            error = stringResource(inputErrorMessage(InputType.FIRST_NAME)),
+                            placeholder = stringResource(R.string.label_input_first_name_edit_profile_screen),
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = ImeAction.Next
+                            ),
+                            onValueChange = {
+                                action(EditProfileAction.OnNameChanged(it))
+                            }
+                        )
 
-                TextFieldUI(
-                    value = "",
-                    placeholder = stringResource(R.string.label_input_email_edit_profile_screen),
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {},
-                            content = {
+                        TextFieldUI(
+                            value = state.surname,
+                            isError = state.inputError == InputType.SURNAME,
+                            error = stringResource(inputErrorMessage(InputType.SURNAME)),
+                            placeholder = stringResource(R.string.label_input_surname_edit_profile_screen),
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = ImeAction.Next
+                            ),
+                            onValueChange = {
+                                action(EditProfileAction.OnSurnameChanged(it))
+                            }
+                        )
+
+                        TextFieldUI(
+                            value = state.email,
+                            placeholder = stringResource(R.string.label_input_email_edit_profile_screen),
+                            enabled = false,
+                            trailingIcon = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_email),
                                     contentDescription = null,
                                     tint = Color.Unspecified
                                 )
+                            },
+                            onValueChange = {
+
                             }
                         )
-                    },
-                    onValueChange = {
 
+                        TextFieldUI(
+                            value = state.phone,
+                            isError = state.inputError == InputType.PHONE,
+                            error = stringResource(inputErrorMessage(InputType.PHONE)),
+                            placeholder = stringResource(R.string.label_input_phone_edit_profile_screen),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Phone
+                            ),
+                            maxLength = MaskVisualTransformation.PHONE_MASK_SIZE,
+                            visualTransformation = MaskVisualTransformation(PHONE_MASK),
+                            onValueChange = {
+                                action(EditProfileAction.OnPhoneChanged(it))
+                            }
+                        )
+
+                        TextFieldClickUI(
+                            value = state.genre ?: "",
+                            placeholder = stringResource(R.string.label_input_genre_edit_profile_screen),
+                            painter = painterResource(id = R.drawable.ic_right),
+                            isError = state.inputError == InputType.GENRE,
+                            error = stringResource(inputErrorMessage(InputType.GENRE)),
+                            onClick = navigateToGenreScreen
+                        )
+
+                        TextFieldClickUI(
+                            value = state.country ?: "",
+                            placeholder = stringResource(R.string.label_input_country_edit_profile_screen),
+                            painter = painterResource(id = R.drawable.ic_right),
+                            isError = state.inputError == InputType.COUNTRY,
+                            error = stringResource(inputErrorMessage(InputType.COUNTRY)),
+                            onClick = navigateToCountryScreen
+                        )
                     }
-                )
-
-                TextFieldUI(
-                    value = state.phone,
-                    isError = state.inputError == InputType.PHONE,
-                    error = stringResource(inputErrorMessage(InputType.PHONE)),
-                    placeholder = stringResource(R.string.label_input_phone_edit_profile_screen),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    maxLength = MaskVisualTransformation.PHONE_MASK_SIZE,
-                    visualTransformation = MaskVisualTransformation(PHONE_MASK),
-                    onValueChange = {
-                        action(EditProfileAction.OnPhoneChanged(it))
-                    }
-                )
-
-                TextFieldClickUI(
-                    value = state.genre?.name ?: "",
-                    placeholder = stringResource(R.string.label_input_genre_edit_profile_screen),
-                    painter = painterResource(id = R.drawable.ic_right),
-                    isError = state.inputError == InputType.GENRE,
-                    error = stringResource(inputErrorMessage(InputType.GENRE)),
-                    onClick = navigateToGenreScreen
-                )
-
-                TextFieldClickUI(
-                    value = state.country?.name ?: "",
-                    placeholder = stringResource(R.string.label_input_country_edit_profile_screen),
-                    painter = painterResource(id = R.drawable.ic_right),
-                    isError = state.inputError == InputType.COUNTRY,
-                    error = stringResource(inputErrorMessage(InputType.COUNTRY)),
-                    onClick = navigateToCountryScreen
-                )
-            }
+                }
+            )
         }
-    )
+    }
 }
 
 @PreviewLightDark
@@ -224,7 +236,11 @@ private fun EditProfileContent(
 private fun EditProfile() {
     MovieStreamingTheme {
         EditProfileContent(
-            state = EditProfileState(),
+            state = EditProfileState(
+                isLoading = false,
+                email = "u@gmail.com",
+                phone = "11912345678"
+            ),
             action = {},
             navigateToGenreScreen = {},
             navigateToCountryScreen = {},

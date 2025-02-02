@@ -113,12 +113,14 @@ fun TextFieldUI(
                 singleLine = singleLine,
                 shape = RoundedCornerShape(12.dp),
                 colors = TextFieldDefaults.colors(
+                    disabledContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
                     unfocusedContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
                     focusedContainerColor = MovieStreamingTheme.colorScheme.textFieldBackgroundColor,
                     focusedIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
                     unfocusedIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
                     errorContainerColor = MovieStreamingTheme.colorScheme.alphaDefaultColor,
                     errorIndicatorColor = MovieStreamingTheme.colorScheme.transparentColor,
+                    disabledTextColor = MovieStreamingTheme.colorScheme.disabledColor,
                     unfocusedTextColor = MovieStreamingTheme.colorScheme.textColor,
                     focusedTextColor = MovieStreamingTheme.colorScheme.textColor,
                     errorTextColor = MovieStreamingTheme.colorScheme.textColor,
@@ -165,6 +167,37 @@ private fun TextFieldUIPreview() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            TextFieldUI(
+                modifier = Modifier
+                    .padding(32.dp),
+                value = textValue,
+                isError = false,
+                enabled = false,
+                placeholder = "Ex: Arley Santana",
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_lock_password),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                },
+                trailingIcon = {
+                    IconButton(
+                        onClick = {},
+                        content = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_hide),
+                                contentDescription = null,
+                                tint = Color.Unspecified
+                            )
+                        }
+                    )
+                },
+                onValueChange = {
+                    textValue = it
+                }
+            )
+
             TextFieldUI(
                 modifier = Modifier
                     .padding(32.dp),

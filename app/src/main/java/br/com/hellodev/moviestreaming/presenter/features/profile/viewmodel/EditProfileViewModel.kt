@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.functions.isValidName
 import br.com.hellodev.moviestreaming.core.functions.isValidPhone
+import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
 import br.com.hellodev.moviestreaming.presenter.features.profile.action.EditProfileAction
 import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditProfileParameter
 import br.com.hellodev.moviestreaming.presenter.features.profile.state.EditProfileState
@@ -13,10 +14,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class EditProfileViewModel : ViewModel() {
+class EditProfileViewModel(
+    private val getUserUseCase: GetUserUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(EditProfileState())
     val state = _state.asStateFlow()
+
+    init {
+        getUser()
+    }
 
     fun submitAction(action: EditProfileAction) {
         when (action) {
@@ -38,6 +45,28 @@ class EditProfileViewModel : ViewModel() {
 
             is EditProfileAction.SetOnBackResult -> {
                 setOnBackResult(parameter = action.parameter)
+            }
+        }
+    }
+
+    private fun getUser() {
+        viewModelScope.launch {
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
+            val user = getUserUseCase()
+
+            _state.update { currentState ->
+                currentState.copy(
+                    name = user.name ?: "",
+                    surname = user.surname ?: "",
+                    email = user.email ?: "",
+                    phone = user.phone ?: "",
+                    genre = user.genre ?: "",
+                    country = user.country ?: "",
+                    isLoading = false
+                )
             }
         }
     }
@@ -83,13 +112,13 @@ class EditProfileViewModel : ViewModel() {
     private fun setOnBackResult(parameter: EditProfileParameter) {
         parameter.genre?.let {
             _state.update { currentState ->
-                currentState.copy(genre = it)
+                currentState.copy(genre = it.name)
             }
         }
 
         parameter.country?.let {
             _state.update { currentState ->
-                currentState.copy(country = it)
+                currentState.copy(country = it.name)
             }
         }
 
