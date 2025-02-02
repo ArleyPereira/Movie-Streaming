@@ -82,6 +82,7 @@
 
     <!--    CountryScreen-->
     <string name="label_title_country_screen">Seu país</string>
+    <string name="label_search_placeholder_country_screen">Ex: Brasil</string>
     <string name="label_placeholder_country_screen">Ex: Brasil</string>
     <string name="label_button_select_country_screen">Selecionar</string>
 

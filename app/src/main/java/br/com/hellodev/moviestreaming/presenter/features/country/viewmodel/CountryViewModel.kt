@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.presenter.features.country.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.hellodev.moviestreaming.core.functions.normalize
 import br.com.hellodev.moviestreaming.domain.remote.model.country.Country
 import br.com.hellodev.moviestreaming.presenter.features.country.action.CountryAction
 import br.com.hellodev.moviestreaming.presenter.features.country.state.CountryState
@@ -24,6 +25,10 @@ class CountryViewModel : ViewModel() {
             is CountryAction.OnCountrySelected -> {
                 onCountrySelected(country = action.country)
             }
+
+            is CountryAction.OnSearch -> {
+                searchCountry(query = action.query)
+            }
         }
     }
 
@@ -36,8 +41,24 @@ class CountryViewModel : ViewModel() {
     private fun getCounties() {
         viewModelScope.launch {
             _state.update { currentState ->
-                currentState.copy(countries = Country.items)
+                currentState.copy(
+                    countries = Country.items,
+                    countriesFiltered = Country.items
+                )
             }
+        }
+    }
+
+    private fun searchCountry(query: String) {
+        val countriesFiltered = Country.items.filter { country ->
+            country.name?.normalize()?.contains(query.normalize()) == true
+        }
+
+        _state.update { currentState ->
+            currentState.copy(
+                countriesFiltered = countriesFiltered,
+                searchQuery = query
+            )
         }
     }
 
