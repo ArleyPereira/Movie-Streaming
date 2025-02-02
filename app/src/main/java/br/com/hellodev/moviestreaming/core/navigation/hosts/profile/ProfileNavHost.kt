@@ -57,6 +57,12 @@ fun NavGraphBuilder.profileNavHost(
         composable<ProfileRoutes.Country> {
             CountryScreen(
                 onCountrySelected = { country ->
+                    val parameter = EditProfileParameter(country = country)
+                    navHostController.previousBackStackEntry?.savedStateHandle?.putObject(
+                        key = EDIT_PROFILE_SCREEN_KEY,
+                        value = parameter
+                    )
+                    navHostController.popBackStack()
                 },
                 onBackPressed = {
                     navHostController.popBackStack()
