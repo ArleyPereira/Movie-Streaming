@@ -11,6 +11,7 @@ import br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel.EditP
 import br.com.hellodev.moviestreaming.presenter.features.splash.viewmodel.SplashViewModel
 import br.com.hellodev.moviestreaming.presenter.features.welcome.viewmodel.WelcomeViewModel
 import br.com.hellodev.moviestreaming.presenter.features.genre.viewmodel.GenreViewModel
+import br.com.hellodev.moviestreaming.presenter.features.country.viewmodel.CountryViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -37,5 +38,7 @@ val presenterModule = module {
     viewModelOf(::EditProfileViewModel)
 
     viewModelOf(::GenreViewModel)
+
+    viewModelOf(::CountryViewModel)
 
 }

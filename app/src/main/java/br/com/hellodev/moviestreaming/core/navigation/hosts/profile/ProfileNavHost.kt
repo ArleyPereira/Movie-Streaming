@@ -8,6 +8,7 @@ import br.com.hellodev.moviestreaming.core.constans.NavigationKeys.EDIT_PROFILE_
 import br.com.hellodev.moviestreaming.core.navigation.extensions.getObject
 import br.com.hellodev.moviestreaming.core.navigation.extensions.putObject
 import br.com.hellodev.moviestreaming.core.navigation.routes.profile.ProfileRoutes
+import br.com.hellodev.moviestreaming.presenter.features.country.screen.CountryScreen
 import br.com.hellodev.moviestreaming.presenter.features.genre.screen.GenreScreen
 import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditProfileParameter
 import br.com.hellodev.moviestreaming.presenter.features.profile.screen.EditProfileScreen
@@ -27,6 +28,9 @@ fun NavGraphBuilder.profileNavHost(
                 parameter = parameter,
                 navigateToGenreScreen = {
                     navHostController.navigate(ProfileRoutes.Genre)
+                },
+                navigateToCountryScreen = {
+                    navHostController.navigate(ProfileRoutes.Country)
                 },
                 onBackPressed = {
                     navHostController.popBackStack()
@@ -50,5 +54,14 @@ fun NavGraphBuilder.profileNavHost(
             )
         }
 
+        composable<ProfileRoutes.Country> {
+            CountryScreen(
+                onCountrySelected = { country ->
+                },
+                onBackPressed = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
     }
 }

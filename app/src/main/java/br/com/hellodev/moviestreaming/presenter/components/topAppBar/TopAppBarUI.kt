@@ -52,7 +52,7 @@ fun TopAppBarUI(
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MovieStreamingTheme.colorScheme.transparentColor,
+            containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
             navigationIconContentColor = MovieStreamingTheme.colorScheme.topAppBarColor,
             actionIconContentColor = MovieStreamingTheme.colorScheme.topAppBarColor,
             titleContentColor = MovieStreamingTheme.colorScheme.topAppBarColor

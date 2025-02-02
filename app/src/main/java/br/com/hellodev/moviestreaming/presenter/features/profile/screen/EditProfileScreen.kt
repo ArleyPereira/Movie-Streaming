@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -54,6 +55,7 @@ import org.koin.androidx.compose.koinViewModel
 fun EditProfileScreen(
     parameter: EditProfileParameter? = null,
     navigateToGenreScreen: () -> Unit,
+    navigateToCountryScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
     val viewModel = koinViewModel<EditProfileViewModel>()
@@ -67,6 +69,7 @@ fun EditProfileScreen(
         state = state,
         action = viewModel::submitAction,
         navigateToGenreScreen = navigateToGenreScreen,
+        navigateToCountryScreen = navigateToCountryScreen,
         onBackPressed = onBackPressed
     )
 }
@@ -76,6 +79,7 @@ private fun EditProfileContent(
     state: EditProfileState,
     action: (EditProfileAction) -> Unit,
     navigateToGenreScreen: () -> Unit,
+    navigateToCountryScreen: () -> Unit,
     onBackPressed: () -> Unit
 ) {
     Scaffold(
@@ -90,7 +94,7 @@ private fun EditProfileContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .windowInsetsPadding(WindowInsets.navigationBars)
-                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor.copy(alpha = 0.7f))
             ) {
                 HorizontalDividerUI()
 
@@ -116,7 +120,8 @@ private fun EditProfileContent(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(paddingValues)
-                    .padding(24.dp),
+                    .padding(24.dp)
+                    .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
@@ -207,7 +212,7 @@ private fun EditProfileContent(
                     painter = painterResource(id = R.drawable.ic_right),
                     isError = state.inputError == InputType.COUNTRY,
                     error = stringResource(inputErrorMessage(InputType.COUNTRY)),
-                    onClick = {}
+                    onClick = navigateToCountryScreen
                 )
             }
         }
@@ -222,6 +227,7 @@ private fun EditProfile() {
             state = EditProfileState(),
             action = {},
             navigateToGenreScreen = {},
+            navigateToCountryScreen = {},
             onBackPressed = {}
         )
     }

@@ -13,4 +13,7 @@ sealed class ProfileRoutes {
     @Serializable
     data object Genre : ProfileRoutes()
 
+    @Serializable
+    data object Country : ProfileRoutes()
+
 }

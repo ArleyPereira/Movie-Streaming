@@ -76,6 +76,15 @@
     <string name="label_input_country_edit_profile_screen">País</string>
     <string name="label_button_update_edit_profile_screen">Atualizar</string>
 
+    <!--    GenreScreen-->
+    <string name="label_title_genre_screen">Seu gênero</string>
+    <string name="label_button_select_genre_screen">Selecionar</string>
+
+    <!--    CountryScreen-->
+    <string name="label_title_country_screen">Seu país</string>
+    <string name="label_placeholder_country_screen">Ex: Brasil</string>
+    <string name="label_button_select_country_screen">Selecionar</string>
+
     <!--    BottomSheetLogout-->
     <string name="label_title_bottom_sheet_logout">Sair</string>
     <string name="label_message_bottom_sheet_logout">Tem certeza de que deseja sair?</string>
