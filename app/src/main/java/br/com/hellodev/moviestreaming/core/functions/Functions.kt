@@ -1,5 +1,13 @@
 package br.com.hellodev.moviestreaming.core.functions
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.core.content.ContextCompat
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.COUNTRY
@@ -40,4 +48,30 @@ fun String.normalize(): String {
     return Normalizer.normalize(this, Normalizer.Form.NFD)
         .replace(Regex("\\p{InCombiningDiacriticalMarks}"), "")
         .lowercase(Locale.getDefault())
+}
+
+fun checkAndRequestGalleryPermission(
+    context: Context,
+    launcher: ManagedActivityResultLauncher<String, Boolean>,
+    onPermissionGranted: () -> Unit
+) {
+    val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        android.Manifest.permission.READ_MEDIA_IMAGES
+    } else {
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ||
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+        onPermissionGranted()
+    } else {
+        launcher.launch(permission)
+    }
+}
+
+fun openAppSettings(context: Context) {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.parse("package:${context.packageName}")
+    }
+    context.startActivity(intent)
 }

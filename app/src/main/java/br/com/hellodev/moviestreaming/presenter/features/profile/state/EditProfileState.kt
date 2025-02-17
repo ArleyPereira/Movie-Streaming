@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.state
 
+import android.net.Uri
 import br.com.hellodev.moviestreaming.core.enums.feedback.FeedbackType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 
@@ -14,5 +15,6 @@ data class EditProfileState(
     val country: String? = null,
     val hasFeedback: Boolean = false,
     val inputError: InputType? = null,
-    val feedbackUI: Pair<FeedbackType, Int>? = null
+    val feedbackUI: Pair<FeedbackType, Int>? = null,
+    val imageUri: Uri? = null
 )

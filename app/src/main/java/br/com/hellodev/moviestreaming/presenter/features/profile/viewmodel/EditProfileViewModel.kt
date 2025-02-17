@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.R
@@ -54,6 +55,10 @@ class EditProfileViewModel(
 
             is EditProfileAction.ClearFeedback -> {
                 clearFeedback()
+            }
+
+            is EditProfileAction.SetImageUri -> {
+                setImageUri(uri = action.uri)
             }
         }
     }
@@ -193,6 +198,13 @@ class EditProfileViewModel(
         _state.update { currentState ->
             currentState.copy(hasFeedback = false, feedbackUI = null)
         }
+    }
+
+    private fun setImageUri(uri: Uri?) {
+        _state.update { currentState ->
+            currentState.copy(imageUri = uri)
+        }
+
     }
 
 }

@@ -1,5 +1,8 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.screen
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +44,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
+import br.com.hellodev.moviestreaming.core.functions.checkAndRequestGalleryPermission
 import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
@@ -95,6 +99,23 @@ private fun EditProfileContent(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            action(EditProfileAction.SetImageUri(uri))
+        }
+    )
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            imagePickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } else {
+            // Exibir aviso caso a permissão seja negada
+        }
+    }
+
     LaunchedEffect(state.hasFeedback) {
         if (state.hasFeedback) {
             scope.launch {
@@ -138,7 +159,11 @@ private fun EditProfileContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .windowInsetsPadding(WindowInsets.navigationBars)
-                            .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor.copy(alpha = 0.7f))
+                            .background(
+                                MovieStreamingTheme.colorScheme.primaryBackgroundColor.copy(
+                                    alpha = 0.7f
+                                )
+                            )
                     ) {
                         HorizontalDividerUI()
 
@@ -184,12 +209,24 @@ private fun EditProfileContent(
                         ImageUI(
                             modifier = Modifier
                                 .size(140.dp),
-                            imageModel = null,
+                            imageModel = state.imageUri,
                             contentScale = ContentScale.Crop,
                             previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
                             shape = CircleShape,
                             isLoading = state.isLoadingScreen,
-                            onClick = {}
+                            onClick = {
+                                checkAndRequestGalleryPermission(
+                                    context = context,
+                                    launcher = permissionLauncher,
+                                    onPermissionGranted = {
+                                        imagePickerLauncher.launch(
+                                            PickVisualMediaRequest(
+                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                            )
+                                        )
+                                    }
+                                )
+                            }
                         )
 
                         TextFieldUI(
