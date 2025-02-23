@@ -93,4 +93,10 @@
     <string name="label_cancel_button_bottom_sheet_logout">Cancelar</string>
     <string name="label_confirm_button_bottom_sheet_logout">Sim, sair</string>
 
+    <!--    SelectImageBottomSheet-->
+    <string name="label_title_select_image_bottom_sheet">Selecione uma imagem</string>
+    <string name="label_camera_select_image_bottom_sheet">Câmera</string>
+    <string name="label_gallery_select_image_bottom_sheet">Galeria</string>
+    <string name="label_cancel_select_image_bottom_sheet">Cancelar</string>
+
 </resources>

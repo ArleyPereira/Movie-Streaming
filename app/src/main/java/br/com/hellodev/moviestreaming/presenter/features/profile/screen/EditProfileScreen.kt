@@ -19,11 +19,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,10 +51,13 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.functions.checkAndRequestCameraPermission
+import br.com.hellodev.moviestreaming.core.functions.checkAndRequestGalleryPermission
 import br.com.hellodev.moviestreaming.core.functions.createImageUri
 import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
+import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
+import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.select_image.SelectImageBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
@@ -91,6 +97,7 @@ fun EditProfileScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditProfileContent(
     state: EditProfileState,
@@ -101,6 +108,8 @@ private fun EditProfileContent(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -243,29 +252,7 @@ private fun EditProfileContent(
                             shape = CircleShape,
                             isLoading = state.isLoadingScreen,
                             onClick = {
-                                checkAndRequestCameraPermission(
-                                    context = context,
-                                    launcher = cameraPermissionLauncher,
-                                    onPermissionGranted = {
-                                        val uri = createImageUri(context)
-                                        uri?.let {
-                                            imageUri = it
-                                            cameraLauncher.launch(it)
-                                        }
-                                    }
-                                )
-
-//                                checkAndRequestGalleryPermission(
-//                                    context = context,
-//                                    launcher = galleryPermissionLauncher,
-//                                    onPermissionGranted = {
-//                                        galleryLauncher.launch(
-//                                            PickVisualMediaRequest(
-//                                                ActivityResultContracts.PickVisualMedia.ImageOnly
-//                                            )
-//                                        )
-//                                    }
-//                                )
+                                showBottomSheet = true
                             }
                         )
 
@@ -342,6 +329,66 @@ private fun EditProfileContent(
                             isError = state.inputError == InputType.COUNTRY,
                             error = stringResource(inputErrorMessage(InputType.COUNTRY)),
                             onClick = navigateToCountryScreen
+                        )
+                    }
+
+                    if (showBottomSheet) {
+                        ModalBottomSheet(
+                            onDismissRequest = {
+                                showBottomSheet = false
+                            },
+                            sheetState = sheetState,
+                            containerColor = MovieStreamingTheme.colorScheme.secondaryBackgroundColor,
+                            dragHandle = {
+                                DragBottomSheet()
+                            },
+                            content = {
+                                SelectImageBottomSheet(
+                                    onCameraClick = {
+                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                            if (!sheetState.isVisible) {
+                                                showBottomSheet = false
+                                                checkAndRequestCameraPermission(
+                                                    context = context,
+                                                    launcher = cameraPermissionLauncher,
+                                                    onPermissionGranted = {
+                                                        val uri = createImageUri(context)
+                                                        uri?.let {
+                                                            imageUri = it
+                                                            cameraLauncher.launch(it)
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    },
+                                    onGalleryClick = {
+                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                            if (!sheetState.isVisible) {
+                                                showBottomSheet = false
+                                                checkAndRequestGalleryPermission(
+                                                    context = context,
+                                                    launcher = galleryPermissionLauncher,
+                                                    onPermissionGranted = {
+                                                        galleryLauncher.launch(
+                                                            PickVisualMediaRequest(
+                                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                                            )
+                                                        )
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    },
+                                    onCancelClick = {
+                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                            if (!sheetState.isVisible) {
+                                                showBottomSheet = false
+                                            }
+                                        }
+                                    }
+                                )
+                            }
                         )
                     }
                 }
