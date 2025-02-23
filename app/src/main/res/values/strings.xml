@@ -99,4 +99,10 @@
     <string name="label_gallery_select_image_bottom_sheet">Galeria</string>
     <string name="label_cancel_select_image_bottom_sheet">Cancelar</string>
 
+    <!--    PermissionDeniedBottomSheet-->
+    <string name="label_title_bottom_sheet_permission_denied">Permissão negada</string>
+    <string name="label_message_bottom_sheet_permission_denied">Você negou a permissão. Você pode habilitá-la em configurações.</string>
+    <string name="label_cancel_button_bottom_sheet_permission_denied">Cancelar</string>
+    <string name="label_confirm_button_bottom_sheet_permission_denied">Configurações</string>
+
 </resources>

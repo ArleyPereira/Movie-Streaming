@@ -10,6 +10,7 @@ import android.provider.Settings
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.COUNTRY
@@ -88,7 +89,7 @@ fun checkAndRequestCameraPermission(
 
 fun openAppSettings(context: Context) {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-        data = Uri.parse("package:${context.packageName}")
+        data = "package:${context.packageName}".toUri()
     }
     context.startActivity(intent)
 }

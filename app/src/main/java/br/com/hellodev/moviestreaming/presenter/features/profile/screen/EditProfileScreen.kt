@@ -50,13 +50,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
+import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType
+import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType.PERMISSION_DENIED_BOTTOM_SHEET
+import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType.SELECT_IMAGE_BOTTOM_SHEET
 import br.com.hellodev.moviestreaming.core.functions.checkAndRequestCameraPermission
 import br.com.hellodev.moviestreaming.core.functions.checkAndRequestGalleryPermission
 import br.com.hellodev.moviestreaming.core.functions.createImageUri
 import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
+import br.com.hellodev.moviestreaming.core.functions.openAppSettings
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
+import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.permission_denied.PermissionDeniedBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.select_image.SelectImageBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
@@ -108,6 +113,7 @@ private fun EditProfileContent(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var sheetType by remember { mutableStateOf<SheetType?>(null) }
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -135,7 +141,8 @@ private fun EditProfileContent(
         if (isGranted) {
             galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         } else {
-            // Exibir aviso caso a permissão seja negada
+            sheetType = PERMISSION_DENIED_BOTTOM_SHEET
+            showBottomSheet = true
         }
     }
 
@@ -149,7 +156,8 @@ private fun EditProfileContent(
                 cameraLauncher.launch(it)
             }
         } else {
-            // Exibir aviso caso a permissão seja negada
+            sheetType = PERMISSION_DENIED_BOTTOM_SHEET
+            showBottomSheet = true
         }
     }
 
@@ -252,6 +260,7 @@ private fun EditProfileContent(
                             shape = CircleShape,
                             isLoading = state.isLoadingScreen,
                             onClick = {
+                                sheetType = SELECT_IMAGE_BOTTOM_SHEET
                                 showBottomSheet = true
                             }
                         )
@@ -343,51 +352,83 @@ private fun EditProfileContent(
                                 DragBottomSheet()
                             },
                             content = {
-                                SelectImageBottomSheet(
-                                    onCameraClick = {
-                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                            if (!sheetState.isVisible) {
-                                                showBottomSheet = false
-                                                checkAndRequestCameraPermission(
-                                                    context = context,
-                                                    launcher = cameraPermissionLauncher,
-                                                    onPermissionGranted = {
-                                                        val uri = createImageUri(context)
-                                                        uri?.let {
-                                                            imageUri = it
-                                                            cameraLauncher.launch(it)
+                                when (sheetType) {
+                                    SELECT_IMAGE_BOTTOM_SHEET -> {
+                                        SelectImageBottomSheet(
+                                            onCameraClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                            checkAndRequestCameraPermission(
+                                                                context = context,
+                                                                launcher = cameraPermissionLauncher,
+                                                                onPermissionGranted = {
+                                                                    val uri =
+                                                                        createImageUri(context)
+                                                                    uri?.let {
+                                                                        imageUri = it
+                                                                        cameraLauncher.launch(it)
+                                                                    }
+                                                                }
+                                                            )
                                                         }
                                                     }
-                                                )
-                                            }
-                                        }
-                                    },
-                                    onGalleryClick = {
-                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                            if (!sheetState.isVisible) {
-                                                showBottomSheet = false
-                                                checkAndRequestGalleryPermission(
-                                                    context = context,
-                                                    launcher = galleryPermissionLauncher,
-                                                    onPermissionGranted = {
-                                                        galleryLauncher.launch(
-                                                            PickVisualMediaRequest(
-                                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                            },
+                                            onGalleryClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                            checkAndRequestGalleryPermission(
+                                                                context = context,
+                                                                launcher = galleryPermissionLauncher,
+                                                                onPermissionGranted = {
+                                                                    galleryLauncher.launch(
+                                                                        PickVisualMediaRequest(
+                                                                            ActivityResultContracts.PickVisualMedia.ImageOnly
+                                                                        )
+                                                                    )
+                                                                }
                                                             )
-                                                        )
+                                                        }
                                                     }
-                                                )
+                                            },
+                                            onCancelClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
                                             }
-                                        }
-                                    },
-                                    onCancelClick = {
-                                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                            if (!sheetState.isVisible) {
-                                                showBottomSheet = false
-                                            }
-                                        }
+                                        )
                                     }
-                                )
+
+                                    PERMISSION_DENIED_BOTTOM_SHEET -> {
+                                        PermissionDeniedBottomSheet(
+                                            onCancelClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
+                                            onSettingsClick = {
+                                                scope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                            openAppSettings(context)
+                                                        }
+                                                    }
+                                            },
+                                        )
+                                    }
+
+                                    else -> {}
+                                }
                             }
                         )
                     }
