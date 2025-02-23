@@ -5,9 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.Settings
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.COUNTRY
@@ -15,6 +17,7 @@ import br.com.hellodev.moviestreaming.core.enums.input.InputType.FIRST_NAME
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.GENRE
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.PHONE
 import br.com.hellodev.moviestreaming.core.enums.input.InputType.SURNAME
+import java.io.File
 import java.text.Normalizer
 import java.util.Locale
 
@@ -69,9 +72,31 @@ fun checkAndRequestGalleryPermission(
     }
 }
 
+fun checkAndRequestCameraPermission(
+    context: Context,
+    launcher: ManagedActivityResultLauncher<String, Boolean>,
+    onPermissionGranted: () -> Unit
+) {
+    val permission = android.Manifest.permission.CAMERA
+
+    if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+        onPermissionGranted()
+    } else {
+        launcher.launch(permission)
+    }
+}
+
 fun openAppSettings(context: Context) {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
         data = Uri.parse("package:${context.packageName}")
     }
     context.startActivity(intent)
+}
+
+fun createImageUri(context: Context): Uri? {
+    val imageFile = File(
+        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+        "captured_image_${context.packageName}.jpg"
+    )
+    return FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", imageFile)
 }

@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.profile.screen
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,8 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +47,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.input.InputType
-import br.com.hellodev.moviestreaming.core.functions.checkAndRequestGalleryPermission
+import br.com.hellodev.moviestreaming.core.functions.checkAndRequestCameraPermission
+import br.com.hellodev.moviestreaming.core.functions.createImageUri
 import br.com.hellodev.moviestreaming.core.functions.inputErrorMessage
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation
 import br.com.hellodev.moviestreaming.core.helper.MaskVisualTransformation.Companion.PHONE_MASK
@@ -98,19 +102,43 @@ private fun EditProfileContent(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val imagePickerLauncher = rememberLauncherForActivityResult(
+    val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             action(EditProfileAction.SetImageUri(uri))
         }
     )
 
-    val permissionLauncher = rememberLauncherForActivityResult(
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { success ->
+            if (success) {
+                action(EditProfileAction.SetImageUri(imageUri))
+            }
+        }
+    )
+
+    val galleryPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            imagePickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            galleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } else {
+            // Exibir aviso caso a permissão seja negada
+        }
+    }
+
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            val uri = createImageUri(context)
+            uri?.let {
+                imageUri = it
+                cameraLauncher.launch(it)
+            }
         } else {
             // Exibir aviso caso a permissão seja negada
         }
@@ -215,17 +243,29 @@ private fun EditProfileContent(
                             shape = CircleShape,
                             isLoading = state.isLoadingScreen,
                             onClick = {
-                                checkAndRequestGalleryPermission(
+                                checkAndRequestCameraPermission(
                                     context = context,
-                                    launcher = permissionLauncher,
+                                    launcher = cameraPermissionLauncher,
                                     onPermissionGranted = {
-                                        imagePickerLauncher.launch(
-                                            PickVisualMediaRequest(
-                                                ActivityResultContracts.PickVisualMedia.ImageOnly
-                                            )
-                                        )
+                                        val uri = createImageUri(context)
+                                        uri?.let {
+                                            imageUri = it
+                                            cameraLauncher.launch(it)
+                                        }
                                     }
                                 )
+
+//                                checkAndRequestGalleryPermission(
+//                                    context = context,
+//                                    launcher = galleryPermissionLauncher,
+//                                    onPermissionGranted = {
+//                                        galleryLauncher.launch(
+//                                            PickVisualMediaRequest(
+//                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+//                                            )
+//                                        )
+//                                    }
+//                                )
                             }
                         )
 
