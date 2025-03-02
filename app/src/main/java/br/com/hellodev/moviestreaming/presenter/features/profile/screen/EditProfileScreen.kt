@@ -122,7 +122,7 @@ private fun EditProfileContent(
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            action(EditProfileAction.SetImageUri(uri))
+            action(EditProfileAction.SetImageUri(uri ?: Uri.EMPTY))
         }
     )
 
@@ -130,7 +130,7 @@ private fun EditProfileContent(
         contract = ActivityResultContracts.TakePicture(),
         onResult = { success ->
             if (success) {
-                action(EditProfileAction.SetImageUri(imageUri))
+                action(EditProfileAction.SetImageUri(imageUri ?: Uri.EMPTY))
             }
         }
     )
@@ -254,11 +254,13 @@ private fun EditProfileContent(
                         ImageUI(
                             modifier = Modifier
                                 .size(140.dp),
-                            imageModel = state.imageUri,
+                            imageModel = if (state.imageUri != Uri.EMPTY) {
+                                state.imageUri
+                            } else state.photo,
                             contentScale = ContentScale.Crop,
                             previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
                             shape = CircleShape,
-                            isLoading = state.isLoadingScreen,
+                            isLoading = state.isLoadingImage,
                             onClick = {
                                 sheetType = SELECT_IMAGE_BOTTOM_SHEET
                                 showBottomSheet = true

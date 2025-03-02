@@ -10,6 +10,7 @@ import br.com.hellodev.moviestreaming.core.functions.isValidName
 import br.com.hellodev.moviestreaming.core.functions.isValidPhone
 import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveImageUserUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveUserUseCase
 import br.com.hellodev.moviestreaming.presenter.features.profile.action.EditProfileAction
 import br.com.hellodev.moviestreaming.presenter.features.profile.parameter.EditProfileParameter
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 
 class EditProfileViewModel(
     private val getUserUseCase: GetUserUseCase,
-    private val saveUserUseCase: SaveUserUseCase
+    private val saveUserUseCase: SaveUserUseCase,
+    private val saveImageUserUseCase: SaveImageUserUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(EditProfileState())
@@ -34,7 +36,7 @@ class EditProfileViewModel(
     fun submitAction(action: EditProfileAction) {
         when (action) {
             is EditProfileAction.Update -> {
-                updateProfile()
+                update()
             }
 
             is EditProfileAction.OnNameChanged -> {
@@ -73,6 +75,7 @@ class EditProfileViewModel(
 
             _state.update { currentState ->
                 currentState.copy(
+                    photo = user.photo ?: "",
                     name = user.name ?: "",
                     surname = user.surname ?: "",
                     email = user.email ?: "",
@@ -85,15 +88,23 @@ class EditProfileViewModel(
         }
     }
 
+    private fun update() {
+        if (_state.value.imageUri != Uri.EMPTY) {
+            saveImageProfile()
+        } else {
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
+            updateProfile()
+        }
+    }
+
     private fun updateProfile() {
         viewModelScope.launch {
             if (!isValidProfile()) {
                 inputFeedbackError()
                 return@launch
-            }
-
-            _state.update { currentState ->
-                currentState.copy(isLoading = true)
             }
 
             val user = User(
@@ -102,7 +113,8 @@ class EditProfileViewModel(
                 email = _state.value.email,
                 phone = _state.value.phone,
                 genre = _state.value.genre,
-                country = _state.value.country
+                country = _state.value.country,
+                photo = _state.value.urlImageProfile
             )
 
             saveUserUseCase(user = user)
@@ -111,12 +123,37 @@ class EditProfileViewModel(
                 currentState.copy(
                     hasFeedback = true,
                     isLoading = false,
+                    isLoadingImage = false,
                     feedbackUI = Pair(
                         FeedbackType.SUCCESS,
                         R.string.success_save_user_generic
                     )
                 )
             }
+        }
+    }
+
+    private fun saveImageProfile() {
+        viewModelScope.launch {
+            if (!isValidProfile()) {
+                inputFeedbackError()
+                return@launch
+            }
+
+            _state.update { currentState ->
+                currentState.copy(
+                    isLoadingImage = true,
+                    isLoading = true
+                )
+            }
+
+            val url = saveImageUserUseCase(uri = _state.value.imageUri)
+
+            _state.update { currentState ->
+                currentState.copy(urlImageProfile = url)
+            }
+
+            updateProfile()
         }
     }
 
@@ -200,7 +237,7 @@ class EditProfileViewModel(
         }
     }
 
-    private fun setImageUri(uri: Uri?) {
+    private fun setImageUri(uri: Uri) {
         _state.update { currentState ->
             currentState.copy(imageUri = uri)
         }

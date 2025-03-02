@@ -73,6 +73,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.authentication)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
 
     // Serialization
     implementation(libs.serialization.json)

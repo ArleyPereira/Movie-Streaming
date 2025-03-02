@@ -3,6 +3,7 @@ package br.com.hellodev.moviestreaming.core.helper
 import br.com.hellodev.moviestreaming.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 
 class FirebaseHelper {
     companion object {
@@ -11,6 +12,8 @@ class FirebaseHelper {
         fun isAuthenticated() = getAuth().currentUser != null
 
         fun getDatabase() = FirebaseDatabase.getInstance().reference
+
+        fun getStorage() = FirebaseStorage.getInstance().reference
 
         fun getUserId() = getAuth().currentUser?.uid.orEmpty()
 

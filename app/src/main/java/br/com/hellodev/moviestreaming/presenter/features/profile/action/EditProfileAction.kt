@@ -10,5 +10,5 @@ sealed class EditProfileAction {
     data class OnSurnameChanged(val surname: String) : EditProfileAction()
     data class OnPhoneChanged(val phone: String) : EditProfileAction()
     data class SetOnBackResult(val parameter: EditProfileParameter) : EditProfileAction()
-    data class SetImageUri(val uri: Uri?) : EditProfileAction()
+    data class SetImageUri(val uri: Uri) : EditProfileAction()
 }
