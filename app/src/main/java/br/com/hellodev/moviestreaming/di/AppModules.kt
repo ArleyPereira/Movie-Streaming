@@ -7,6 +7,7 @@ val appModules = module {
         repositoryModule,
         useCaseModule,
         presenterModule,
-        localModule
+        localModule,
+        networkModule
     )
 }

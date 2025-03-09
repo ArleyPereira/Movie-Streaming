@@ -78,6 +78,9 @@ dependencies {
     implementation(libs.viewmodel.compose)
     implementation(libs.navigation.compose)
 
+    // Ktor
+    implementation(libs.bundles.ktor)
+
     // Koin
     implementation(libs.koin.compose)
 
