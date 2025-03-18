@@ -2,7 +2,7 @@ package br.com.hellodev.moviestreaming.presenter.features.genre.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.hellodev.moviestreaming.domain.remote.model.genre.Genre
+import br.com.hellodev.moviestreaming.domain.remote.model.genre.GenreUser
 import br.com.hellodev.moviestreaming.presenter.features.genre.action.GenreAction
 import br.com.hellodev.moviestreaming.presenter.features.genre.state.GenreState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,21 +22,21 @@ class GenreViewModel : ViewModel() {
     fun submitAction(action: GenreAction) {
         when (action) {
             is GenreAction.OnGenreSelected -> {
-                onGenreSelected(genre = action.genre)
+                onGenreSelected(genreUser = action.genreUser)
             }
         }
     }
 
-    private fun onGenreSelected(genre: Genre) {
+    private fun onGenreSelected(genreUser: GenreUser) {
         _state.update { currentState ->
-            currentState.copy(selectedGenre = genre)
+            currentState.copy(selectedGenreUser = genreUser)
         }
     }
 
     private fun getGenres() {
         viewModelScope.launch {
             _state.update { currentState ->
-                currentState.copy(genres = Genre.items)
+                currentState.copy(genreUsers = GenreUser.items)
             }
         }
     }

@@ -185,7 +185,7 @@ class EditProfileViewModel(
     }
 
     private fun setOnBackResult(parameter: EditProfileParameter) {
-        parameter.genre?.let {
+        parameter.genreUser?.let {
             _state.update { currentState ->
                 currentState.copy(genre = it.name)
             }

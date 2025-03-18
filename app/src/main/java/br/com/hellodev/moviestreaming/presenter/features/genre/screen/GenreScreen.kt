@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.domain.remote.model.genre.Genre
+import br.com.hellodev.moviestreaming.domain.remote.model.genre.GenreUser
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.radio.RadioButtonUi
@@ -34,7 +34,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GenreScreen(
-    onGenreSelected: (Genre?) -> Unit,
+    onGenreSelected: (GenreUser?) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val viewModel = koinViewModel<GenreViewModel>()
@@ -52,7 +52,7 @@ fun GenreScreen(
 fun GenreContent(
     state: GenreState,
     action: (GenreAction) -> Unit,
-    onGenreSelected: (Genre?) -> Unit,
+    onGenreSelected: (GenreUser?) -> Unit,
     onBackPressed: () -> Unit
 ) {
     Scaffold(
@@ -80,8 +80,8 @@ fun GenreContent(
                             bottom = 32.dp
                         ),
                     text = stringResource(R.string.label_button_select_genre_screen),
-                    enabled = state.selectedGenre != null,
-                    onClick = { onGenreSelected(state.selectedGenre) }
+                    enabled = state.selectedGenreUser != null,
+                    onClick = { onGenreSelected(state.selectedGenreUser) }
                 )
             }
         },
@@ -98,9 +98,9 @@ fun GenreContent(
                     top = 8.dp
                 )
             ) {
-                items(state.genres) { genre ->
+                items(state.genreUsers) { genre ->
                     RadioButtonUi(
-                        selected = genre == state.selectedGenre,
+                        selected = genre == state.selectedGenreUser,
                         text = genre.name ?: "",
                         onClick = {
                             action(GenreAction.OnGenreSelected(genre))
@@ -118,7 +118,7 @@ private fun GenrePreview() {
     MovieStreamingTheme {
         GenreContent(
             state = GenreState(
-                genres = Genre.items
+                genreUsers = GenreUser.items
             ),
             action = {},
             onGenreSelected = {},

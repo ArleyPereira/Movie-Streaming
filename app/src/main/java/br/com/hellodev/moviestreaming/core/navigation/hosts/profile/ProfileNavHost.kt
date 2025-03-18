@@ -41,7 +41,7 @@ fun NavGraphBuilder.profileNavHost(
         composable<ProfileRoutes.Genre> {
             GenreScreen(
                 onGenreSelected = { genre ->
-                    val parameter = EditProfileParameter(genre = genre)
+                    val parameter = EditProfileParameter(genreUser = genre)
                     navHostController.previousBackStackEntry?.savedStateHandle?.putObject(
                         key = EDIT_PROFILE_SCREEN_KEY,
                         value = parameter
