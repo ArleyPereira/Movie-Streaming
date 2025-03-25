@@ -19,6 +19,7 @@ class MovieRepositoryImpl(
     override suspend fun nowPlaying(): BaseResponse<List<Movie>> {
         return try {
             val response = httpClient.get(NOW_PLAYING_ROUTE)
+
             apiRequest<List<MovieResponse>, List<Movie>>(response) { movies ->
                 movies.map { it.toDomain() }
             }

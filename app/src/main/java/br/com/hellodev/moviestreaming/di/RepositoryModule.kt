@@ -6,14 +6,16 @@ import br.com.hellodev.moviestreaming.data.remote.repository.user.UserRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.authentication.AuthenticationRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.movie.MovieRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.user.UserRepository
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val repositoryModule = module {
 
-    factory<AuthenticationRepository> { AuthenticationRepositoryImpl() }
+    factoryOf(::AuthenticationRepositoryImpl).bind(AuthenticationRepository::class)
 
-    factory<UserRepository> { UserRepositoryImpl() }
+    factoryOf(::UserRepositoryImpl).bind(UserRepository::class)
 
-    factory<MovieRepository> { MovieRepositoryImpl(get(), get()) }
+    factoryOf(::MovieRepositoryImpl).bind(MovieRepository::class)
 
 }
