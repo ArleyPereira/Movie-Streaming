@@ -1,6 +1,7 @@
 package br.com.hellodev.moviestreaming.di
 
 import br.com.hellodev.moviestreaming.BuildConfig
+import br.com.hellodev.moviestreaming.data.api.ApiRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -41,11 +42,13 @@ val networkModule = module {
             defaultRequest {
                 url {
                     protocol = URLProtocol.HTTPS
-                    host = "api.themoviedb.org/3/"
+                    host = "api.themoviedb.org/3"
                     contentType(ContentType.Application.Json)
                     parameters.append("api_key", BuildConfig.API_KEY)
                 }
             }
         }
     }
+
+    single<ApiRequest> { ApiRequest(get()) }
 }
