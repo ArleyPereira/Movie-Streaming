@@ -9,4 +9,6 @@ interface MovieRepository {
 
     suspend fun popular(): BaseResponse<List<Movie>>
 
+    suspend fun topRated(): BaseResponse<List<Movie>>
+
 }

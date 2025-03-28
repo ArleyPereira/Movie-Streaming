@@ -3,6 +3,8 @@ package br.com.hellodev.moviestreaming.presenter.features.main.home.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,6 +41,7 @@ private fun HomeContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(paddingValues)
             ) {
                 SectionMovies(
@@ -53,6 +56,14 @@ private fun HomeContent(
                     leftText = "Populares",
                     rightText = "Ver tudo",
                     movies = state.popularList,
+                    onMovieClick = {},
+                    onRightClick = {}
+                )
+
+                SectionMovies(
+                    leftText = "Mais votados",
+                    rightText = "Ver tudo",
+                    movies = state.topRatedList,
                     onMovieClick = {},
                     onRightClick = {}
                 )

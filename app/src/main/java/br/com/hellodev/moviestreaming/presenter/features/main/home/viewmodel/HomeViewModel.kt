@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetTopRatedUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.home.action.HomeAction
 import br.com.hellodev.moviestreaming.presenter.features.main.home.state.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getNowPlayingUseCase: GetNowPlayingUseCase,
-    private val getPopularUseCase: GetPopularUseCase
+    private val getPopularUseCase: GetPopularUseCase,
+    private val getTopRatedUseCase: GetTopRatedUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -23,6 +25,7 @@ class HomeViewModel(
     init {
         getNowPlaying()
         getPopular()
+        getTopRated()
     }
 
     fun submitAction(action: HomeAction) {
@@ -56,6 +59,25 @@ class HomeViewModel(
                 ResultStatus.SUCCESS ->  {
                     _state.update {
                         it.copy(popularList = response.results ?: emptyList())
+                    }
+                }
+
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    private fun getTopRated() {
+        viewModelScope.launch {
+            val response = getTopRatedUseCase()
+
+            when(response.resultStatus){
+                ResultStatus.SUCCESS ->  {
+                    _state.update {
+                        it.copy(topRatedList = response.results ?: emptyList())
                     }
                 }
 
