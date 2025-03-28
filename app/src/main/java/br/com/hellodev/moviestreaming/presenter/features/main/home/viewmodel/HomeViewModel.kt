@@ -1,6 +1,5 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
@@ -9,6 +8,7 @@ import br.com.hellodev.moviestreaming.presenter.features.main.home.action.HomeAc
 import br.com.hellodev.moviestreaming.presenter.features.main.home.state.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -32,7 +32,9 @@ class HomeViewModel(
 
             when(response.resultStatus){
                 ResultStatus.SUCCESS ->  {
-                    Log.i("INFOTESTE", "getNowPlaying: ${response.results?.size}")
+                    _state.update {
+                        it.copy(nowPlayingList = response.results ?: emptyList())
+                    }
                 }
 
                 else -> {

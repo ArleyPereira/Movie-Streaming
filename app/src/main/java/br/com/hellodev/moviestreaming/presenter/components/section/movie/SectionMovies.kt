@@ -87,12 +87,12 @@ fun SectionMovies(
         ),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(movies) {
+        items(movies) { movie ->
             ImageUI(
                 modifier = Modifier
                     .width(150.dp)
                     .height(200.dp),
-                imageModel = null,
+                imageModel = movie.posterPath,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = painterResource(R.drawable.movie_placeholder),
                 onClick = onMovieClick
