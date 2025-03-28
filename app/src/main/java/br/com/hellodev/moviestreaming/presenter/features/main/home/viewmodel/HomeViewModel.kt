@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.home.action.HomeAction
 import br.com.hellodev.moviestreaming.presenter.features.main.home.state.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getNowPlayingUseCase: GetNowPlayingUseCase
+    private val getNowPlayingUseCase: GetNowPlayingUseCase,
+    private val getPopularUseCase: GetPopularUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -20,6 +22,7 @@ class HomeViewModel(
 
     init {
         getNowPlaying()
+        getPopular()
     }
 
     fun submitAction(action: HomeAction) {
@@ -34,6 +37,25 @@ class HomeViewModel(
                 ResultStatus.SUCCESS ->  {
                     _state.update {
                         it.copy(nowPlayingList = response.results ?: emptyList())
+                    }
+                }
+
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    private fun getPopular() {
+        viewModelScope.launch {
+            val response = getPopularUseCase()
+
+            when(response.resultStatus){
+                ResultStatus.SUCCESS ->  {
+                    _state.update {
+                        it.copy(popularList = response.results ?: emptyList())
                     }
                 }
 

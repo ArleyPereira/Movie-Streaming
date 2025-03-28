@@ -48,6 +48,14 @@ private fun HomeContent(
                     onMovieClick = {},
                     onRightClick = {}
                 )
+
+                SectionMovies(
+                    leftText = "Populares",
+                    rightText = "Ver tudo",
+                    movies = state.popularList,
+                    onMovieClick = {},
+                    onRightClick = {}
+                )
             }
         }
     )

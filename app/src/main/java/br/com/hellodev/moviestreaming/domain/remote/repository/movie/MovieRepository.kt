@@ -7,4 +7,6 @@ interface MovieRepository {
 
     suspend fun nowPlaying(): BaseResponse<List<Movie>>
 
+    suspend fun popular(): BaseResponse<List<Movie>>
+
 }
