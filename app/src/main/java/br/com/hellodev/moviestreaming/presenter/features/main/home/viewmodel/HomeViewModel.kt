@@ -6,6 +6,7 @@ import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetTopRatedUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetUpcomingUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.home.action.HomeAction
 import br.com.hellodev.moviestreaming.presenter.features.main.home.state.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getNowPlayingUseCase: GetNowPlayingUseCase,
     private val getPopularUseCase: GetPopularUseCase,
-    private val getTopRatedUseCase: GetTopRatedUseCase
+    private val getTopRatedUseCase: GetTopRatedUseCase,
+    private val getUpcomingUseCase: GetUpcomingUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -26,6 +28,7 @@ class HomeViewModel(
         getNowPlaying()
         getPopular()
         getTopRated()
+        getUpcoming()
     }
 
     fun submitAction(action: HomeAction) {
@@ -78,6 +81,25 @@ class HomeViewModel(
                 ResultStatus.SUCCESS ->  {
                     _state.update {
                         it.copy(topRatedList = response.results ?: emptyList())
+                    }
+                }
+
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    private fun getUpcoming() {
+        viewModelScope.launch {
+            val response = getUpcomingUseCase()
+
+            when(response.resultStatus){
+                ResultStatus.SUCCESS ->  {
+                    _state.update {
+                        it.copy(upcomingList = response.results ?: emptyList())
                     }
                 }
 

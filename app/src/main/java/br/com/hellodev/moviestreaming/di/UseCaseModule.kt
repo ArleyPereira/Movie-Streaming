@@ -5,6 +5,7 @@ import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.Regis
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetTopRatedUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetUpcomingUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveImageUserUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveUserUseCase
@@ -28,5 +29,7 @@ val useCaseModule = module {
     factoryOf(::GetPopularUseCase)
 
     factoryOf(::GetTopRatedUseCase)
+
+    factoryOf(::GetUpcomingUseCase)
 
 }

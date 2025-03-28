@@ -67,6 +67,14 @@ private fun HomeContent(
                     onMovieClick = {},
                     onRightClick = {}
                 )
+
+                SectionMovies(
+                    leftText = "Em breve",
+                    rightText = "Ver tudo",
+                    movies = state.upcomingList,
+                    onMovieClick = {},
+                    onRightClick = {}
+                )
             }
         }
     )

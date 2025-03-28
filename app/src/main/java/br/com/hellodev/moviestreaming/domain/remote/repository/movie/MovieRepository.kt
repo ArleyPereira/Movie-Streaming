@@ -11,4 +11,6 @@ interface MovieRepository {
 
     suspend fun topRated(): BaseResponse<List<Movie>>
 
+    suspend fun upcoming(): BaseResponse<List<Movie>>
+
 }
