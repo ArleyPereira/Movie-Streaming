@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.download.screen
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -11,11 +12,14 @@ import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DownloadScreen() {
+fun DownloadScreen(
+    paddingValues: PaddingValues = PaddingValues()
+) {
     val viewModel = koinViewModel<DownloadViewModel>()
     val state by viewModel.state.collectAsState()
 
     DownloadContent(
+        paddingValues = paddingValues,
         state = state,
         action = viewModel::submitAction
     )
@@ -23,6 +27,7 @@ fun DownloadScreen() {
 
 @Composable
 private fun DownloadContent(
+    paddingValues: PaddingValues = PaddingValues(),
     state: DownloadState,
     action: (DownloadAction) -> Unit
 ) {

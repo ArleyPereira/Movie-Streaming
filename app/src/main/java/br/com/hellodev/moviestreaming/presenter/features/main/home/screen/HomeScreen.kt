@@ -1,6 +1,9 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.home.screen
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -19,28 +22,34 @@ import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    paddingValues: PaddingValues = PaddingValues()
+) {
     val viewModel = koinViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsState()
 
     HomeContent(
+        paddingValues = paddingValues,
         state = state,
         action = viewModel::submitAction
     )
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun HomeContent(
+    paddingValues: PaddingValues = PaddingValues(),
     state: HomeState,
     action: (HomeAction) -> Unit
 ) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        content = { paddingValues ->
+        content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
                     .verticalScroll(rememberScrollState())
                     .padding(paddingValues)
             ) {

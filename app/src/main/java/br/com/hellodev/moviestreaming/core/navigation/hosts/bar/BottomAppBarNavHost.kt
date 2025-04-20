@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.core.navigation.hosts.bar
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -18,6 +19,7 @@ import br.com.hellodev.moviestreaming.presenter.features.main.search.screen.Sear
 fun BottomAppBarNavHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
+    paddingValues: PaddingValues = PaddingValues(),
     navigateToHomeAuthentication: () -> Unit
 ) {
     NavHost(
@@ -26,23 +28,32 @@ fun BottomAppBarNavHost(
         modifier = modifier
     ) {
         composable<BottomAppBarRoutes.Home> {
-            HomeScreen()
+            HomeScreen(
+                paddingValues = paddingValues
+            )
         }
 
         composable<BottomAppBarRoutes.Search> {
-            SearchScreen()
+            SearchScreen(
+                paddingValues = paddingValues
+            )
         }
 
         composable<BottomAppBarRoutes.Favorite> {
-            FavoriteScreen()
+            FavoriteScreen(
+                paddingValues = paddingValues
+            )
         }
 
         composable<BottomAppBarRoutes.Download> {
-            DownloadScreen()
+            DownloadScreen(
+                paddingValues = paddingValues
+            )
         }
 
         composable<BottomAppBarRoutes.Account> {
             AccountScreen(
+                paddingValues = paddingValues,
                 navigateToHomeAuthentication = navigateToHomeAuthentication,
                 navigateToEditProfileScreen = {
                     navHostController.navigate(ProfileRoutes.EditProfile)

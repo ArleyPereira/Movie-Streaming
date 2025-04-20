@@ -87,7 +87,9 @@ private fun WelcomeContent(
                     painter = painterResource(id = R.drawable.background_gradient),
                     contentDescription = null,
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
 
                 Column(

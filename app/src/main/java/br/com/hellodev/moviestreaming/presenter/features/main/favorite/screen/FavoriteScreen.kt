@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.favorite.screen
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -11,11 +12,14 @@ import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(
+    paddingValues: PaddingValues = PaddingValues()
+) {
     val viewModel = koinViewModel<FavoriteViewModel>()
     val state by viewModel.state.collectAsState()
 
     FavoriteContent(
+        paddingValues = paddingValues,
         state = state,
         action = viewModel::submitAction
     )
@@ -23,6 +27,7 @@ fun FavoriteScreen() {
 
 @Composable
 private fun FavoriteContent(
+    paddingValues: PaddingValues = PaddingValues(),
     state: FavoriteState,
     action: (FavoriteAction) -> Unit
 ) {

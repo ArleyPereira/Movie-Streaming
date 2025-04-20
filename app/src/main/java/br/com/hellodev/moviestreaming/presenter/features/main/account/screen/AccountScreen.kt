@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.account.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +35,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.menu.MenuType
-import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.*
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.DARK_MODE
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.DOWNLOAD
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.EDIT_PROFILE
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.HELP_CENTER
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.LANGUAGE
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.LOGOUT
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.NOTIFICATION
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.PRIVACY_POLICY
+import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.SECURITY
 import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.logout.BottomSheetLogout
@@ -54,6 +63,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AccountScreen(
+    paddingValues: PaddingValues = PaddingValues(),
     navigateToHomeAuthentication: () -> Unit,
     navigateToEditProfileScreen: () -> Unit
 ) {
@@ -61,6 +71,7 @@ fun AccountScreen(
     val state by viewModel.state.collectAsState()
 
     AccountContent(
+        paddingValues = paddingValues,
         state = state,
         action = viewModel::submitAction,
         onItemClick = { type ->
@@ -84,9 +95,11 @@ fun AccountScreen(
     )
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AccountContent(
+    paddingValues: PaddingValues = PaddingValues(),
     state: AccountState,
     action: (AccountAction) -> Unit,
     onItemClick: (MenuType) -> Unit
@@ -96,25 +109,21 @@ private fun AccountContent(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = Modifier
+            .padding(paddingValues),
         topBar = {
             HeaderScreen(
                 modifier = Modifier
-                    .padding(
-                        top = 24.dp,
-                        start = 24.dp,
-                        end = 24.dp
-                    ),
+                    .padding(horizontal = 24.dp),
                 title = R.string.label_account_bottom_app_bar
             )
         },
         containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
-        content = { paddingValues ->
+        content = {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding()
-                    ),
+                    .padding(paddingValues),
                 contentPadding = PaddingValues(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
