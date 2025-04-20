@@ -8,7 +8,7 @@ import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 fun MovieResponse.toDomain(): Movie {
     return Movie(
         adult = adult,
-        backdropPath = "https://image.tmdb.org/t/p/w500/$backdropPath",
+        backdropPath = "https://image.tmdb.org/t/p/original/$backdropPath",
         budget = budget,
         genres = genreResponses?.map { it?.toDomain() },
         homepage = homepage,

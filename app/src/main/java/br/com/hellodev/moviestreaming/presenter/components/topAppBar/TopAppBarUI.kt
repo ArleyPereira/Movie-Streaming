@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.presenter.components.topAppBar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,6 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +27,9 @@ import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 fun TopAppBarUI(
     modifier: Modifier = Modifier,
     title: String = "",
-    onClick: () -> Unit
+    containerColor: Color = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
+    actions: @Composable (RowScope.() -> Unit) = {},
+    onBackPressed: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -42,7 +46,7 @@ fun TopAppBarUI(
         modifier = modifier,
         navigationIcon = {
             IconButton(
-                onClick = onClick,
+                onClick = onBackPressed,
                 content = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_left),
@@ -51,8 +55,9 @@ fun TopAppBarUI(
                 }
             )
         },
+        actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
+            containerColor = containerColor,
             navigationIconContentColor = MovieStreamingTheme.colorScheme.topAppBarColor,
             actionIconContentColor = MovieStreamingTheme.colorScheme.topAppBarColor,
             titleContentColor = MovieStreamingTheme.colorScheme.topAppBarColor
@@ -71,7 +76,7 @@ private fun TopAppBarUIPreview() {
         ) {
             TopAppBarUI(
                 title = "Fill Your Profile",
-                onClick = {}
+                onBackPressed = {}
             )
         }
     }

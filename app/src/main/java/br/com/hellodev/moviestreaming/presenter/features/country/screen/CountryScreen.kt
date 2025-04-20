@@ -65,7 +65,7 @@ fun CountryContent(
         topBar = {
             TopAppBarUI(
                 title = stringResource(R.string.label_title_country_screen),
-                onClick = onBackPressed
+                onBackPressed = onBackPressed
             )
         },
         bottomBar = {

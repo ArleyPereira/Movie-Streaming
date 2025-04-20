@@ -113,7 +113,7 @@ private fun LoginContent(
     Scaffold(
         topBar = {
             TopAppBarUI(
-                onClick = onBackPressed
+                onBackPressed = onBackPressed
             )
         },
         snackbarHost = {

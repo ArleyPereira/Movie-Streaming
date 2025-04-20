@@ -59,7 +59,7 @@ fun GenreContent(
         topBar = {
             TopAppBarUI(
                 title = stringResource(R.string.label_title_genre_screen),
-                onClick = onBackPressed
+                onBackPressed = onBackPressed
             )
         },
         bottomBar = {

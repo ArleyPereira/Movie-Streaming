@@ -95,7 +95,10 @@ class MovieRepositoryImpl(
     override suspend fun details(movieId: Int): BaseResponse<Movie> {
         return try {
             val response = httpClient.get(movieDetailsRoute(movieId))
-            apiRequest<MovieResponse, Movie>(response) { it.toDomain() }
+            apiRequest<MovieResponse, Movie>(
+                response = response,
+                isPaginated = false
+            ) { it.toDomain() }
         } catch (e: Exception) {
             e.printStackTrace()
             BaseResponse(

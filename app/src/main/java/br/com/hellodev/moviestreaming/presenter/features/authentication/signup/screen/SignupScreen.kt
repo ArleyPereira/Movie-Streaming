@@ -113,7 +113,7 @@ private fun SignupContent(
     Scaffold(
         topBar = {
             TopAppBarUI(
-                onClick = onBackPressed
+                onBackPressed = onBackPressed
             )
         },
         snackbarHost = {

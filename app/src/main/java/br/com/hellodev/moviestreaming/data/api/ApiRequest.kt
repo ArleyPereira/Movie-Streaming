@@ -10,15 +10,22 @@ import kotlinx.serialization.json.Json
 class ApiRequest(val json: Json) {
     suspend inline operator fun <reified R : Any, D : Any> invoke(
         response: HttpResponse,
-        noinline toDomain: (R) -> D
+        isPaginated: Boolean = true,
+        noinline toDomain: (R) -> D,
     ): BaseResponse<D> {
         return try {
             if (response.status.value in 200..299) {
                 val responseBody = response.body<String>()
-                val baseResponse = json.decodeFromString<BaseResponse<R>>(responseBody)
-                    .copy(resultStatus = ResultStatus.SUCCESS)
 
-                applyMapperSuccess(baseResponse, toDomain)
+                if (isPaginated) {
+                    val baseResponse = json.decodeFromString<BaseResponse<R>>(responseBody)
+
+                    applyMapperPaginatedSuccess(baseResponse, toDomain)
+                } else {
+                    val baseResponse = json.decodeFromString<R>(responseBody)
+
+                    applyMapperSingleSuccess(baseResponse, toDomain)
+                }
             } else {
                 val errorBody = response.body<String>()
                 val errorResponse = json.decodeFromString<BaseResponse<Unit>>(errorBody)
@@ -50,7 +57,7 @@ class ApiRequest(val json: Json) {
         }
     }
 
-    fun <R, D> applyMapperSuccess(
+    fun <R, D> applyMapperPaginatedSuccess(
         body: BaseResponse<R>,
         mapper: (R) -> D
     ): BaseResponse<D> {
@@ -60,8 +67,18 @@ class ApiRequest(val json: Json) {
             totalPages = body.totalPages,
             totalResults = body.totalResults,
             statusCode = body.statusCode,
-            resultStatus = body.resultStatus,
+            resultStatus = ResultStatus.SUCCESS,
             message = body.message
+        )
+    }
+
+    fun <R, D> applyMapperSingleSuccess(
+        body: R,
+        mapper: (R) -> D
+    ): BaseResponse<D> {
+        return BaseResponse(
+            results = mapper(body),
+            resultStatus = ResultStatus.SUCCESS
         )
     }
 

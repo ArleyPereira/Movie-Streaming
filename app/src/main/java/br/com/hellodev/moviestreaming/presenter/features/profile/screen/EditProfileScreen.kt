@@ -196,7 +196,7 @@ private fun EditProfileContent(
                 topBar = {
                     TopAppBarUI(
                         title = stringResource(R.string.label_title_edit_profile_screen),
-                        onClick = onBackPressed
+                        onBackPressed = onBackPressed
                     )
                 },
                 bottomBar = {
