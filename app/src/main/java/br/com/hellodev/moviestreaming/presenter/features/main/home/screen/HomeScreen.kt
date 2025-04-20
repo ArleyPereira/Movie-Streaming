@@ -23,7 +23,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    paddingValues: PaddingValues = PaddingValues()
+    paddingValues: PaddingValues = PaddingValues(),
+    navigateToMovieDetailsScreen: (Int) -> Unit
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsState()
@@ -31,6 +32,7 @@ fun HomeScreen(
     HomeContent(
         paddingValues = paddingValues,
         state = state,
+        navigateToMovieDetailsScreen = navigateToMovieDetailsScreen,
         action = viewModel::submitAction
     )
 }
@@ -40,6 +42,7 @@ fun HomeScreen(
 private fun HomeContent(
     paddingValues: PaddingValues = PaddingValues(),
     state: HomeState,
+    navigateToMovieDetailsScreen: (Int) -> Unit,
     action: (HomeAction) -> Unit
 ) {
     Scaffold(
@@ -57,7 +60,7 @@ private fun HomeContent(
                     leftText = "Lançamentos",
                     rightText = "Ver tudo",
                     movies = state.nowPlayingList,
-                    onMovieClick = {},
+                    onMovieClick = navigateToMovieDetailsScreen,
                     onRightClick = {}
                 )
 
@@ -65,7 +68,7 @@ private fun HomeContent(
                     leftText = "Populares",
                     rightText = "Ver tudo",
                     movies = state.popularList,
-                    onMovieClick = {},
+                    onMovieClick = navigateToMovieDetailsScreen,
                     onRightClick = {}
                 )
 
@@ -73,7 +76,7 @@ private fun HomeContent(
                     leftText = "Mais votados",
                     rightText = "Ver tudo",
                     movies = state.topRatedList,
-                    onMovieClick = {},
+                    onMovieClick = navigateToMovieDetailsScreen,
                     onRightClick = {}
                 )
 
@@ -81,7 +84,7 @@ private fun HomeContent(
                     leftText = "Em breve",
                     rightText = "Ver tudo",
                     movies = state.upcomingList,
-                    onMovieClick = {},
+                    onMovieClick = navigateToMovieDetailsScreen,
                     onRightClick = {}
                 )
             }
@@ -95,6 +98,7 @@ private fun HomePreview() {
     MovieStreamingTheme {
         HomeContent(
             state = HomeState(),
+            navigateToMovieDetailsScreen = {},
             action = {}
         )
     }

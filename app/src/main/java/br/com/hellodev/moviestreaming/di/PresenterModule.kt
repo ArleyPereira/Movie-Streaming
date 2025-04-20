@@ -2,7 +2,10 @@ package br.com.hellodev.moviestreaming.di
 
 import br.com.hellodev.moviestreaming.presenter.features.authentication.login.viewmodel.LoginViewModel
 import br.com.hellodev.moviestreaming.presenter.features.authentication.signup.viewmodel.SignupViewModel
+import br.com.hellodev.moviestreaming.presenter.features.country.viewmodel.CountryViewModel
+import br.com.hellodev.moviestreaming.presenter.features.genre.viewmodel.GenreViewModel
 import br.com.hellodev.moviestreaming.presenter.features.main.account.viewmodel.AccountViewModel
+import br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel.MovieDetailsViewModel
 import br.com.hellodev.moviestreaming.presenter.features.main.download.viewModel.DownloadViewModel
 import br.com.hellodev.moviestreaming.presenter.features.main.favorite.viewmodel.FavoriteViewModel
 import br.com.hellodev.moviestreaming.presenter.features.main.home.viewmodel.HomeViewModel
@@ -10,8 +13,6 @@ import br.com.hellodev.moviestreaming.presenter.features.main.search.viewmodel.S
 import br.com.hellodev.moviestreaming.presenter.features.profile.viewmodel.EditProfileViewModel
 import br.com.hellodev.moviestreaming.presenter.features.splash.viewmodel.SplashViewModel
 import br.com.hellodev.moviestreaming.presenter.features.welcome.viewmodel.WelcomeViewModel
-import br.com.hellodev.moviestreaming.presenter.features.genre.viewmodel.GenreViewModel
-import br.com.hellodev.moviestreaming.presenter.features.country.viewmodel.CountryViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -40,5 +41,7 @@ val presenterModule = module {
     viewModelOf(::GenreViewModel)
 
     viewModelOf(::CountryViewModel)
+
+    viewModelOf(::MovieDetailsViewModel)
 
 }

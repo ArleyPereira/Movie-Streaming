@@ -26,14 +26,14 @@ class ApiRequest(val json: Json) {
                 if (response.status >= HttpStatusCode.InternalServerError) {
                     BaseResponse(
                         results = null,
-                        status = response.status.value,
+                        statusCode = response.status.value,
                         resultStatus = ResultStatus.ERROR,
                         message = "Por favor, tente novamente em alguns instantes."
                     )
                 } else {
                     BaseResponse(
                         results = null,
-                        status = response.status.value,
+                        statusCode = response.status.value,
                         resultStatus = ResultStatus.ERROR,
                         message = errorResponse.message
                     )
@@ -43,7 +43,7 @@ class ApiRequest(val json: Json) {
             exception.printStackTrace()
             BaseResponse(
                 results = null,
-                status = response.status.value,
+                statusCode = response.status.value,
                 resultStatus = ResultStatus.ERROR,
                 message = "Por favor, tente novamente em alguns instantes."
             )
@@ -59,7 +59,7 @@ class ApiRequest(val json: Json) {
             page = body.page,
             totalPages = body.totalPages,
             totalResults = body.totalResults,
-            status = body.status,
+            statusCode = body.statusCode,
             resultStatus = body.resultStatus,
             message = body.message
         )

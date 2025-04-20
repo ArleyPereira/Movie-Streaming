@@ -9,7 +9,7 @@ data class BaseResponse<T>(
     val page: Int? = null,
     val totalPages: Int? = null,
     val totalResults: Int? = null,
-    val status: Int? = null,
+    val statusCode: Int? = null,
     val message: String? = null,
     val results: T? = null
 )

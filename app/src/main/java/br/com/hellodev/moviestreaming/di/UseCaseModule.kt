@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.di
 
 import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.LoginUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.RegisterUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetTopRatedUseCase
@@ -31,5 +32,7 @@ val useCaseModule = module {
     factoryOf(::GetTopRatedUseCase)
 
     factoryOf(::GetUpcomingUseCase)
+
+    factoryOf(::GetMovieDetailsUseCase)
 
 }

@@ -8,6 +8,7 @@ import br.com.hellodev.moviestreaming.data.routes.NOW_PLAYING_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.POPULAR_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.TOP_RATED_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.UPCOMING_ROUTE
+import br.com.hellodev.moviestreaming.data.routes.movieDetailsRoute
 import br.com.hellodev.moviestreaming.domain.remote.model.base.BaseResponse
 import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 import br.com.hellodev.moviestreaming.domain.remote.repository.movie.MovieRepository
@@ -30,7 +31,7 @@ class MovieRepositoryImpl(
             e.printStackTrace()
             BaseResponse(
                 results = null,
-                status = null,
+                statusCode = null,
                 resultStatus = ResultStatus.ERROR,
                 message = "Por favor, tente novamente em alguns instantes."
             )
@@ -48,7 +49,7 @@ class MovieRepositoryImpl(
             e.printStackTrace()
             BaseResponse(
                 results = null,
-                status = null,
+                statusCode = null,
                 resultStatus = ResultStatus.ERROR,
                 message = "Por favor, tente novamente em alguns instantes."
             )
@@ -66,7 +67,7 @@ class MovieRepositoryImpl(
             e.printStackTrace()
             BaseResponse(
                 results = null,
-                status = null,
+                statusCode = null,
                 resultStatus = ResultStatus.ERROR,
                 message = "Por favor, tente novamente em alguns instantes."
             )
@@ -84,7 +85,22 @@ class MovieRepositoryImpl(
             e.printStackTrace()
             BaseResponse(
                 results = null,
-                status = null,
+                statusCode = null,
+                resultStatus = ResultStatus.ERROR,
+                message = "Por favor, tente novamente em alguns instantes."
+            )
+        }
+    }
+
+    override suspend fun details(movieId: Int): BaseResponse<Movie> {
+        return try {
+            val response = httpClient.get(movieDetailsRoute(movieId))
+            apiRequest<MovieResponse, Movie>(response) { it.toDomain() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            BaseResponse(
+                results = null,
+                statusCode = null,
                 resultStatus = ResultStatus.ERROR,
                 message = "Por favor, tente novamente em alguns instantes."
             )

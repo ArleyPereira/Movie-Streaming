@@ -19,4 +19,9 @@ sealed class BottomAppBarRoutes {
     @Serializable
     data object Account : BottomAppBarRoutes()
 
+    @Serializable
+    data class Details(
+        val id: Int = 0
+    ) : BottomAppBarRoutes()
+
 }

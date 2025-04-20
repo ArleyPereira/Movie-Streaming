@@ -13,4 +13,6 @@ interface MovieRepository {
 
     suspend fun upcoming(): BaseResponse<List<Movie>>
 
+    suspend fun details(movieId: Int): BaseResponse<Movie>
+
 }

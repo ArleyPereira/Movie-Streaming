@@ -10,6 +10,7 @@ import br.com.hellodev.moviestreaming.core.navigation.hosts.profile.profileNavHo
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
 import br.com.hellodev.moviestreaming.core.navigation.routes.profile.ProfileRoutes
 import br.com.hellodev.moviestreaming.presenter.features.main.account.screen.AccountScreen
+import br.com.hellodev.moviestreaming.presenter.features.main.details.screen.MovieDetailsScreen
 import br.com.hellodev.moviestreaming.presenter.features.main.download.screen.DownloadScreen
 import br.com.hellodev.moviestreaming.presenter.features.main.favorite.screen.FavoriteScreen
 import br.com.hellodev.moviestreaming.presenter.features.main.home.screen.HomeScreen
@@ -29,6 +30,9 @@ fun BottomAppBarNavHost(
     ) {
         composable<BottomAppBarRoutes.Home> {
             HomeScreen(
+                navigateToMovieDetailsScreen = { movieId ->
+                    navHostController.navigate(BottomAppBarRoutes.Details(movieId))
+                },
                 paddingValues = paddingValues
             )
         }
@@ -57,6 +61,14 @@ fun BottomAppBarNavHost(
                 navigateToHomeAuthentication = navigateToHomeAuthentication,
                 navigateToEditProfileScreen = {
                     navHostController.navigate(ProfileRoutes.EditProfile)
+                }
+            )
+        }
+
+        composable<BottomAppBarRoutes.Details> {
+            MovieDetailsScreen(
+                onBackPressed = {
+                    navHostController.popBackStack()
                 }
             )
         }

@@ -38,7 +38,7 @@ fun SectionMovies(
     leftText: String,
     rightText: String,
     movies: List<Movie>,
-    onMovieClick: () -> Unit,
+    onMovieClick: (Int) -> Unit,
     onRightClick: () -> Unit
 ) {
     Row(
@@ -95,7 +95,7 @@ fun SectionMovies(
                 imageModel = movie.posterPath,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = painterResource(R.drawable.movie_placeholder),
-                onClick = onMovieClick
+                onClick = { onMovieClick(movie.id ?: 0) }
             )
         }
     }
