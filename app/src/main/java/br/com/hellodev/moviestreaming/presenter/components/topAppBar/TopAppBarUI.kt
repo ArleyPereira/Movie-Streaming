@@ -50,7 +50,8 @@ fun TopAppBarUI(
                 content = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_left),
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = MovieStreamingTheme.colorScheme.iconColor
                     )
                 }
             )
