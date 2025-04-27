@@ -94,7 +94,11 @@ class MovieRepositoryImpl(
 
     override suspend fun details(movieId: Int): BaseResponse<Movie> {
         return try {
-            val response = httpClient.get(movieDetailsRoute(movieId))
+            val response = httpClient.get(movieDetailsRoute(movieId)) {
+                url {
+                    parameters.append("language", "pt-br")
+                }
+            }
             apiRequest<MovieResponse, Movie>(
                 response = response,
                 isPaginated = false

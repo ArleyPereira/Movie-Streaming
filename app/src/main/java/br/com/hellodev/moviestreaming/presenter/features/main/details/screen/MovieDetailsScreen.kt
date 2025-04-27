@@ -111,7 +111,7 @@ private fun MovieDetailsContent(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
-                        text = "Avatar: The Way of Water The Way of Water",
+                        text = state.movie?.title ?: "",
                         modifier = Modifier
                             .weight(1f),
                         style = TextStyle(
@@ -161,7 +161,7 @@ private fun MovieDetailsContent(
                             )
 
                             Text(
-                                text = "9.8",
+                                text = (state.movie?.voteAverage).toString().substring(0, 3),
                                 style = TextStyle(
                                     fontSize = 12.sp,
                                     fontFamily = UrbanistFamily,
@@ -181,7 +181,7 @@ private fun MovieDetailsContent(
 
                     item {
                         Text(
-                            text = "2022",
+                            text = state.movie?.releaseDate ?: "",
                             style = TextStyle(
                                 lineHeight = 19.6.sp,
                                 fontFamily = UrbanistFamily,
@@ -287,6 +287,40 @@ private fun MovieDetailsContent(
                         onClick = {}
                     )
                 }
+
+                Text(
+                    text = "Gêneros: ${state.movie?.genres?.joinToString(separator = ", ") { it?.name ?: "" }}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = UrbanistFamily,
+                        fontWeight = FontWeight(500),
+                        color = MovieStreamingTheme.colorScheme.textColor,
+                        letterSpacing = 0.2.sp
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = state.movie?.overview ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = UrbanistFamily,
+                        fontWeight = FontWeight(500),
+                        color = MovieStreamingTheme.colorScheme.textColor,
+                        letterSpacing = 0.2.sp
+                    ),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )
