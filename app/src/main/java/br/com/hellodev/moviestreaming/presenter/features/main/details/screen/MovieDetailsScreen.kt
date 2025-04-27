@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
+import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
@@ -179,6 +181,19 @@ private fun MovieDetailsContent(
 
                     item {
                         Text(
+                            text = "2022",
+                            style = TextStyle(
+                                lineHeight = 19.6.sp,
+                                fontFamily = UrbanistFamily,
+                                fontWeight = FontWeight(600),
+                                color = MovieStreamingTheme.colorScheme.textColor,
+                                letterSpacing = 0.2.sp
+                            )
+                        )
+                    }
+
+                    item {
+                        Text(
                             text = "13+",
                             modifier = Modifier
                                 .border(
@@ -245,6 +260,32 @@ private fun MovieDetailsContent(
                             )
                         )
                     }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    PrimaryButton(
+                        text = "Play",
+                        modifier = Modifier
+                            .height(38.dp)
+                            .weight(1f),
+                        icon = painterResource(id = R.drawable.ic_play),
+                        onClick = {}
+                    )
+
+                    OutlinedButton(
+                        text = "Download",
+                        modifier = Modifier
+                            .height(38.dp)
+                            .weight(1f),
+                        icon = painterResource(id = R.drawable.ic_download_fill),
+                        onClick = {}
+                    )
                 }
             }
         }

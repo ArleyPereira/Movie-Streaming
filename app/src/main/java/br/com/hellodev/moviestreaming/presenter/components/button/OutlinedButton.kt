@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.components.button
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,9 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,17 +39,17 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
-fun PrimaryButton(
+fun OutlinedButton(
     modifier: Modifier = Modifier,
     text: String,
     icon: Painter? = null,
     enabled: Boolean = true,
     isLoading: Boolean = false,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("button_loading.json"))
 
-    Button(
+    OutlinedButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
@@ -61,9 +61,9 @@ fun PrimaryButton(
             )
             .height(58.dp),
         enabled = enabled && !isLoading,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MovieStreamingTheme.colorScheme.defaultColor,
-            disabledContainerColor = MovieStreamingTheme.colorScheme.disabledDefaultColor
+        border = BorderStroke(
+            width = 1.dp,
+            color = MovieStreamingTheme.colorScheme.defaultColor
         ),
         content = {
             if (isLoading) {
@@ -87,7 +87,8 @@ fun PrimaryButton(
                             painter = icon,
                             contentDescription = null,
                             modifier = Modifier
-                                .size(20.dp)
+                                .size(20.dp),
+                            tint = MovieStreamingTheme.colorScheme.defaultColor
                         )
                     }
 
@@ -100,7 +101,7 @@ fun PrimaryButton(
                             lineHeight = 22.4.sp,
                             fontFamily = UrbanistFamily,
                             fontWeight = FontWeight.Bold,
-                            color = MovieStreamingTheme.colorScheme.whiteColor,
+                            color = MovieStreamingTheme.colorScheme.defaultColor,
                             textAlign = TextAlign.Center,
                             letterSpacing = 0.2.sp
                         )
@@ -114,7 +115,7 @@ fun PrimaryButton(
 
 @PreviewLightDark
 @Composable
-private fun PrimaryButtonPreview() {
+private fun OutlinedButtonPreview() {
     MovieStreamingTheme {
         Column(
             modifier = Modifier
@@ -123,7 +124,7 @@ private fun PrimaryButtonPreview() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            PrimaryButton(
+            OutlinedButton(
                 text = "Continuar",
                 isLoading = false,
                 enabled = true,
@@ -132,7 +133,7 @@ private fun PrimaryButtonPreview() {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            PrimaryButton(
+            OutlinedButton(
                 text = "Play",
                 icon = painterResource(R.drawable.ic_play),
                 isLoading = false,
