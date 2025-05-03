@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
+import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -42,6 +44,31 @@ class MovieDetailsViewModel(
                     _state.update {
                         it.copy(
                             movie = response.results,
+                            isLoading = false
+                        )
+                    }
+
+                    getMovieCredits()
+                }
+
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    private fun getMovieCredits() {
+        viewModelScope.launch {
+            val movieId = savedStateHandle.toRoute<BottomAppBarRoutes.Details>().id
+            val response = getMovieCreditsUseCase(movieId)
+
+            when (response.resultStatus) {
+                ResultStatus.SUCCESS -> {
+                    _state.update {
+                        it.copy(
+                            credits = response.results,
                             isLoading = false
                         )
                     }

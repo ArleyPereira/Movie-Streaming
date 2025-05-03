@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
+import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
@@ -48,6 +50,7 @@ import br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel.
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 import org.koin.androidx.compose.koinViewModel
+import org.koin.viewmodel.emptyState
 
 @Composable
 fun MovieDetailsScreen(
@@ -321,6 +324,17 @@ private fun MovieDetailsContent(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(state.credits?.cast ?: emptyList()) { cast ->
+                        CastMovieUI(cast = cast)
+                    }
+                }
             }
         }
     )
