@@ -55,6 +55,10 @@ val TextFieldBackgroundColorDark = Color(0xFF1F222A)
 val SwitchInactiveBackgroundColorLight = Color(0xFFEEEEEE)
 val SwitchInactiveBackgroundColorDark = Color(0xFF35383F)
 
+// TabRow
+val TabRowUnselectedTextColorLight = Color(0xFF9E9E9E)
+val TabRowUnselectedTextColorDark = Color(0xFF616161)
+
 // Alert & Status
 val SuccessColor = Color(0xFF4AAF57)
 val InfoColor = Color(0xFF246BFD)

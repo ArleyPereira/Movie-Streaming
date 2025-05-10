@@ -19,6 +19,7 @@ data class MyColorScheme(
     val secondaryButtonTextColor: Color,
     val switchInactiveBackgroundColor: Color,
     val switchActiveBackgroundColor: Color,
+    val tabRowUnselectedTextColor: Color,
     val successColor: Color,
     val infoColor: Color,
     val warningColor: Color,

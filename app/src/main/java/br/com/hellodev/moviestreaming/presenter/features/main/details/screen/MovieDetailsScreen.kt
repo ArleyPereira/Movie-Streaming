@@ -20,13 +20,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -43,6 +51,7 @@ import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
+import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
@@ -65,11 +74,15 @@ fun MovieDetailsScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MovieDetailsContent(
     state: MovieDetailsState,
     onBackPressed: () -> Unit
 ) {
+    var tabState by remember { mutableIntStateOf(0) }
+    val titles = listOf("Trailers", "Similares", "Comentários")
+
     Scaffold(
         topBar = {
             TopAppBarUI(
@@ -333,6 +346,55 @@ private fun MovieDetailsContent(
                 ) {
                     items(state.credits?.cast ?: emptyList()) { cast ->
                         CastMovieUI(cast = cast)
+                    }
+                }
+
+                PrimaryTabRow(
+                    selectedTabIndex = tabState,
+                    containerColor = Color.Transparent,
+                    indicator = {
+                        Spacer(
+                            modifier = Modifier
+                                .tabIndicatorOffset(tabState)
+                                .height(4.dp)
+                                .padding(horizontal = 16.dp)
+                                .background(
+                                    color = MovieStreamingTheme.colorScheme.defaultColor,
+                                    shape = RoundedCornerShape(size = 100.dp)
+                                )
+                        )
+                    },
+                    divider = {
+                        HorizontalDividerUI(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        Tab(
+                            selected = tabState == index,
+                            onClick = { tabState = index },
+                            text = {
+                                Text(
+                                    text = title,
+                                    style = TextStyle(
+                                        lineHeight = 22.4.sp,
+                                        fontFamily = UrbanistFamily,
+                                        fontWeight = FontWeight(600),
+                                        color = if (tabState == index) {
+                                            MovieStreamingTheme.colorScheme.defaultColor
+                                        } else {
+                                            MovieStreamingTheme.colorScheme.tabRowUnselectedTextColor
+                                        },
+                                        textAlign = TextAlign.Center,
+                                        letterSpacing = 0.2.sp
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        )
                     }
                 }
             }
