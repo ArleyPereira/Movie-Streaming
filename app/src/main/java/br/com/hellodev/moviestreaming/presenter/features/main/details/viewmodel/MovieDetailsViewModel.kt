@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.reviews.GetMovieReviewsUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 class MovieDetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
+    private val getMovieReviewsUseCase: GetMovieReviewsUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -72,6 +75,32 @@ class MovieDetailsViewModel(
                             isLoading = false
                         )
                     }
+
+                    getMovieReviews()
+                }
+
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    private fun getMovieReviews() {
+        viewModelScope.launch {
+            val movieId = savedStateHandle.toRoute<BottomAppBarRoutes.Details>().id
+            val response = getMovieReviewsUseCase(movieId)
+
+            when (response.resultStatus) {
+                ResultStatus.SUCCESS -> {
+                    Log.i("INFOTESTE", "getMovieReviews: ${response.results}")
+//                    _state.update {
+//                        it.copy(
+//                            credits = response.results,
+//                            isLoading = false
+//                        )
+//                    }
                 }
 
                 else -> {

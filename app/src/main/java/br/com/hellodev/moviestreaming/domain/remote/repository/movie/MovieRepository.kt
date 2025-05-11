@@ -3,6 +3,7 @@ package br.com.hellodev.moviestreaming.domain.remote.repository.movie
 import br.com.hellodev.moviestreaming.domain.remote.model.base.BaseResponse
 import br.com.hellodev.moviestreaming.domain.remote.model.credits.Credits
 import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.reviews.Review
 
 interface MovieRepository {
 
@@ -17,5 +18,7 @@ interface MovieRepository {
     suspend fun details(movieId: Int): BaseResponse<Movie>
 
     suspend fun credits(movieId: Int): BaseResponse<Credits>
+
+    suspend fun reviews(movieId: Int): BaseResponse<List<Review>>
 
 }
