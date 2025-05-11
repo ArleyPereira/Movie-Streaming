@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.navigation.tabs.MovieDetailsTabsItems
 import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
@@ -80,8 +82,7 @@ private fun MovieDetailsContent(
     state: MovieDetailsState,
     onBackPressed: () -> Unit
 ) {
-    var tabState by remember { mutableIntStateOf(0) }
-    val titles = listOf("Trailers", "Similares", "Comentários")
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -286,7 +287,7 @@ private fun MovieDetailsContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     PrimaryButton(
-                        text = "Play",
+                        text = stringResource(R.string.label_play_movie_details_screen),
                         modifier = Modifier
                             .height(38.dp)
                             .weight(1f),
@@ -295,7 +296,7 @@ private fun MovieDetailsContent(
                     )
 
                     OutlinedButton(
-                        text = "Download",
+                        text = stringResource(R.string.label_download_movie_details_screen),
                         modifier = Modifier
                             .height(38.dp)
                             .weight(1f),
@@ -305,7 +306,11 @@ private fun MovieDetailsContent(
                 }
 
                 Text(
-                    text = "Gêneros: ${state.movie?.genres?.joinToString(separator = ", ") { it?.name ?: "" }}",
+                    text = stringResource(
+                        R.string.label_genres_movie_details_screen,
+                        state.movie?.genres?.joinToString(separator = ", ") { it?.name ?: "" }
+                            .toString()
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -350,12 +355,12 @@ private fun MovieDetailsContent(
                 }
 
                 PrimaryTabRow(
-                    selectedTabIndex = tabState,
+                    selectedTabIndex = selectedTabIndex,
                     containerColor = Color.Transparent,
                     indicator = {
                         Spacer(
                             modifier = Modifier
-                                .tabIndicatorOffset(tabState)
+                                .tabIndicatorOffset(selectedTabIndex)
                                 .height(4.dp)
                                 .padding(horizontal = 16.dp)
                                 .background(
@@ -371,18 +376,18 @@ private fun MovieDetailsContent(
                         )
                     }
                 ) {
-                    titles.forEachIndexed { index, title ->
+                    MovieDetailsTabsItems.items.forEachIndexed { index, tab ->
                         Tab(
-                            selected = tabState == index,
-                            onClick = { tabState = index },
+                            selected = selectedTabIndex == index,
+                            onClick = { selectedTabIndex = index },
                             text = {
                                 Text(
-                                    text = title,
+                                    text = stringResource(tab.title),
                                     style = TextStyle(
                                         lineHeight = 22.4.sp,
                                         fontFamily = UrbanistFamily,
                                         fontWeight = FontWeight(600),
-                                        color = if (tabState == index) {
+                                        color = if (selectedTabIndex == index) {
                                             MovieStreamingTheme.colorScheme.defaultColor
                                         } else {
                                             MovieStreamingTheme.colorScheme.tabRowUnselectedTextColor

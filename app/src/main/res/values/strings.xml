@@ -105,4 +105,12 @@
     <string name="label_cancel_button_bottom_sheet_permission_denied">Cancelar</string>
     <string name="label_confirm_button_bottom_sheet_permission_denied">Configurações</string>
 
+    <!--    MovieDetailsScreen-->
+    <string name="label_play_movie_details_screen">Play</string>
+    <string name="label_download_movie_details_screen">Download</string>
+    <string name="label_genres_movie_details_screen">Gêneros: %1$s</string>
+    <string name="label_trailers_tab_movie_details_screen">Trailers</string>
+    <string name="label_similar_tab_movie_details_screen">Similares</string>
+    <string name="label_comments_tab_movie_details_screen">Comentários</string>
+
 </resources>
