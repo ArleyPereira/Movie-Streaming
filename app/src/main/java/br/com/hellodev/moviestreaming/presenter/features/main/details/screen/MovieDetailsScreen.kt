@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,6 +50,7 @@ import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
+import br.com.hellodev.moviestreaming.presenter.components.review.MovieReviewUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
 import br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel.MovieDetailsViewModel
@@ -99,7 +102,11 @@ private fun MovieDetailsContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
+                    .padding(
+                        bottom = paddingValues.calculateBottomPadding()
+                    )
             ) {
                 ImageUI(
                     modifier = Modifier
@@ -392,6 +399,26 @@ private fun MovieDetailsContent(
                                 )
                             }
                         )
+                    }
+                }
+
+                when (selectedTabIndex) {
+                    0 -> {
+
+                    }
+
+                    1 -> {
+
+                    }
+
+                    2 -> {
+                        state.reviews?.forEach { review ->
+                            MovieReviewUI(
+                                modifier = Modifier
+                                    .padding(16.dp),
+                                review = review
+                            )
+                        }
                     }
                 }
             }

@@ -17,17 +17,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.domain.remote.model.reviews.AuthorDetails
+import br.com.hellodev.moviestreaming.domain.remote.model.reviews.Review
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 
 @Composable
 fun MovieReviewUI(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    review: Review
 ) {
     Column(
         modifier = modifier
@@ -44,7 +48,7 @@ fun MovieReviewUI(
             ImageUI(
                 modifier = Modifier
                     .size(48.dp),
-                imageModel = "",
+                imageModel = review.authorDetails?.avatarPath,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = painterResource(id = R.drawable.movie_placeholder),
                 shape = CircleShape,
@@ -52,7 +56,7 @@ fun MovieReviewUI(
             )
 
             Text(
-                text = "Kristin Watson",
+                text = review.authorDetails?.name.orEmpty(),
                 style = TextStyle(
                     lineHeight = 22.4.sp,
                     fontFamily = UrbanistFamily,
@@ -64,13 +68,15 @@ fun MovieReviewUI(
         }
 
         Text(
-            text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+            text = review.content.orEmpty(),
             style = TextStyle(
                 lineHeight = 19.6.sp,
                 fontFamily = UrbanistFamily,
                 color = MovieStreamingTheme.colorScheme.textColor,
                 letterSpacing = 0.2.sp,
-            )
+            ),
+            maxLines = 10,
+            overflow = TextOverflow.Ellipsis
         )
 
         Row(
@@ -90,7 +96,7 @@ fun MovieReviewUI(
                 )
 
                 Text(
-                    text = "8",
+                    text = review.authorDetails?.rating.toString(),
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontFamily = UrbanistFamily,
@@ -119,6 +125,15 @@ fun MovieReviewUI(
 @Composable
 private fun MovieReviewUIPreview() {
     MovieStreamingTheme {
-        MovieReviewUI()
+        MovieReviewUI(
+            review = Review(
+                authorDetails = AuthorDetails(
+                    name = "John Doe",
+                    rating = 5.0f,
+                    avatarPath = null
+                ),
+                content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            )
+        )
     }
 }

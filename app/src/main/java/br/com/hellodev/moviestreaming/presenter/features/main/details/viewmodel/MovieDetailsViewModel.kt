@@ -1,6 +1,5 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -94,13 +93,12 @@ class MovieDetailsViewModel(
 
             when (response.resultStatus) {
                 ResultStatus.SUCCESS -> {
-                    Log.i("INFOTESTE", "getMovieReviews: ${response.results}")
-//                    _state.update {
-//                        it.copy(
-//                            credits = response.results,
-//                            isLoading = false
-//                        )
-//                    }
+                    _state.update {
+                        it.copy(
+                            reviews = response.results,
+                            isLoading = false
+                        )
+                    }
                 }
 
                 else -> {

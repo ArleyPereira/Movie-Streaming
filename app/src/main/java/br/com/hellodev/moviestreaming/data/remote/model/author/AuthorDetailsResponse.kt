@@ -12,5 +12,5 @@ data class AuthorDetailsResponse(
     val avatarPath: String? = null,
 
     @SerialName("rating")
-    val rating: Int? = null
+    val rating: Float? = null
 )
