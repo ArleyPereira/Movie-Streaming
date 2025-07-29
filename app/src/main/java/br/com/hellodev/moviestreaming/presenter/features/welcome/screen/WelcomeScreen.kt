@@ -1,7 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.welcome.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,7 +24,6 @@ import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.slide.WelcomeSlideUI
 import br.com.hellodev.moviestreaming.presenter.features.welcome.action.WelcomeAction
 import br.com.hellodev.moviestreaming.presenter.features.welcome.viewmodel.WelcomeViewModel
-import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -74,15 +73,11 @@ private fun WelcomeContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = paddingValues.calculateBottomPadding())
-                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor),
+                    .paint(
+                        painter = painterResource(id = R.drawable.placeholder_welcome),
+                        contentScale = ContentScale.Crop
+                    )
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.placeholder_welcome),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop
-                )
-
                 Image(
                     painter = painterResource(id = R.drawable.background_gradient),
                     contentDescription = null,
@@ -95,6 +90,8 @@ private fun WelcomeContent(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(paddingValues)
+                        .padding(bottom = 24.dp)
                 ) {
                     WelcomeSlideUI(
                         modifier = Modifier
@@ -105,7 +102,7 @@ private fun WelcomeContent(
 
                     PrimaryButton(
                         modifier = Modifier
-                            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+                            .padding(horizontal = 24.dp),
                         text = "Pular",
                         onClick = { action(WelcomeAction.OnNextScreen) }
                     )
