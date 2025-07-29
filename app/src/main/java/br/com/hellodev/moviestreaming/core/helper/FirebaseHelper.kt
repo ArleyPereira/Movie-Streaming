@@ -15,7 +15,7 @@ class FirebaseHelper {
 
         fun getStorage() = FirebaseStorage.getInstance().reference
 
-        fun getUserId() = getAuth().currentUser?.uid.orEmpty()
+        fun getUserId() = getAuth().currentUser?.uid ?: "UNAUTHENTICATED_USER"
 
         fun validError(error: String?): Int {
             return when {
