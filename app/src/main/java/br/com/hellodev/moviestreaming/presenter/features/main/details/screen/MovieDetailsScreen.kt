@@ -3,6 +3,7 @@ package br.com.hellodev.moviestreaming.presenter.features.main.details.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -80,24 +81,6 @@ private fun MovieDetailsContent(
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     Scaffold(
-        topBar = {
-            TopAppBarUI(
-                containerColor = Color.Transparent,
-                actions = {
-                    IconButton(
-                        onClick = {},
-                        content = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_cast),
-                                contentDescription = null,
-                                tint = MovieStreamingTheme.colorScheme.iconColor
-                            )
-                        }
-                    )
-                },
-                onBackPressed = onBackPressed,
-            )
-        },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
@@ -108,17 +91,39 @@ private fun MovieDetailsContent(
                         bottom = paddingValues.calculateBottomPadding()
                     )
             ) {
-                ImageUI(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(320.dp),
-                    imageModel = state.movie?.backdropPath,
-                    contentScale = ContentScale.Crop,
-                    previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
-                    shape = RoundedCornerShape(0.dp),
-                    isLoading = false,
-                    onClick = {}
-                )
+                ) {
+                    ImageUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(320.dp),
+                        imageModel = state.movie?.backdropPath,
+                        contentScale = ContentScale.Crop,
+                        previewPlaceholder = painterResource(id = R.drawable.placeholder_welcome),
+                        shape = RoundedCornerShape(0.dp),
+                        isLoading = false,
+                        onClick = {}
+                    )
+
+                    TopAppBarUI(
+                        containerColor = Color.Transparent,
+                        actions = {
+                            IconButton(
+                                onClick = {},
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_cast),
+                                        contentDescription = null,
+                                        tint = MovieStreamingTheme.colorScheme.iconColor
+                                    )
+                                }
+                            )
+                        },
+                        onBackPressed = onBackPressed,
+                    )
+                }
 
                 Row(
                     modifier = Modifier

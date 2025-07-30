@@ -47,7 +47,6 @@ import br.com.hellodev.moviestreaming.core.enums.menu.MenuType.SECURITY
 import br.com.hellodev.moviestreaming.domain.remote.model.user.User
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.logout.BottomSheetLogout
-import br.com.hellodev.moviestreaming.presenter.components.header.HeaderScreen
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.menu.MenuItemDarkModeUI
 import br.com.hellodev.moviestreaming.presenter.components.menu.MenuItemLanguageUI
@@ -109,15 +108,6 @@ private fun AccountContent(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
-        modifier = Modifier
-            .padding(paddingValues),
-        topBar = {
-            HeaderScreen(
-                modifier = Modifier
-                    .padding(horizontal = 24.dp),
-                title = R.string.label_account_bottom_app_bar
-            )
-        },
         containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor,
         content = {
             LazyColumn(
