@@ -8,6 +8,7 @@ import br.com.hellodev.moviestreaming.data.mapping.reviews.toDomain
 import br.com.hellodev.moviestreaming.data.remote.model.author.ReviewResponse
 import br.com.hellodev.moviestreaming.data.remote.model.credits.CreditsResponse
 import br.com.hellodev.moviestreaming.data.remote.model.movie.MovieResponse
+import br.com.hellodev.moviestreaming.data.routes.MOVIE_SEARCH_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.NOW_PLAYING_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.POPULAR_ROUTE
 import br.com.hellodev.moviestreaming.data.routes.TOP_RATED_ROUTE
@@ -153,6 +154,29 @@ class MovieRepositoryImpl(
             }
             apiRequest<List<ReviewResponse>, List<Review>>(response) { reviews ->
                 reviews.map { it.toDomain() }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            BaseResponse(
+                results = null,
+                statusCode = null,
+                resultStatus = ResultStatus.ERROR,
+                message = "Por favor, tente novamente em alguns instantes."
+            )
+        }
+    }
+
+    override suspend fun search(query: String): BaseResponse<List<Movie>> {
+        return try {
+            val response = httpClient.get(MOVIE_SEARCH_ROUTE) {
+                url {
+                    parameters.append("query", query)
+                    parameters.append("language", "pt-br")
+                }
+            }
+
+            apiRequest<List<MovieResponse>, List<Movie>>(response) { movies ->
+                movies.map { it.toDomain() }
             }
         } catch (e: Exception) {
             e.printStackTrace()

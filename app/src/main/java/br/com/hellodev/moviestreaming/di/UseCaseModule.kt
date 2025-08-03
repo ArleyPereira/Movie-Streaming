@@ -8,6 +8,7 @@ import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetNowPlayingU
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetPopularUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetTopRatedUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetUpcomingUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.SearchMovieUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.reviews.GetMovieReviewsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.GetUserUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.user.SaveImageUserUseCase
@@ -40,5 +41,7 @@ val useCaseModule = module {
     factoryOf(::GetMovieCreditsUseCase)
 
     factoryOf(::GetMovieReviewsUseCase)
+
+    factoryOf(::SearchMovieUseCase)
 
 }

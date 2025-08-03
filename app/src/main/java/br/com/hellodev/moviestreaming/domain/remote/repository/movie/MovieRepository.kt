@@ -21,4 +21,6 @@ interface MovieRepository {
 
     suspend fun reviews(movieId: Int): BaseResponse<List<Review>>
 
+    suspend fun search(query: String): BaseResponse<List<Movie>>
+
 }

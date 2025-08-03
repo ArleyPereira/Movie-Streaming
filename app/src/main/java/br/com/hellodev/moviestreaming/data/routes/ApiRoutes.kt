@@ -13,3 +13,5 @@ fun movieDetailsRoute(movieId: Int) = "movie/$movieId"
 fun movieCreditsRoute(movieId: Int) = "movie/$movieId/credits"
 
 fun movieReviewsRoute(movieId: Int) = "movie/$movieId/reviews"
+
+const val MOVIE_SEARCH_ROUTE = "search/movie"
