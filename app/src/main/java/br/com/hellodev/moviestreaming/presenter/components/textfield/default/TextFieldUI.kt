@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -54,6 +55,7 @@ fun TextFieldUI(
     trailingIcon: @Composable (() -> Unit)? = null,
     requireKeyboardFocus: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onValueChange: (String) -> Unit
 ) {
@@ -110,6 +112,7 @@ fun TextFieldUI(
                 isError = isError,
                 visualTransformation = visualTransformation,
                 keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
                 singleLine = singleLine,
                 shape = RoundedCornerShape(12.dp),
                 colors = TextFieldDefaults.colors(
