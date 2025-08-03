@@ -1,5 +1,6 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.search.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -61,6 +64,7 @@ private fun SearchContent(
             ) {
                 TextFieldUI(
                     modifier = Modifier
+                        .weight(1f)
                         .padding(16.dp),
                     value = state.query,
                     placeholder = "Pesquisar",
@@ -81,6 +85,24 @@ private fun SearchContent(
                     ),
                     onValueChange = {
                         action(SearchAction.OnQueryChanged(it))
+                    }
+                )
+
+                Card(
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(end = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MovieStreamingTheme.colorScheme.alphaDefaultColor
+                    ),
+                    content = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_filter),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(16.dp),
+                            tint = Color.Unspecified
+                        )
                     }
                 )
             }
