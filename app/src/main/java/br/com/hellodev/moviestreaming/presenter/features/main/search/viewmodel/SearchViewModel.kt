@@ -38,12 +38,19 @@ class SearchViewModel(
 
     private fun onSearch() {
         viewModelScope.launch {
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
             val response = searchMovieUseCase(_state.value.query)
 
             when (response.resultStatus) {
                 ResultStatus.SUCCESS -> {
                     _state.update { currentState ->
-                        currentState.copy(movies = response.results.orEmpty())
+                        currentState.copy(
+                            movies = response.results.orEmpty(),
+                            isLoading = false
+                        )
                     }
                 }
 

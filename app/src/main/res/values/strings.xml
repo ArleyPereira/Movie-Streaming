@@ -113,4 +113,8 @@
     <string name="label_similar_tab_movie_details_screen">Similares</string>
     <string name="label_comments_tab_movie_details_screen">Comentários</string>
 
+    <!--    SearchScreen-->
+    <string name="label_title_empty_state_search_screen">Nenhum resultado encontrado.</string>
+    <string name="label_message_empty_state_search_screen">Desculpe, a palavra-chave inserida não foi encontrada. Tente verificar novamente ou pesquise com outras palavras-chave.</string>
+
 </resources>
