@@ -42,7 +42,9 @@ class SearchViewModel(
 
             when (response.resultStatus) {
                 ResultStatus.SUCCESS -> {
-
+                    _state.update { currentState ->
+                        currentState.copy(movies = response.results.orEmpty())
+                    }
                 }
 
                 else -> {

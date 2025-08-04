@@ -1,19 +1,24 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.search.screen
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,12 +26,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.textfield.default.TextFieldUI
 import br.com.hellodev.moviestreaming.presenter.features.main.search.action.SearchAction
 import br.com.hellodev.moviestreaming.presenter.features.main.search.state.SearchState
@@ -48,6 +54,7 @@ fun SearchScreen(
     )
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun SearchContent(
     paddingValues: PaddingValues = PaddingValues(),
@@ -59,6 +66,7 @@ private fun SearchContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
                     .windowInsetsPadding(WindowInsets.statusBars),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -108,8 +116,29 @@ private fun SearchContent(
             }
         },
         containerColor = MovieStreamingTheme.colorScheme.primaryBackgroundColor
-    ) { paddingValues ->
-
+    ) { mPaddingValues ->
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                top = mPaddingValues.calculateTopPadding(),
+                end = 16.dp,
+                bottom = paddingValues.calculateBottomPadding()
+            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(state.movies) { movie ->
+                ImageUI(
+                    modifier = Modifier
+                        .height(200.dp),
+                    imageModel = movie.posterPath,
+                    contentScale = ContentScale.Crop,
+                    previewPlaceholder = painterResource(R.drawable.movie_placeholder),
+                    onClick = { }
+                )
+            }
+        }
     }
 }
 
