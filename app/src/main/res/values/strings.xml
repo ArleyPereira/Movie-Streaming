@@ -117,4 +117,11 @@
     <string name="label_title_empty_state_search_screen">Nenhum resultado encontrado.</string>
     <string name="label_message_empty_state_search_screen">Desculpe, a palavra-chave inserida não foi encontrada. Tente verificar novamente ou pesquise com outras palavras-chave.</string>
 
+    <!--    DialogDownloading-->
+    <string name="text_title_dialog_downloading">Download</string>
+    <string name="text_message_dialog_downloading">Download em andamento...\nAguarde ou oculte o processo</string>
+    <string name="text_hide_dialog_downloading">Esconder</string>
+    <string name="text_downloaded_size_dialog_downloading">%1$s / %2$s</string>
+    <string name="text_download_progress_dialog_downloading">%1$d%%</string>
+
 </resources>
