@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.extensions.calculateFileSize
 import br.com.hellodev.moviestreaming.presenter.components.button.SecondaryButton
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
@@ -38,6 +39,9 @@ import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 @Composable
 fun DownloadDialogUI(
     modifier: Modifier = Modifier,
+    progress: Int,
+    downloadedSize: Float = 0f,
+    downloadSize: Float = 0f,
     onDismissRequest: () -> Unit
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -103,8 +107,8 @@ fun DownloadDialogUI(
                     Text(
                         text = stringResource(
                             R.string.text_downloaded_size_dialog_downloading,
-                            "457.2",
-                            "968.5 MB"
+                            downloadedSize.calculateFileSize(),
+                            downloadSize.calculateFileSize()
                         ),
                         style = TextStyle(
                             lineHeight = 19.6.sp,
@@ -118,7 +122,7 @@ fun DownloadDialogUI(
                     Text(
                         text = stringResource(
                             R.string.text_download_progress_dialog_downloading,
-                            47
+                            progress
                         ),
                         style = TextStyle(
                             lineHeight = 19.6.sp,
@@ -136,10 +140,10 @@ fun DownloadDialogUI(
                     modifier = Modifier
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween // Consider removing SpaceBetween if icon is on the right
                 ) {
                     LinearProgressIndicator(
-                        progress = { 0.2f },
+                        progress = { progress / 100f }, // Convert Int progress (0-100) to Float (0.0-1.0)
                         modifier = Modifier
                             .weight(1f)
                             .clip(CircleShape)
@@ -154,7 +158,8 @@ fun DownloadDialogUI(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),
                         contentDescription = null,
-                        tint = MovieStreamingTheme.colorScheme.iconColor
+                        tint = MovieStreamingTheme.colorScheme.iconColor,
+                        modifier = Modifier.padding(start = 8.dp)
                     )
                 }
 
@@ -176,6 +181,9 @@ fun DownloadDialogUI(
 private fun DownloadDialogUIPreview() {
     MovieStreamingTheme {
         DownloadDialogUI(
+            progress = 50,
+            downloadedSize = 90f,
+            downloadSize = 180f,
             onDismissRequest = {}
         )
     }

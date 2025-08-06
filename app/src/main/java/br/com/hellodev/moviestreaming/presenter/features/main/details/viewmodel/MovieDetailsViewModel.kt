@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
@@ -11,6 +12,7 @@ import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetail
 import br.com.hellodev.moviestreaming.domain.remote.usecase.reviews.GetMovieReviewsUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +34,13 @@ class MovieDetailsViewModel(
 
     fun submitAction(action: MovieDetailsAction) {
         when (action) {
-            else -> {}
+            is MovieDetailsAction.StartDownload -> {
+                startDownload()
+            }
+
+            is MovieDetailsAction.SetCurrentDialog -> {
+                setCurrentDialog(action.type)
+            }
         }
     }
 
@@ -54,7 +62,7 @@ class MovieDetailsViewModel(
                 }
 
                 else -> {
-
+                    // Handle error if needed
                 }
             }
         }
@@ -78,7 +86,7 @@ class MovieDetailsViewModel(
                 }
 
                 else -> {
-
+                    // Handle error if needed
                 }
             }
 
@@ -101,11 +109,53 @@ class MovieDetailsViewModel(
                 }
 
                 else -> {
-
+                    // Handle error if needed
                 }
             }
 
         }
+    }
+
+    private fun startDownload() {
+        viewModelScope.launch {
+            if (_state.value.isDownloading) {
+                _state.update { it.copy(currentDialog = DialogType.DOWNLOADING_DIALOG) }
+                return@launch
+            }
+
+            _state.update {
+                it.copy(
+                    downloadProgress = 0,
+                    downloadedSize = 0f,
+                    currentDialog = DialogType.DOWNLOADING_DIALOG,
+                    isDownloading = true
+                )
+            }
+
+            val totalSize = _state.value.movie?.runtime?.toFloat() ?: 0f
+            for (progress in 1..100) {
+                delay(50)
+                val downloadedSize = totalSize * (progress / 100f)
+                _state.update {
+                    it.copy(
+                        downloadProgress = progress,
+                        downloadedSize = downloadedSize
+                    )
+                }
+            }
+
+            delay(500)
+            _state.update {
+                it.copy(
+                    currentDialog = DialogType.EMPTY_DIALOG,
+                    isDownloading = false
+                )
+            }
+        }
+    }
+
+    private fun setCurrentDialog(type: DialogType) {
+        _state.update { it.copy(currentDialog = type) }
     }
 
 }
