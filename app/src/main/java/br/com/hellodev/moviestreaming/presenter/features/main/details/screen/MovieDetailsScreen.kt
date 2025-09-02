@@ -45,14 +45,18 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
+import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType.DOWNLOADING_DIALOG
+import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType.EMPTY_DIALOG
 import br.com.hellodev.moviestreaming.core.navigation.tabs.MovieDetailsTabsItems
 import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
+import br.com.hellodev.moviestreaming.presenter.components.dialog.download.DownloadDialogUI
 import br.com.hellodev.moviestreaming.presenter.components.divider.HorizontalDividerUI
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.components.review.MovieReviewUI
 import br.com.hellodev.moviestreaming.presenter.components.topAppBar.TopAppBarUI
+import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
 import br.com.hellodev.moviestreaming.presenter.features.main.details.state.MovieDetailsState
 import br.com.hellodev.moviestreaming.presenter.features.main.details.viewmodel.MovieDetailsViewModel
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
@@ -68,6 +72,7 @@ fun MovieDetailsScreen(
 
     MovieDetailsContent(
         state = state,
+        action = viewModel::submitAction,
         onBackPressed = onBackPressed
     )
 }
@@ -76,6 +81,7 @@ fun MovieDetailsScreen(
 @Composable
 private fun MovieDetailsContent(
     state: MovieDetailsState,
+    action: (MovieDetailsAction) -> Unit,
     onBackPressed: () -> Unit
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
@@ -305,7 +311,9 @@ private fun MovieDetailsContent(
                             .height(38.dp)
                             .weight(1f),
                         icon = painterResource(id = R.drawable.ic_download_fill),
-                        onClick = {}
+                        onClick = {
+                            action(MovieDetailsAction.StartDownload)
+                        }
                     )
                 }
 
@@ -427,6 +435,21 @@ private fun MovieDetailsContent(
                     }
                 }
             }
+
+            when (state.currentDialog) {
+                DOWNLOADING_DIALOG -> {
+                    DownloadDialogUI(
+                        progress = state.downloadProgress,
+                        downloadedSize = state.downloadedSize,
+                        downloadSize = state.movie?.runtime?.toFloat() ?: 0f,
+                        onDismissRequest = {
+                            action(MovieDetailsAction.SetCurrentDialog(EMPTY_DIALOG))
+                        }
+                    )
+                }
+
+                else -> {}
+            }
         }
     )
 }
@@ -437,6 +460,7 @@ private fun MovieDetailsPreview() {
     MovieStreamingTheme {
         MovieDetailsContent(
             state = MovieDetailsState(),
+            action = {},
             onBackPressed = {}
         )
     }
