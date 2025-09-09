@@ -6,4 +6,6 @@ interface DownloadRepository {
 
     suspend fun save(movie: Movie)
 
+    suspend fun list(): List<Movie>
+
 }

@@ -160,12 +160,6 @@ class MovieDetailsViewModel(
         }
     }
 
-    private fun saveMovie() {
-        viewModelScope.launch {
-
-        }
-    }
-
     private fun setCurrentDialog(type: DialogType) {
         _state.update { it.copy(currentDialog = type) }
     }
