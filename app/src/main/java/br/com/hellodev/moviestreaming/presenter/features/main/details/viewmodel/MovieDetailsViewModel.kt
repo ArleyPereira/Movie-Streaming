@@ -8,6 +8,7 @@ import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.download.SaveMovieUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.reviews.GetMovieReviewsUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
@@ -22,6 +23,7 @@ class MovieDetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
     private val getMovieReviewsUseCase: GetMovieReviewsUseCase,
+    private val saveMovieUseCase: SaveMovieUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -153,6 +155,14 @@ class MovieDetailsViewModel(
                     isDownloading = false
                 )
             }
+
+            _state.value.movie?.let { saveMovieUseCase(movie = it) }
+        }
+    }
+
+    private fun saveMovie() {
+        viewModelScope.launch {
+
         }
     }
 
