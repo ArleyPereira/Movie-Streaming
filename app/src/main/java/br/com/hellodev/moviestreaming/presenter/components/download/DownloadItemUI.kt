@@ -56,7 +56,10 @@ fun DownloadItemUI(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(112.dp)
-                .padding(16.dp),
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                ),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
