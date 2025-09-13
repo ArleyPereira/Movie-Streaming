@@ -30,6 +30,24 @@ class DownloadRepositoryImpl : DownloadRepository {
         }
     }
 
+    override suspend fun delete(movie: Movie?) {
+        suspendCoroutine { continuation ->
+            downloadReference
+                .child(FirebaseHelper.getUserId())
+                .child(movie?.id.toString())
+                .removeValue()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resumeWith(Result.success(Unit))
+                    } else {
+                        task.exception?.let { exception ->
+                            continuation.resumeWith(Result.failure(exception))
+                        }
+                    }
+                }
+        }
+    }
+
     override suspend fun list(): List<Movie> {
         return suspendCoroutine { continuation ->
             downloadReference
