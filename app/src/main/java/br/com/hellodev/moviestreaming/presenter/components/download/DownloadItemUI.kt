@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.presenter.components.download
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,21 +37,31 @@ import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 fun DownloadItemUI(
     modifier: Modifier = Modifier,
     movie: Movie,
-    onDeleteClick: () -> Unit
+    onDeleteClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        ImageUI(
-            modifier = Modifier
-                .width(150.dp)
-                .height(112.dp),
-            imageModel = movie.backdropPath,
-            contentScale = ContentScale.Crop,
-            previewPlaceholder = painterResource(id = R.drawable.movie_placeholder),
-            onClick = {}
-        )
+        Box {
+            ImageUI(
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(112.dp),
+                imageModel = movie.backdropPath,
+                contentScale = ContentScale.Crop,
+                previewPlaceholder = painterResource(id = R.drawable.movie_placeholder),
+                onClick = {}
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_play),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.Center),
+                tint = Color.Unspecified
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -111,18 +122,20 @@ fun DownloadItemUI(
                     )
                 )
 
-                IconButton(
-                    modifier = Modifier
-                        .size(20.dp),
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_delete),
-                            contentDescription = null,
-                            tint = Color.Unspecified
-                        )
-                    },
-                    onClick = onDeleteClick
-                )
+                onDeleteClick?.let {
+                    IconButton(
+                        modifier = Modifier
+                            .size(20.dp),
+                        content = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null,
+                                tint = Color.Unspecified
+                            )
+                        },
+                        onClick = it
+                    )
+                }
             }
         }
     }
