@@ -21,12 +21,12 @@ class DownloadViewModel(
     private val _state = MutableStateFlow(DownloadState())
     val state = _state.asStateFlow()
 
-    init {
-        getMovies()
-    }
-
     fun submitAction(action: DownloadAction) {
         when (action) {
+            is DownloadAction.InitData -> {
+                getMovies()
+            }
+
             is DownloadAction.OnSelectedMovie -> {
                 onSelectedMovie(action.movie)
             }
@@ -37,6 +37,14 @@ class DownloadViewModel(
 
             is DownloadAction.OnDeleteMovie -> {
                 deleteMovie()
+            }
+
+            is DownloadAction.OnQueryChanged -> {
+                onQueryChanged(action.query)
+            }
+
+            is DownloadAction.OnSearch -> {
+                onSearch()
             }
         }
     }
@@ -49,7 +57,8 @@ class DownloadViewModel(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        movies = movies
+                        movies = movies,
+                        moviesFiltered = movies
                     )
                 }
             } catch (e: Exception) {
@@ -62,20 +71,59 @@ class DownloadViewModel(
         viewModelScope.launch {
             try {
                 deleteMovieUseCase(movie = _state.value.selectedMovie)
-                val currentMovies = _state.value.movies.toMutableList().apply {
+                val newMovies = _state.value.movies.toMutableList().apply {
+                    remove(_state.value.selectedMovie)
+                }
+
+                val newMoviesFiltered = _state.value.moviesFiltered.toMutableList().apply {
                     remove(_state.value.selectedMovie)
                 }
 
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        movies = currentMovies,
+                        movies = newMovies,
+                        moviesFiltered = newMoviesFiltered,
                         selectedMovie = null,
                         sheetType = SheetType.EMPTY_BOTTOM_SHEET
                     )
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private fun onQueryChanged(query: String) {
+        _state.update { currentState ->
+            currentState.copy(query = query)
+        }
+    }
+
+    private fun onSearch() {
+        viewModelScope.launch {
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
+            if (_state.value.query.isEmpty()) {
+                _state.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        moviesFiltered = _state.value.movies
+                    )
+                }
+            } else {
+                val newMoviesFiltered = _state.value.movies.filter { movie ->
+                    movie.title?.contains(_state.value.query, ignoreCase = true) == true
+                }
+
+                _state.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        moviesFiltered = newMoviesFiltered
+                    )
+                }
             }
         }
     }

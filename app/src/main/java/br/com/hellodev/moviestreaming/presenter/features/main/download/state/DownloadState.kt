@@ -6,6 +6,8 @@ import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 data class DownloadState(
     val isLoading: Boolean = true,
     val movies: List<Movie> = emptyList(),
+    val moviesFiltered: List<Movie> = emptyList(),
     val selectedMovie: Movie? = null,
+    val query: String = "",
     val sheetType: SheetType = SheetType.EMPTY_BOTTOM_SHEET
 )
