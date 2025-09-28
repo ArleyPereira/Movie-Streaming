@@ -7,6 +7,7 @@ import androidx.navigation.toRoute
 import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.download.SaveMovieUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
@@ -156,7 +157,14 @@ class MovieDetailsViewModel(
                 )
             }
 
-            _state.value.movie?.let { saveMovieUseCase(movie = it) }
+            val movieDownload = MovieDownload(
+                id = _state.value.movie?.id,
+                backdropPath = _state.value.movie?.backdropPath,
+                title = _state.value.movie?.title,
+                runtime = _state.value.movie?.runtime
+            )
+
+            _state.value.movie?.let { saveMovieUseCase(movie = movieDownload) }
         }
     }
 

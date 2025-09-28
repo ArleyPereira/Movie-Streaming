@@ -1,10 +1,12 @@
 package br.com.hellodev.moviestreaming.domain.remote.model.movie
 
+import br.com.hellodev.moviestreaming.domain.remote.model.genre.GenreMovie
+
 data class Movie(
     val adult: Boolean? = null,
     val backdropPath: String? = null,
     val budget: Int? = null,
-    val genres: List<Genre?>? = null,
+    val genreMovies: List<GenreMovie?>? = null,
     val homepage: String? = null,
     val id: Int? = null,
     val imdbId: String? = null,

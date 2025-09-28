@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.button.SecondaryButton
 import br.com.hellodev.moviestreaming.presenter.components.download.DownloadItemUI
@@ -31,7 +31,7 @@ import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 @Composable
 fun BottomSheetDelete(
     modifier: Modifier = Modifier,
-    movie: Movie,
+    movie: MovieDownload,
     onCancelClick: () -> Unit,
     onConfirmClick: () -> Unit
 ) {
@@ -115,7 +115,7 @@ fun BottomSheetDelete(
 private fun BBottomSheetDeletePreview() {
     MovieStreamingTheme {
         BottomSheetDelete(
-            movie = Movie(
+            movie = MovieDownload(
                 title = "Sonic 3 - Sonic The Hedgehog",
                 runtime = 90
             ),

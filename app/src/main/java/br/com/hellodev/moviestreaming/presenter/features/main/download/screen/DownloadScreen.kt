@@ -47,7 +47,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType
 import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType.DELETE_BOTTOM_SHEET
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.delete.BottomSheetDelete
 import br.com.hellodev.moviestreaming.presenter.components.bottom.sheet.drag.DragBottomSheet
 import br.com.hellodev.moviestreaming.presenter.components.download.DownloadItemUI
@@ -257,16 +257,14 @@ private fun DownloadPreview() {
         DownloadContent(
             state = DownloadState(
                 movies = listOf(
-                    Movie(
+                    MovieDownload(
                         id = 1,
                         title = "Movie 1",
-                        overview = "Overview 1",
                         runtime = 120,
                     ),
-                    Movie(
+                    MovieDownload(
                         id = 2,
                         title = "Movie 2",
-                        overview = "Overview 2",
                         runtime = 120,
                     )
                 )

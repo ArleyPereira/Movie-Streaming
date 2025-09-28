@@ -1,7 +1,7 @@
 package br.com.hellodev.moviestreaming.presenter.features.main.download.action
 
 import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 
 sealed class DownloadAction {
     object InitData : DownloadAction()
@@ -9,6 +9,6 @@ sealed class DownloadAction {
     object OnSearch : DownloadAction()
 
     data class OnQueryChanged(val query: String) : DownloadAction()
-    data class OnSelectedMovie(val movie: Movie) : DownloadAction()
+    data class OnSelectedMovie(val movie: MovieDownload) : DownloadAction()
     data class SetCurrentBottomSheet(val type: SheetType) : DownloadAction()
 }

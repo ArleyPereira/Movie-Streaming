@@ -320,7 +320,7 @@ private fun MovieDetailsContent(
                 Text(
                     text = stringResource(
                         R.string.label_genres_movie_details_screen,
-                        state.movie?.genres?.joinToString(separator = ", ") { it?.name ?: "" }
+                        state.movie?.genreMovies?.joinToString(separator = ", ") { it?.name ?: "" }
                             .toString()
                     ),
                     modifier = Modifier

@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.extensions.calculateFileSize
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.presenter.components.image.ImageUI
 import br.com.hellodev.moviestreaming.presenter.theme.MovieStreamingTheme
 import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
@@ -36,7 +36,7 @@ import br.com.hellodev.moviestreaming.presenter.theme.UrbanistFamily
 @Composable
 fun DownloadItemUI(
     modifier: Modifier = Modifier,
-    movie: Movie,
+    movie: MovieDownload,
     onDeleteClick: (() -> Unit)? = null
 ) {
     Row(
@@ -151,7 +151,7 @@ private fun DownloadItemUIPreview() {
                 .background(MovieStreamingTheme.colorScheme.primaryBackgroundColor)
         ) {
             DownloadItemUI(
-                movie = Movie(
+                movie = MovieDownload(
                     title = "Sonic 3 - Sonic The Hedgehog",
                     runtime = 90
                 ),

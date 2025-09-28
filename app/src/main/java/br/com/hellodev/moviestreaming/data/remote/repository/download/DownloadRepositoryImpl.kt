@@ -1,7 +1,7 @@
 package br.com.hellodev.moviestreaming.data.remote.repository.download
 
 import br.com.hellodev.moviestreaming.core.helper.FirebaseHelper
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.domain.remote.repository.download.DownloadRepository
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -12,7 +12,7 @@ class DownloadRepositoryImpl : DownloadRepository {
         .getDatabase()
         .child("downloads")
 
-    override suspend fun save(movie: Movie) {
+    override suspend fun save(movie: MovieDownload) {
         suspendCoroutine { continuation ->
             downloadReference
                 .child(FirebaseHelper.getUserId())
@@ -30,7 +30,7 @@ class DownloadRepositoryImpl : DownloadRepository {
         }
     }
 
-    override suspend fun delete(movie: Movie?) {
+    override suspend fun delete(movie: MovieDownload?) {
         suspendCoroutine { continuation ->
             downloadReference
                 .child(FirebaseHelper.getUserId())
@@ -48,7 +48,7 @@ class DownloadRepositoryImpl : DownloadRepository {
         }
     }
 
-    override suspend fun list(): List<Movie> {
+    override suspend fun list(): List<MovieDownload> {
         return suspendCoroutine { continuation ->
             downloadReference
                 .child(FirebaseHelper.getUserId())
@@ -56,10 +56,10 @@ class DownloadRepositoryImpl : DownloadRepository {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val snapshot = task.result
-                        val movies = mutableListOf<Movie>()
+                        val movies = mutableListOf<MovieDownload>()
 
                         for (movieSnapshot in snapshot.children) {
-                            val movie = movieSnapshot.getValue(Movie::class.java)
+                            val movie = movieSnapshot.getValue(MovieDownload::class.java)
                             movie?.let {
                                 movies.add(it)
                             }

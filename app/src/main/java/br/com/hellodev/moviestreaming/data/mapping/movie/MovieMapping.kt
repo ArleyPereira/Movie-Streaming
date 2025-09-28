@@ -2,7 +2,7 @@ package br.com.hellodev.moviestreaming.data.mapping.movie
 
 import br.com.hellodev.moviestreaming.data.remote.model.movie.GenreResponse
 import br.com.hellodev.moviestreaming.data.remote.model.movie.MovieResponse
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Genre
+import br.com.hellodev.moviestreaming.domain.remote.model.genre.GenreMovie
 import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 
 fun MovieResponse.toDomain(): Movie {
@@ -10,7 +10,7 @@ fun MovieResponse.toDomain(): Movie {
         adult = adult,
         backdropPath = "https://image.tmdb.org/t/p/original/$backdropPath",
         budget = budget,
-        genres = genreResponses?.map { it?.toDomain() },
+        genreMovies = genreResponses?.map { it?.toDomain() },
         homepage = homepage,
         id = id,
         imdbId = imdbId,
@@ -32,8 +32,8 @@ fun MovieResponse.toDomain(): Movie {
     )
 }
 
-fun GenreResponse.toDomain(): Genre {
-    return Genre(
+fun GenreResponse.toDomain(): GenreMovie {
+    return GenreMovie(
         id = id,
         name = name
     )

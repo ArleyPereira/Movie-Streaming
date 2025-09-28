@@ -3,7 +3,7 @@ package br.com.hellodev.moviestreaming.presenter.features.main.download.viewMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.hellodev.moviestreaming.core.enums.sheet.SheetType
-import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.domain.remote.usecase.download.DeleteMovieUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.download.GetMoviesUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.download.action.DownloadAction
@@ -128,7 +128,7 @@ class DownloadViewModel(
         }
     }
 
-    private fun onSelectedMovie(movie: Movie) {
+    private fun onSelectedMovie(movie: MovieDownload) {
         _state.update {
             it.copy(
                 selectedMovie = movie,
