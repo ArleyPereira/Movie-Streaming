@@ -1,9 +1,11 @@
 package br.com.hellodev.moviestreaming.di
 
+import br.com.hellodev.moviestreaming.data.local.repository.favorite.FavoriteRepositoryImpl
 import br.com.hellodev.moviestreaming.data.remote.repository.authentication.AuthenticationRepositoryImpl
 import br.com.hellodev.moviestreaming.data.remote.repository.download.DownloadRepositoryImpl
 import br.com.hellodev.moviestreaming.data.remote.repository.movie.MovieRepositoryImpl
 import br.com.hellodev.moviestreaming.data.remote.repository.user.UserRepositoryImpl
+import br.com.hellodev.moviestreaming.domain.local.repository.favorite.FavoriteRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.authentication.AuthenticationRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.download.DownloadRepository
 import br.com.hellodev.moviestreaming.domain.remote.repository.movie.MovieRepository
@@ -21,5 +23,9 @@ val repositoryModule = module {
     factoryOf(::MovieRepositoryImpl).bind(MovieRepository::class)
 
     factoryOf(::DownloadRepositoryImpl).bind(DownloadRepository::class)
+
+    // #################### - Local ####################
+
+    factoryOf(::FavoriteRepositoryImpl).bind(FavoriteRepository::class)
 
 }

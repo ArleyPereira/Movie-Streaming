@@ -1,5 +1,9 @@
 package br.com.hellodev.moviestreaming.di
 
+import br.com.hellodev.moviestreaming.domain.local.usecase.favorite.DeleteFavoriteUseCase
+import br.com.hellodev.moviestreaming.domain.local.usecase.favorite.GetFavoritesUseCase
+import br.com.hellodev.moviestreaming.domain.local.usecase.favorite.InsertFavoriteUseCase
+import br.com.hellodev.moviestreaming.domain.local.usecase.favorite.UpdateFavoriteUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.LoginUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.authentication.RegisterUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
@@ -52,5 +56,15 @@ val useCaseModule = module {
     factoryOf(::GetMoviesUseCase)
 
     factoryOf(::DeleteMovieUseCase)
+
+    // #################### - Local ####################
+
+    factoryOf(::InsertFavoriteUseCase)
+
+    factoryOf(::GetFavoritesUseCase)
+
+    factoryOf(::UpdateFavoriteUseCase)
+
+    factoryOf(::DeleteFavoriteUseCase)
 
 }
