@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 val localPropertiesFile: File = rootProject.file("local.properties")
@@ -80,6 +81,11 @@ dependencies {
 
     // Ktor
     implementation(libs.bundles.ktor)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Koin
     implementation(libs.koin.compose)
