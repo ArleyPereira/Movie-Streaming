@@ -11,4 +11,5 @@ object NavigationKeys {
 
 object Database {
     const val DATABASE_NAME = "movie_streaming_database"
+    const val FAVORITE_TABLE_NAME = "favorites"
 }

@@ -18,4 +18,9 @@ val localModule = module {
             name = DATABASE_NAME
         )
     }
+
+    single {
+        get<AppDatabase>().favoriteDao()
+    }
+
 }
