@@ -8,3 +8,7 @@ object SharedPreferenceKeys {
 object NavigationKeys {
     const val EDIT_PROFILE_SCREEN_KEY = "EDIT_PROFILE_SCREEN_KEY"
 }
+
+object Database {
+    const val DATABASE_NAME = "movie_streaming_database"
+}
