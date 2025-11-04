@@ -2,9 +2,10 @@ package br.com.hellodev.moviestreaming.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import br.com.hellodev.moviestreaming.data.local.entity.FavoriteEntity
 
 @Database(
-    entities = [MovieDownloadEntity::class],
+    entities = [FavoriteEntity::class],
     version = 1,
     exportSchema = false
 )
