@@ -22,7 +22,7 @@ class FavoriteRepositoryImpl(
         }
     }
 
-    override fun delete(movieFavorite: MovieFavorite) {
+    override suspend fun delete(movieFavorite: MovieFavorite) {
         dao.delete(movieFavorite.toEntity())
     }
 

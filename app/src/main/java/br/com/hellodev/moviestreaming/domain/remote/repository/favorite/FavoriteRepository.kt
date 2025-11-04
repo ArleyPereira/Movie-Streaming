@@ -9,6 +9,6 @@ interface FavoriteRepository {
 
     fun getAll(): Flow<List<MovieFavorite>>
 
-    fun delete(movieFavorite: MovieFavorite)
+    suspend fun delete(movieFavorite: MovieFavorite)
 
 }
