@@ -16,6 +16,10 @@ class FavoriteRepositoryImpl(
         dao.insert(movieFavorite.toEntity())
     }
 
+    override suspend fun getFavoriteById(id: Int): MovieFavorite? {
+        return dao.getFavoriteById(id)?.toDomain()
+    }
+
     override fun getAll(): Flow<List<MovieFavorite>> {
         return dao.getAll().map { list ->
             list.map { it.toDomain() }

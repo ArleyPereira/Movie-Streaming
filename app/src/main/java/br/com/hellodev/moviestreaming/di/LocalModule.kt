@@ -16,7 +16,7 @@ val localModule = module {
             context = get(),
             klass = AppDatabase::class.java,
             name = DATABASE_NAME
-        )
+        ).build()
     }
 
     single {

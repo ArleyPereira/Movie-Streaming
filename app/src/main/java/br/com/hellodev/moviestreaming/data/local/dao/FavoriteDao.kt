@@ -15,10 +15,13 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favoriteEntity: FavoriteEntity)
 
+    @Query("SELECT * FROM $FAVORITE_TABLE_NAME WHERE movie_id = :id")
+    suspend fun getFavoriteById(id: Int): FavoriteEntity?
+
     @Query("SELECT * FROM $FAVORITE_TABLE_NAME")
     fun getAll(): Flow<List<FavoriteEntity>>
 
     @Delete
-    fun delete(favoriteEntity: FavoriteEntity)
+    suspend fun delete(favoriteEntity: FavoriteEntity)
 
 }

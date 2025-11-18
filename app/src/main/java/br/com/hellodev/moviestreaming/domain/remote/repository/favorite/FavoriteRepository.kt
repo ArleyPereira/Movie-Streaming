@@ -7,6 +7,8 @@ interface FavoriteRepository {
 
     suspend fun insert(movieFavorite: MovieFavorite)
 
+    suspend fun getFavoriteById(id: Int): MovieFavorite?
+
     fun getAll(): Flow<List<MovieFavorite>>
 
     suspend fun delete(movieFavorite: MovieFavorite)

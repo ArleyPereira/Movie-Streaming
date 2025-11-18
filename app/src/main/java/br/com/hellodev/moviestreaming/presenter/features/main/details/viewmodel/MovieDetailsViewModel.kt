@@ -7,9 +7,13 @@ import androidx.navigation.toRoute
 import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType
 import br.com.hellodev.moviestreaming.core.enums.result.ResultStatus
 import br.com.hellodev.moviestreaming.core.navigation.routes.bar.BottomAppBarRoutes
+import br.com.hellodev.moviestreaming.domain.remote.model.favorite.MovieFavorite
 import br.com.hellodev.moviestreaming.domain.remote.model.movie.MovieDownload
 import br.com.hellodev.moviestreaming.domain.remote.usecase.credits.GetMovieCreditsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.download.SaveMovieUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.favorite.DeleteFavoriteUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.favorite.GetFavoriteByIdUseCase
+import br.com.hellodev.moviestreaming.domain.remote.usecase.favorite.InsertFavoriteUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.movie.GetMovieDetailsUseCase
 import br.com.hellodev.moviestreaming.domain.remote.usecase.reviews.GetMovieReviewsUseCase
 import br.com.hellodev.moviestreaming.presenter.features.main.details.action.MovieDetailsAction
@@ -24,6 +28,9 @@ class MovieDetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val getMovieCreditsUseCase: GetMovieCreditsUseCase,
     private val getMovieReviewsUseCase: GetMovieReviewsUseCase,
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
+    private val getFavoriteByIdUseCase: GetFavoriteByIdUseCase,
     private val saveMovieUseCase: SaveMovieUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -41,8 +48,12 @@ class MovieDetailsViewModel(
                 setCurrentDialog(type = action.type)
             }
 
-            MovieDetailsAction.StartDownload -> {
+            is MovieDetailsAction.StartDownload -> {
                 startDownload()
+            }
+
+            is MovieDetailsAction.OnFavoriteChange -> {
+                onFavoriteChange()
             }
         }
     }
@@ -62,6 +73,8 @@ class MovieDetailsViewModel(
                     }
 
                     getMovieCredits()
+
+                    getFavorite()
                 }
 
                 else -> {
@@ -116,6 +129,41 @@ class MovieDetailsViewModel(
                 }
             }
 
+        }
+    }
+
+    private fun getFavorite() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    movieFavorite = getFavoriteByIdUseCase(_state.value.movie?.id ?: 0)
+                )
+            }
+        }
+    }
+
+    private fun onFavoriteChange() {
+        viewModelScope.launch {
+            val movieFavorite = _state.value.movieFavorite
+            if (movieFavorite != null) {
+                deleteFavoriteUseCase(movieFavorite)
+
+                _state.update { it.copy(movieFavorite = null) }
+            } else {
+                val movie = _state.value.movie
+                val movieFavorite = MovieFavorite(
+                    movieId = movie?.id,
+                    title = movie?.title,
+                    backdropPath = movie?.backdropPath,
+                    runtime = movie?.runtime
+                )
+
+                insertFavoriteUseCase(movieFavorite)
+
+                _state.update {
+                    it.copy(movieFavorite = getFavoriteByIdUseCase(movie?.id ?: 0))
+                }
+            }
         }
     }
 

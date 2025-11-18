@@ -48,6 +48,7 @@ import br.com.hellodev.moviestreaming.R
 import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType.DOWNLOADING_DIALOG
 import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType.EMPTY_DIALOG
 import br.com.hellodev.moviestreaming.core.navigation.tabs.MovieDetailsTabsItems
+import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 import br.com.hellodev.moviestreaming.presenter.components.button.OutlinedButton
 import br.com.hellodev.moviestreaming.presenter.components.button.PrimaryButton
 import br.com.hellodev.moviestreaming.presenter.components.cast.CastMovieUI
@@ -152,18 +153,42 @@ private fun MovieDetailsContent(
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_heart_line),
-                        contentDescription = null,
-                        tint = MovieStreamingTheme.colorScheme.iconColor
-                    )
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_share),
-                        contentDescription = null,
+                    IconButton(
                         modifier = Modifier
                             .size(24.dp),
-                        tint = MovieStreamingTheme.colorScheme.iconColor
+                        onClick = {
+                            action(MovieDetailsAction.OnFavoriteChange)
+                        },
+                        content = {
+                            Icon(
+                                painter = if (state.movieFavorite != null) {
+                                    painterResource(id = R.drawable.ic_heart_fill)
+                                } else {
+                                    painterResource(id = R.drawable.ic_heart_line)
+                                },
+                                contentDescription = null,
+                                tint = if (state.movieFavorite != null) {
+                                    Color.Unspecified
+                                } else {
+                                    MovieStreamingTheme.colorScheme.iconColor
+                                }
+                            )
+                        }
+                    )
+
+                    IconButton(
+                        modifier = Modifier
+                            .size(24.dp),
+                        onClick = {},
+                        content = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_share),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(24.dp),
+                                tint = MovieStreamingTheme.colorScheme.iconColor
+                            )
+                        }
                     )
                 }
 
@@ -459,7 +484,12 @@ private fun MovieDetailsContent(
 private fun MovieDetailsPreview() {
     MovieStreamingTheme {
         MovieDetailsContent(
-            state = MovieDetailsState(),
+            state = MovieDetailsState(
+                movie = Movie(
+                    title = "Um dia Fora de Controle"
+                ),
+                movieFavorite = null
+            ),
             action = {},
             onBackPressed = {}
         )

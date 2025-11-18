@@ -2,6 +2,7 @@ package br.com.hellodev.moviestreaming.presenter.features.main.details.state
 
 import br.com.hellodev.moviestreaming.core.enums.dialog.DialogType
 import br.com.hellodev.moviestreaming.domain.remote.model.credits.Credits
+import br.com.hellodev.moviestreaming.domain.remote.model.favorite.MovieFavorite
 import br.com.hellodev.moviestreaming.domain.remote.model.movie.Movie
 import br.com.hellodev.moviestreaming.domain.remote.model.reviews.Review
 
@@ -10,6 +11,7 @@ data class MovieDetailsState(
     val movie: Movie? = null,
     val credits: Credits? = null,
     val reviews: List<Review>? = null,
+    val movieFavorite: MovieFavorite? = null,
     val currentDialog: DialogType = DialogType.EMPTY_DIALOG,
     val downloadProgress: Int = 0,
     val downloadedSize: Float = 0f,
